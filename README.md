@@ -1,47 +1,8 @@
-# Project Name
-
-<!--
-STARTER KIT GUIDANCE — DELETE AFTER INITIAL TEAM SETUP
-
-Replace "Project Name" above with your team's approved project name.
-
-This README is the entry point to your project's engineering record.
-
-Before your first phase-gate submission:
-
-1. Replace the project name.
-2. Complete the Project Overview.
-3. Confirm the Project Status.
-4. Confirm your team information is current in /docs/team/roles.md.
-5. Add any prerequisites already known.
-6. Add build, run, and test instructions as implementation develops.
-7. Remove all Starter Kit instructional HTML comments that no longer provide
-   useful team guidance.
-
-Continue updating this README throughout the semester.
-
-The README should orient another engineer to the project. It should NOT
-duplicate the detailed authoritative engineering evidence maintained elsewhere
-in the repository.
--->
+# CampusConnect Workflow System
 
 ## Project Overview
 
-<!--
-TEAM CONTENT REQUIRED
-
-Replace this comment with a concise description of your actual project.
-
-In a few sentences, explain:
-
-- the problem the system addresses;
-- its intended users or stakeholders;
-- its primary purpose; and
-- the major scope of the system.
-
-Keep this at an overview level. Detailed requirements belong under
-/docs/requirements/.
--->
+Students often need assistance with a variety of things, from asking about club events to needing overall academic support, but they don't know how or where to find help. The staff who can handle requests need a good system to organize these requests, prioritize them, maintain good communication, and keep record of such requests. CampusConnect, a workflow system and student support systems, provides an easier way for students to submit their requests and help the staff handle them quickly and efficiently. 
 
 ## Project Status
 
@@ -160,7 +121,8 @@ Never place passwords, tokens, private keys, or other secrets in this README.
 -->
 
 ### Prerequisites
-
+- Java 27
+- Maven
 <!--
 TEAM CONTENT REQUIRED
 
@@ -351,23 +313,3 @@ https://etisframework.org/
 Use ETIS as professional guidance and reference material.
 
 **Sakai remains authoritative for COMP 330/474 course requirements.**
-
-<!--
-FINAL STARTER KIT README CHECK — DELETE AFTER INITIAL SETUP
-
-Before the first phase-gate submission:
-
-1. Replace "Project Name."
-2. Complete Project Overview.
-3. Confirm Project Status is current.
-4. Confirm /docs/team/roles.md contains the actual team.
-5. Add all currently known prerequisites.
-6. Add real setup/build/run/test instructions as those capabilities exist.
-7. Confirm all repository paths above exist and are correctly named.
-8. Remove stale Starter Kit guidance.
-9. Do not duplicate authoritative engineering evidence in this README.
-10. Remove this final instructional comment.
-
-After setup, continue maintaining the README as the project's engineering
-entry point throughout the semester.
--->
