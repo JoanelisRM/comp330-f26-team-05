@@ -28,11 +28,11 @@ Replace the sample student entries below with the members of your team. Leave th
 
 | Student Name | GitHub Login | Git Author Alias(es) | Member Type |
 |---|---|---|---|
-| Jordan Smith | jsmith-luc | Jordan Smith; J. Smith | Student |
-| Taylor Nguyen | tnguyen22 | Taylor Nguyen | Student |
-| Morgan Lee | mlee-luc | Morgan Lee | Student |
-| Casey Patel | cpatel-luc | Casey Patel | Student |
-| Riley Chen | rchen-luc | Riley Chen | Student |
+| Joanelis Rivera Matos | JoanelisRM | JoanelisRM | Student |
+| Khaja Shabbir Ahmed | Shabbir04 | Shabbir04 | Student |
+| Sydel Ugwu | Sugwu123 | Sydel Ugwu | Student |
+| Hamza Bashar | hbashar786 | Hamza Bashar | Student |
+| Nova Kurul | selkianova | Yamac Nova Kurul | Student |
 | William O'Connell | woconnell1 |  | Instructor / Observer |
 
 ### Instructions
