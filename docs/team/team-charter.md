@@ -8,9 +8,12 @@
 
 **Team Name:**  
 **Project:**  
-**Members:**
-
-<!-- List each team member. Roles may evolve during the semester. -->
+**Members:** 
+Joanelis Rivera Matos,
+Khaja Shabbir Ahmed,
+Hamza Bashar,
+Sydel Ugwu,
+Nova Kurul,
 
 ## Team Purpose
 
