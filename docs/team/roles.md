@@ -74,15 +74,15 @@ The following ownership assignments apply to the Project Launch (A1) deliverable
 
 | Deliverable | Primary Owner | Backup Owner | Evidence Location |
 |---|---|---|---|
-| Repository README | Jordan Smith | Taylor Nguyen | `/README.md` |
-| Team Charter | Taylor Nguyen | Jordan Smith | `/docs/team/team-charter.md` |
-| Role Matrix | Jordan Smith | Casey Patel | `/docs/team/roles.md` |
-| Working Agreements | Taylor Nguyen | Riley Chen | `/docs/team/working-agreements.md` |
-| AI-Use Policy | Riley Chen | Casey Patel | `/docs/ai/ai-policy.md` |
-| AI-Use Log | Riley Chen | Casey Patel | `/docs/ai/ai-use-log.md` |
-| Initial Requirements | Morgan Lee | Taylor Nguyen | `/docs/requirements/` |
-| Planning and Risk | Taylor Nguyen | Jordan Smith | `/docs/planning/` |
-| Initial Decision Record | Morgan Lee | Casey Patel | `/docs/decisions/` |
+| Repository README | Joanelis Rivera Matos | Khaja Shabbir Ahmed | `/README.md` |
+| Team Charter | Hamza Bashar | Joanelis Rivera Matos | `/docs/team/team-charter.md` |
+| Role Matrix | Joanelis Rivera Matos | Sydel Ugwu | `/docs/team/roles.md` |
+| Working Agreements | Khaja Shabbir Ahmed | Nova Kurul | `/docs/team/working-agreements.md` |
+| AI-Use Policy | Nova Kurul | Hamza Bashar | `/docs/ai/ai-policy.md` |
+| AI-Use Log | Nova Kurul | Hamza Bashar | `/docs/ai/ai-use-log.md` |
+| Initial Requirements | Sydel Ugwu | Khaja Shabbir Ahmed | `/docs/requirements/` |
+| Planning and Risk | Khaja Shabbir Ahmed | Joanelis Rivera Matos | `/docs/planning/` |
+| Initial Decision Record | Sydel Ugwu | Hamza Bashar | `/docs/decisions/` |
 
 ### Instructions
 
@@ -121,11 +121,11 @@ The **Evidence** column should reference a repository-visible confirmation made 
 
 | Student Name | Acknowledged | Evidence |
 |---|---|---|
-| Jordan Smith | Yes | Issue #2 — acknowledgement comment |
-| Taylor Nguyen | Yes | PR #3 — review acknowledgement |
-| Morgan Lee | Pending |  |
-| Casey Patel | Pending |  |
-| Riley Chen | Pending |  |
+| Joanelis Rivera Matos | Yes | Commit Updated team members and GitHub identities in roles.md |
+| Khaja Shabbir Ahmed | Pending |  |
+| Sydel Ugwu | Pending |  |
+| Hamza Bashar | Pending |  |
+| Nova Kurul | Pending |  |
 
 ### Instructions
 
