@@ -1,13 +1,9 @@
 # Team Charter
 
-> This document defines how your team intends to operate as an engineering team.
-> Replace the guidance under each section with your team's decisions.
-> Do not simply delete sections that seem difficult—discuss them as a team.
-
 ## Team Identity
 
-**Team Name:**  
-**Project:**  
+**Team Name:**  TBD
+**Project:**  CampusConnect Workflow System
 **Members:** 
 Joanelis Rivera Matos,
 Khaja Shabbir Ahmed,
