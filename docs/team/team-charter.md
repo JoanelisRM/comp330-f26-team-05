@@ -20,6 +20,14 @@ Our team brings together a mix of experiences. For some members this is their fi
 
 ## Roles and Shared Ownership
 
+| Specialized Role | Primary Owner(s) | Backup Owner | Effective Gates | Notes |
+|---|---|---|---|---|
+| Team Lead | Joanelis Rivera Matos | Sydel Ugwu | A1-A6 | |
+| Planning & Process Lead | Khaja Shabbir Ahmed | Hamza Bashar | A1-A6 | |
+| Architecture & Development Lead | Sydel Ugwu | Nova Kurul | A1-A6 | |
+| Quality & Review Lead | Hamza Bashar | Khaja Shabbir Ahmed | A1-A6 | |
+| Operations & Evidence Lead | Nova Kurul | Joanelis Rivera Matos | A1-A6 | |
+
 <!-- Identify any initial roles or primary responsibilities.
      Explain how the team will prevent knowledge silos and maintain shared ownership. -->
 
