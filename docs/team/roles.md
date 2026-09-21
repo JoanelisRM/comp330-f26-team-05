@@ -124,7 +124,7 @@ The **Evidence** column should reference a repository-visible confirmation made 
 | Joanelis Rivera Matos | Yes | Commit Updated team members and GitHub identities in roles.md |
 | Khaja Shabbir Ahmed | Pending |  |
 | Sydel Ugwu | Pending |  |
-| Hamza Bashar | Yes | Commit Update team charter |
+| Hamza Bashar | Yes | Commit Updated team charter |
 | Nova Kurul | Yes | Commit Cleaned AI templates and established AI Policy/Logs for Phase A1 |
 
 ### Instructions
