@@ -25,9 +25,11 @@ Our team brings together a mix of experiences. For some members this is their fi
 
 ## Communication
 
-<!-- What communication channel(s) will you use?
-     What response time should teammates normally expect?
-     How will urgent issues be communicated? -->
+**Communications Channels:** We will use Microsoft Teams as our main channel for day to day discussion, questions and coordination. And Github Issue and pull request comments should be used for anything specifics related work, so that decision and it's time chain can stay in record.
+
+**Response Time:** Teammates should expect a reply within 24 hours on any given day. If someone is unavailable for more than 24 hours, they should inform the team in advance in Microsoft Teams.
+
+**Urgent Issues:** Because some members have found Teams unreliable, urgent issues should not be relied upon Teams alone. It should be sent through a backup channel (text or email) which is to be decided by the team. Reply time for urgent issues is expected to be within few hours.
 
 ## Meetings and Coordination
 
