@@ -56,10 +56,9 @@ Conflict and Escalation TBD.
 
 ## AI and Engineering Responsibility
 
-AI and Engineering Responsibility TBD.
-<!-- State your team's expectations for using AI-assisted engineering tools.
-     Remember: the team remains responsible for understanding, verifying,
-     testing, and defending its work. -->
+**AI Use Responsibility** Our team will use AI assisted tools mentioned in AI policy for assistants in brainstorming, drafting, debugging, testing ideas, and for reviewing work. AI work should be treated as a draft and is subject to a final review by a team member. The team is fully responsible for everything committed to the repository. It's strictly advised that no member should submit any AI assisted work they cannot defend.
+
+**AI Log** Significant AI use should be recorded in `/docs/ai/ai-use-log.md`, and detailed vefrification evidence should be recorded in `/docs/ai/ai-verification-notes.md` when needed.
 
 ## Team Commitments
 
