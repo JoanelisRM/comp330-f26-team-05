@@ -33,28 +33,30 @@ Our team brings together a mix of experiences. For some members this is their fi
 
 ## Meetings and Coordination
 
-<!-- How often will you meet?
-     How will meetings be organized?
-     How will decisions and action items be captured? -->
+Our first meeting hasn't been scheduled yet. Meetings and coordination to be decided at that first meeting and decisions will reflect in this charter.
 
 ## Decision Making
 
-<!-- How will normal engineering decisions be made?
-     What happens when the team cannot reach agreement? -->
+Decision Making yet to be decided.
 
 ## Participation and Accountability
 
-<!-- What does the team consider reasonable participation?
-     What should a member do if they cannot meet a commitment? -->
+**Reasonable Participation** Full expectations will be decided and confirmed at our first team meeting. But at minimum, every member is expected to respond to team messages within the agreed response window, and is mandatory to attend scheduled meetings, if they cannot attend due unforeseen circumstances they should notify the team via communication channels. Every member is expected to contribute to each assignment.
+
+**Problem with Meeting a Commitment** If there is an issue in fulfilling a commitment the member should notify the team as early as possible, ideally before the deadline, they should explain what they can still complete and what needs to be done by their backup as everyone has one backup available.
+
+**Unresponsiveness** If a member does not respond for 72 hours during active assignment, the team should try following up through the backup urgent channel. If the problem persists, the team should discuss with the member to resolve the issue and, if needed, raise it with the instructor.
 
 ## Conflict and Escalation
 
+Conflict and Escalation TBD.
 <!-- How will the team address disagreements, missed commitments,
      or persistent participation problems?
      When should the instructor become involved? -->
 
 ## AI and Engineering Responsibility
 
+AI and Engineering Responsibility TBD.
 <!-- State your team's expectations for using AI-assisted engineering tools.
      Remember: the team remains responsible for understanding, verifying,
      testing, and defending its work. -->
