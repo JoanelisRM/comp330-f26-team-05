@@ -125,7 +125,7 @@ The **Evidence** column should reference a repository-visible confirmation made 
 | Khaja Shabbir Ahmed | Pending |  |
 | Sydel Ugwu | Pending |  |
 | Hamza Bashar | Yes | Commit Update team members in team charter |
-| Nova Kurul | Pending |  |
+| Nova Kurul | Yes | Commit Cleaned AI templates and established AI Policy/Logs for Phase A1 |
 
 ### Instructions
 
