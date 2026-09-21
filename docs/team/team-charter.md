@@ -16,7 +16,7 @@ Nova Kurul,
 
 ## Team Purpose
 
-<!-- In 2–4 sentences, describe what your team wants to accomplish beyond merely completing assignments. -->
+Our team brings together a mix of experiences. For some members this is their first time they're building a project and for some it's the first time they're working on one as a team for a project. And some have had experience of this setting. The purpose of this team will be to pass down knowledge and help others in the team for whom it's their first time, while also trying to create a system we can genuinely stand behind, one that every member understands well enough to explain and defend.
 
 ## Roles and Shared Ownership
 
@@ -59,9 +59,8 @@ Nova Kurul,
 
 ## Team Commitments
 
-<!-- Identify 4–8 principles your team agrees to follow. -->
+TBD
 
 ## Charter Review
 
-<!-- When will the team revisit this charter?
-     A charter may change as the team learns how it works together. -->
+This charter will be up for discussion and party to change in the next team meeting.
