@@ -1,253 +1,55 @@
 # Risk Register
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file tracks meaningful PROJECT RISKS.
-
-A risk is an uncertain future condition that could negatively affect:
-
-- scope;
-- schedule;
-- architecture;
-- security;
-- quality;
-- verification;
-- deployment;
-- operations;
-- data integrity;
-- stakeholder acceptance; or
-- another important project outcome.
-
-A risk is NOT the same as:
-
-ISSUE
-A problem that has already occurred.
-
-ASSUMPTION
-Something currently being treated as true without sufficient confirmation.
-
-CONSTRAINT
-A known condition the team must work within.
-
-TASK
-Work the team already knows it needs to perform.
-
-If a risk actually occurs, it may become an issue and require action.
-
-The goal is NOT to create a long list of generic things that could theoretically
-go wrong.
-
-Track risks meaningful enough to influence engineering judgment or planning.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove all instructional comments before the applicable phase-gate submission.
-- Sample risks must not be copied into the project unless they actually apply.
--->
+**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
+**Gate:** A1 — Project Launch (initial baseline) · **Last updated:** 2026-09-24
 
 ## Risk Register
 
-<!--
-TEAM CONTENT REQUIRED
-
-Use stable IDs:
-
-R-###
-
-Examples:
-
-R-001
-R-002
-
-COLUMN GUIDANCE
-
-Risk
-State the uncertain condition and consequence clearly.
-
-A useful form is:
-
-"If <uncertain condition>, then <potential consequence>."
-
-Likelihood
-Suggested values:
-- Low
-- Medium
-- High
-
-Impact
-Suggested values:
-- Low
-- Medium
-- High
-
-Mitigation
-Actions taken BEFORE the risk occurs to reduce likelihood or impact.
-
-Contingency / Response
-What the team intends to do IF the risk occurs.
-
-Owner
-The person responsible for monitoring and driving mitigation.
-
-Status
-Suggested values:
-
-- Open
-- Monitoring
-- Mitigating
-- Materialized
-- Closed
-- Accepted
-
-Related Evidence
-Reference assumptions, requirements, schedule, architecture, issues, or other
-evidence when appropriate.
-
-EXAMPLE ONLY:
-
 | ID | Risk | Likelihood | Impact | Mitigation | Contingency / Response | Owner | Status | Related Evidence |
 |---|---|---|---|---|---|---|---|---|
-| R-001 | If external authentication access is delayed, then integration and protected-workflow verification may miss the planned milestone. | Medium | High | Confirm access early and build interface boundary independently | Use temporary test authentication only if permitted and reschedule integration milestone | Team Lead | Open | ASM-001, MS-003 |
-
-DELETE the example and populate the actual table below.
--->
-
-| ID | Risk | Likelihood | Impact | Mitigation | Contingency / Response | Owner | Status | Related Evidence |
-|---|---|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |  |  |
+| R-001 | If Microsoft Teams stays unreliable for some members, then messages and decisions will be missed and deadlines will slip. | Medium | Medium | Backup urgent channel; task decisions recorded in GitHub Issues/PRs, not only chat | Escalate through the backup channel; follow the 72-hour unresponsiveness rule in the charter | Khaja Shabbir Ahmed | Open | `docs/team/team-charter.md`, `docs/team/working-agreements.md` |
+| R-002 | If members new to team Git workflow push directly to `main` or keep long-lived branches, then work will be lost or conflict. | Medium | Medium | Branch + PR rules and required review in working agreements | Revert the breaking change; pair with the member on the next PR | Hamza Bashar | Open | `docs/team/working-agreements.md` |
+| R-003 | If new features are added to Cycle 1 without re-estimating, then the vertical slice will not be finished and tested on time. | Medium | High | Deferred-scope list; any scope change needs a PR to `scope.md` and a re-estimate | Cut or defer the newest item first | Khaja Shabbir Ahmed | Open | `scope.md` |
+| R-004 | If AI-generated content is committed without review, then the team will submit work it cannot explain or defend. | Medium | High | AI policy, AI-use log, required PR review | Remove or rewrite the content; record the finding in AI verification notes | Nova Kurul | Open | `docs/ai/ai-policy.md`, `docs/ai/ai-use-log.md` |
+| R-005 | If the requirements baseline stays unwritten, then scope, tasks, estimates and traceability cannot be confirmed. | High | High | Treat requirements as the first A1/A2 dependency; Planning Lead backs up the requirements owner | Planning Lead and requirements owner pair to draft REQ-001..003 | Sydel Ugwu | Materialized | `docs/requirements/requirements.md` |
+| R-006 | If a phase-gate tag points to the wrong commit, then the graded version will not match the team's final work. | Medium | High | Tag checklist: tag only after all gate PRs are merged, then verify on GitHub | Move the tag to the correct commit before grading | Joanelis Rivera Matos | Materialized | Tag `a1-project-launch` |
+| R-007 | If members are not yet productive in Java/Maven, then implementation (A4) will take much longer than estimated. | Medium | High | Early setup task; share a working build on every machine before A4 | Simplify the slice or pair experienced with less-experienced members | Sydel Ugwu | Open | `README.md` (Prerequisites) |
+| R-008 | If weekly availability is lower than planned (other courses, jobs), then milestones will slip. | High | Medium | Plan from stated capacity; internal targets 2–3 days before Sakai deadlines | Use backup owners; defer scope rather than skip review/testing | Khaja Shabbir Ahmed | Open | `schedule.md`, `estimates.md` |
 
 ## Risk Evaluation
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Likelihood and impact should represent the team's current engineering judgment.
-
-Do not manufacture numerical probabilities unless the team has a meaningful
-basis for them.
-
-A simple Low / Medium / High scale is sufficient for most course projects.
-
-Consider impact across areas such as:
-
-- delivery;
-- requirement satisfaction;
-- architecture;
-- security;
-- data;
-- verification;
-- operation.
-
-A High-impact risk deserves attention even when likelihood is relatively low.
--->
+- **Likelihood:** Low = unlikely this cycle; Medium = could reasonably happen; High = already showing signs or very likely.
+- **Impact:** Low = minor rework; Medium = delays one task or milestone; High = threatens a phase gate or release claim.
+- Risks rated High on either scale are reviewed at every team meeting.
 
 ## Risk Triggers / Indicators
 
-<!--
-TEAM CONTENT REQUIRED FOR RISKS WHERE EARLY WARNING IS USEFUL
-
-A trigger is evidence suggesting the risk may be becoming more likely or may
-have occurred.
-
-Examples ONLY:
-
-- access still unavailable by a certain date;
-- error rate increases during verification;
-- estimate grows beyond a planning threshold;
-- dependency fails repeatedly;
-- requirement remains unresolved by architecture review.
-
-Do not force a trigger onto every risk.
-
-Populate actual meaningful triggers below.
--->
-
 | Risk ID | Trigger / Indicator | Monitoring Evidence |
 |---|---|---|
-|  |  |  |
+| R-001 | A message goes unanswered for more than 24 hours | Teams chat, issue comments |
+| R-002 | A commit appears on `main` without a PR, or a branch is open more than a week | Commit history, PR list |
+| R-003 | A new feature appears in an issue or PR that is not in `scope.md` | Issues, PRs, `scope.md` history |
+| R-004 | A PR contains content the author cannot explain, or AI use is not logged | PR review comments, AI-use log |
+| R-005 | `requirements.md` still contains starter-kit content near a gate deadline | `docs/requirements/` history |
+| R-006 | `git ls-remote --tags` shows a gate tag not on the latest gate commit | GitHub tags page |
+| R-007 | A member cannot build and run the project locally | Setup issue, team meeting notes |
+| R-008 | Tasks pass their target date, or members report reduced availability | Task plan, Projects board |
 
 ## Materialized Risks
 
-<!--
-TEAM CONTENT REQUIRED WHEN A RISK ACTUALLY OCCURS
-
-When an uncertain risk becomes a real problem:
-
-1. change its status to Materialized;
-2. record what occurred;
-3. identify the resulting issue or action;
-4. execute the planned contingency or revise it based on evidence;
-5. update schedule, scope, architecture, or other affected artifacts.
-
-Do not delete the original risk simply because it occurred.
-
-A blank table is correct when no tracked risk has materialized.
--->
-
 | Risk ID | Date | What Occurred | Resulting Action / Issue | Impact |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| R-006 | 2026-09-24 | `a1-project-launch` tag found pointing at the Initial commit (808a359, 2026-09-08) instead of the final A1 work | Team Lead to move the tag after all A1 PRs merge (TASK-010) | Graded A1 version would miss all launch evidence if not fixed |
+| R-005 | 2026-09-24 | Requirements files are still starter-kit templates at the end of the A1 window | Requirements baseline tracked as TASK-005/TASK-006; planning uses proposed REQ IDs | Scope, estimates and traceability remain provisional |
 
 ## Closed or Accepted Risks
 
-<!--
-TEAM CONTENT REQUIRED AS RISKS CHANGE
-
-A risk may be Closed because:
-
-- the uncertainty no longer exists;
-- the project passed the point where the risk could occur;
-- mitigation eliminated meaningful exposure.
-
-A risk may be Accepted when:
-
-- the team understands the exposure;
-- additional mitigation is not justified;
-- the remaining risk is deliberately tolerated.
-
-Do not mark a risk Closed merely because the team has stopped discussing it.
--->
-
 | Risk ID | Final Status | Reason | Evidence |
 |---|---|---|---|
-|  |  |  |  |
+| — | — | No risks closed yet at A1 | — |
 
 ## Risk Review
 
-<!--
-TEAM CONTENT REQUIRED
-
-Describe how often or at what points the team reviews the risk register.
-
-A lightweight approach is sufficient.
-
-Examples:
-
-- weekly planning meeting;
-- before each phase gate;
-- when scope or architecture changes materially;
-- when an important assumption is invalidated.
-
-Replace this comment with the team's actual approach.
--->
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Delete example risks.
-2. Confirm every retained entry describes genuine uncertainty.
-3. Separate risks from existing issues, assumptions, tasks, and constraints.
-4. Confirm mitigation and contingency are not the same thing.
-5. Assign an owner to every active risk.
-6. Reference related assumptions, schedule, requirements, or architecture where useful.
-7. Preserve materialized risks rather than deleting them.
-8. Close or accept risks only with a reason.
-9. Remove ALL instructional HTML comments.
-
-The completed risk register should help the team make better decisions, not
-serve as a generic list of possible problems.
--->
+- The Planning & Process Lead reviews this register at each weekly team meeting and before every phase-gate submission.
+- Risk owners update the status of their own risks when triggers occur.
+- New risks are added through a PR so the change is reviewable.
