@@ -14,7 +14,7 @@
 
 | ID | Work Item | Estimate | Range / Uncertainty | Basis | Assumptions | Owner(s) | Status |
 |---|---|---|---|---|---|---|---|
-| EST-001 | TASK-001 Working agreements | 3 hrs | 2–4 hrs | Template sections known; mostly writing and review | PA-001 | Khaja Shabbir Ahmed | In Review |
+| EST-001 | TASK-001 Working agreements | 3 hrs | 2–4 hrs | Template sections known; mostly writing and review | PA-001 | Khaja Shabbir Ahmed | Done |
 | EST-002 | TASK-002 Role acknowledgements | 0.5 hr | 0.5–1 hr | One small commit per member | — | Joanelis Rivera Matos | Initial |
 | EST-003 | TASK-003 Charter TBDs | 2 hrs | 1–3 hrs | Depends on kickoff decisions | PA-002 | Hamza Bashar | Initial |
 | EST-004 | TASK-004 Kickoff meeting | 1 hr | 1–1.5 hrs | One meeting plus notes | PA-002 | Joanelis Rivera Matos | Initial |

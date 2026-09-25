@@ -9,7 +9,7 @@ Tasks are tracked here during A1. From A2, each task will also have a GitHub Iss
 
 | ID | Task | Owner | Backup / Reviewer | Related Evidence | Estimate | Target | Dependencies | Status |
 |---|---|---|---|---|---|---|---|---|
-| TASK-001 | Write team working agreements | Khaja Shabbir Ahmed | Nova Kurul | `docs/team/working-agreements.md`, PR #1 | EST-001 | 2026-09-26 | — | In Review |
+| TASK-001 | Write team working agreements | Khaja Shabbir Ahmed | Nova Kurul | `docs/team/working-agreements.md`, PR #1 | EST-001 | 2026-09-26 | — | Done (merged 2026-09-24) |
 | TASK-002 | Complete role acknowledgements for every member | Joanelis Rivera Matos | Sydel Ugwu | `docs/team/roles.md` | EST-002 | 2026-09-26 | — | In Progress (Sydel pending) |
 | TASK-003 | Resolve charter TBDs (team name, meetings, decision making, conflict, commitments) | Hamza Bashar | Joanelis Rivera Matos | `docs/team/team-charter.md` | EST-003 | 2026-09-26 | TASK-004 | Planned |
 | TASK-004 | Hold kickoff meeting and record date and decisions | Joanelis Rivera Matos | Sydel Ugwu | Charter, Word summary | EST-004 | 2026-09-25 | Team availability | Planned |
@@ -48,3 +48,4 @@ A task is complete when it meets the team **Definition of Done** in `docs/team/w
 | Date | Task ID | Change | Reason | Related Evidence |
 |---|---|---|---|---|
 | 2026-09-24 | All | Initial task plan created | A1 planning baseline | This file |
+| 2026-09-25 | TASK-001 | Status In Review → Done | PR #1 merged | PR #1 |
