@@ -1,230 +1,50 @@
 # Task Plan
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
+**Gate:** A1 — Project Launch (initial baseline) · **Last updated:** 2026-09-24
 
-This file records the team's actionable work plan.
-
-The task plan answers:
-
-- What work needs to happen?
-- Who currently owns it?
-- What does it depend on?
-- When is it expected?
-- What evidence will show that it is complete?
-- What is its current status?
-
-This is different from:
-
-scope.md
-- defines the project boundary;
-
-estimates.md
-- records expected effort or complexity;
-
-schedule.md
-- records milestones and timing;
-
-task-plan.md
-- records actionable work needed to execute the plan.
-
-Do not turn this into hundreds of tiny checklist items.
-
-Track work at a level where ownership, dependencies, progress, and completion
-are meaningful.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove all instructional comments before the applicable phase-gate submission.
-- Examples are guidance only.
--->
+Tasks are tracked here during A1. From A2, each task will also have a GitHub Issue on the Projects board (TASK-012), and this file will link to those issues.
 
 ## Active Task Plan
 
-<!--
-TEAM CONTENT REQUIRED
-
-Use stable task IDs:
-
-TASK-###
-
-Examples:
-
-TASK-001
-TASK-002
-
-COLUMN GUIDANCE
-
-Task
-Describe a concrete engineering outcome.
-
-Owner
-Identify the primary person responsible for moving the work forward.
-
-Backup / Reviewer
-Identify another team member who can review or support the work where useful.
-
-Related Evidence
-Reference requirements, acceptance criteria, scope items, risks, ADRs, issues,
-or other evidence.
-
-Estimate
-Reference estimates.md when a formal estimate exists.
-
-Target
-Identify the milestone, date, or phase gate.
-
-Dependencies
-Identify meaningful predecessor work.
-
-Status
-Suggested values:
-
-- Planned
-- Ready
-- In Progress
-- Blocked
-- Review
-- Complete
-- Deferred
-
-EXAMPLE ONLY:
-
 | ID | Task | Owner | Backup / Reviewer | Related Evidence | Estimate | Target | Dependencies | Status |
 |---|---|---|---|---|---|---|---|---|
-| TASK-001 | Define workflow submission acceptance criteria | Taylor Nguyen | Morgan Lee | REQ-001 | EST-002 | MS-001 | Initial requirement draft | Planned |
-
-DELETE the example and populate the actual table below.
--->
-
-| ID | Task | Owner | Backup / Reviewer | Related Evidence | Estimate | Target | Dependencies | Status |
-|---|---|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |  |  |
+| TASK-001 | Write team working agreements | Khaja Shabbir Ahmed | Nova Kurul | `docs/team/working-agreements.md`, PR #1 | EST-001 | 2026-09-26 | — | In Review |
+| TASK-002 | Complete role acknowledgements for every member | Joanelis Rivera Matos | Sydel Ugwu | `docs/team/roles.md` | EST-002 | 2026-09-26 | — | In Progress (Sydel pending) |
+| TASK-003 | Resolve charter TBDs (team name, meetings, decision making, conflict, commitments) | Hamza Bashar | Joanelis Rivera Matos | `docs/team/team-charter.md` | EST-003 | 2026-09-26 | TASK-004 | Planned |
+| TASK-004 | Hold kickoff meeting and record date and decisions | Joanelis Rivera Matos | Sydel Ugwu | Charter, Word summary | EST-004 | 2026-09-25 | Team availability | Planned |
+| TASK-005 | Confirm Cycle 1 vertical slice and REQ IDs | Sydel Ugwu | Khaja Shabbir Ahmed | `scope.md` | EST-005 | 2026-09-25 | — | In Progress |
+| TASK-006 | Write initial requirements, acceptance criteria, assumptions and open questions | Sydel Ugwu | Khaja Shabbir Ahmed | `docs/requirements/` | EST-006 | 2026-09-26 | TASK-005 | Planned |
+| TASK-007 | Create initial planning baseline (scope, tasks, estimates, schedule, risks, traceability) | Khaja Shabbir Ahmed | Joanelis Rivera Matos | `docs/planning/` | EST-007 | 2026-09-26 | TASK-005 | In Review |
+| TASK-008 | Write initial decision record (project choice and tech stack) | Sydel Ugwu | Hamza Bashar | `docs/decisions/ADR-001-*.md` | EST-008 | 2026-09-26 | — | Planned |
+| TASK-009 | Update README status and remove remaining template guidance | Joanelis Rivera Matos | Khaja Shabbir Ahmed | `README.md` | EST-009 | 2026-09-26 | — | Planned |
+| TASK-010 | Move `a1-project-launch` tag to the final A1 commit and verify on GitHub | Joanelis Rivera Matos | Sydel Ugwu | Git tag | EST-010 | 2026-09-27 | TASK-001..009 merged | Planned |
+| TASK-011 | Prepare A1 Word index and submit on Sakai | Joanelis Rivera Matos | Sydel Ugwu | Word document | EST-011 | 2026-09-27 | TASK-010 | Planned |
+| TASK-012 | Create GitHub Issues for tasks, a Cycle 1 milestone and a Projects board | Khaja Shabbir Ahmed | Hamza Bashar | GitHub Issues / Projects | EST-012 | 2026-09-30 | TASK-006 | Planned (A2) |
+| TASK-013 | Expand planning package for A2 (planning README, team commitments, re-estimation) | Khaja Shabbir Ahmed | Joanelis Rivera Matos | `docs/planning/` | EST-013 | 2026-10-02 | TASK-006, TASK-012 | Planned (A2) |
 
 ## Definition of Task Completion
 
-<!--
-TEAM CONTENT REQUIRED
-
-A task should not be marked Complete merely because someone says they are done.
-
-Describe what completion means for tasks in this plan.
-
-Consider where appropriate:
-
-- artifact updated;
-- implementation committed;
-- pull request reviewed;
-- tests pass;
-- related documentation updated;
-- acceptance criterion satisfied;
-- evidence linked;
-- known limitations recorded.
-
-This should agree with:
-
-/docs/team/working-agreements.md
-
-Do not create a conflicting second Definition of Done.
-
-Reference the team agreement and add planning-specific clarification only when
-necessary.
-
-Replace this comment with the team's actual completion rule or reference.
--->
+A task is complete when it meets the team **Definition of Done** in `docs/team/working-agreements.md`: acceptance criteria met, merged through a reviewed PR, related documents updated, AI use logged, and the task/issue status updated.
 
 ## Blocked Work
 
-<!--
-TEAM CONTENT REQUIRED WHEN TASKS ARE BLOCKED
-
-Blocked work should become visible.
-
-Do not simply leave a task "In Progress" indefinitely.
-
-Record:
-
-- what is blocked;
-- why;
-- who owns resolution;
-- what evidence or decision is needed;
-- schedule or scope impact.
-
-EXAMPLE ONLY:
-
 | Task ID | Blocker | Resolution Owner | Needed Evidence / Action | Impact |
 |---|---|---|---|---|
-| TASK-004 | External authentication configuration unavailable | Team Lead | Confirm provider setup | Delays integration testing |
-
-Populate actual blocked work below.
-
-A blank table is correct when nothing is blocked.
--->
-
-| Task ID | Blocker | Resolution Owner | Needed Evidence / Action | Impact |
-|---|---|---|---|---|
-|  |  |  |  |  |
+| TASK-006 | Cycle 1 slice and REQ IDs not yet confirmed | Sydel Ugwu | Confirm slice in team chat, then update `scope.md` if it changes | Blocks traceability and A2 estimates |
+| TASK-003 | Kickoff meeting not yet held/recorded | Joanelis Rivera Matos | Schedule and record kickoff | Charter decisions remain TBD |
 
 ## Completed Work
 
-<!--
-OPTIONAL TEAM CONTENT
-
-You may either:
-
-1. keep completed tasks in the Active Task Plan using status Complete; or
-2. move completed tasks into this section.
-
-Choose one approach and use it consistently.
-
-Do not duplicate completed tasks in both places.
-
-If your team keeps completed tasks above, remove this section.
--->
-
 | ID | Task | Owner | Completion Evidence | Completed |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| — | Repository created from starter kit | Joanelis Rivera Matos | Commit 808a359 | 2026-09-08 |
+| — | Role matrix and ownership assigned | Joanelis Rivera Matos / Hamza Bashar | `docs/team/roles.md` history | 2026-09-20 |
+| — | AI policy and AI-use log established | Nova Kurul | Commit 583d4d1 | 2026-09-20 |
+| — | Khaja role acknowledgement | Khaja Shabbir Ahmed | Commit bcca00a | 2026-09-24 |
 
 ## Task Changes
 
-<!--
-TEAM CONTENT REQUIRED ONLY FOR MEANINGFUL CHANGES
-
-Do not record every minor edit.
-
-Use this section when a task is materially:
-
-- split;
-- merged;
-- reassigned;
-- deferred;
-- cancelled;
-- expanded due to new evidence.
-
-A blank table is intentional at project start.
--->
-
 | Date | Task ID | Change | Reason | Related Evidence |
 |---|---|---|---|---|
-|  |  |  |  |  |
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Replace blank scaffold rows with actual tasks or remove unnecessary rows.
-2. Confirm every active task has a clear owner.
-3. Confirm task granularity is meaningful rather than trivial.
-4. Make blocked work explicit.
-5. Link important tasks to engineering evidence.
-6. Ensure completion criteria agree with working-agreements.md.
-7. Confirm target dates or milestones agree with schedule.md.
-8. Confirm referenced estimates exist when used.
-9. Remove ALL instructional HTML comments.
-
-The completed task plan should make current engineering work visible and
-actionable without becoming a second requirements document.
--->
+| 2026-09-24 | All | Initial task plan created | A1 planning baseline | This file |
