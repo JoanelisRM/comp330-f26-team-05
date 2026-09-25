@@ -1,264 +1,68 @@
 # Estimates
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file records the team's engineering estimates and the reasoning behind them.
-
-An estimate is NOT a promise.
-
-An estimate represents the team's current judgment about expected effort,
-duration, complexity, or another planning quantity based on the evidence
-available at the time.
-
-Good estimation evidence should make visible:
-
-- what is being estimated;
-- the estimate itself;
-- the basis for the estimate;
-- important assumptions;
-- uncertainty or confidence;
-- who participated in the estimate; and
-- how actual experience compares with the estimate later.
-
-Do not invent precision you do not have.
-
-"Approximately 8-12 hours" may be stronger engineering evidence than "9.25 hours"
-when the work is not understood well enough to justify that precision.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove instructional comments before the applicable phase-gate submission.
-- Examples are guidance only.
--->
+**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
+**Gate:** A1 — Project Launch (initial baseline) · **Last updated:** 2026-09-24
 
 ## Estimation Approach
 
-<!--
-TEAM CONTENT REQUIRED
-
-Describe how your team will estimate work.
-
-Possible approaches include:
-
-- relative sizing;
-- person-hours;
-- ideal engineering hours;
-- ranges;
-- story points;
-- task decomposition;
-- analogous estimation;
-- a combination of approaches.
-
-Do not choose a method simply because it appears in this scaffold.
-
-Explain enough that another reviewer can understand what your estimate values mean.
-
-Replace this comment with your team's actual approach.
--->
+- Estimates are effort in hours, given as a likely value with a range, not a promise.
+- These are the Planning Lead's first estimates. **Each task owner will confirm or correct their own estimate** at the next team meeting, and changes will be recorded under Estimate Changes.
+- Estimates include review and rework time, not just writing time.
+- Cycle 1 implementation work (the vertical slice itself) will be estimated in A2 once requirements REQ-001..003 exist.
 
 ## Estimates
 
-<!--
-TEAM CONTENT REQUIRED
-
-Use stable estimate IDs:
-
-EST-###
-
-Examples:
-
-EST-001
-EST-002
-
-COLUMN GUIDANCE
-
-Work Item
-Identify the scope item, requirement group, milestone, feature, or task being
-estimated.
-
-Estimate
-State the estimate using the unit defined by your team.
-
-Range / Uncertainty
-Represent uncertainty explicitly when useful.
-
-Basis
-Explain where the estimate came from.
-
-Assumptions
-Reference important assumptions that materially influence the estimate.
-
-Owner(s)
-Identify who participated in or owns refinement of the estimate.
-
-Status
-Suggested values:
-
-- Initial
-- Refined
-- Completed
-- Superseded
-
-EXAMPLE ONLY:
-
 | ID | Work Item | Estimate | Range / Uncertainty | Basis | Assumptions | Owner(s) | Status |
 |---|---|---|---|---|---|---|---|
-| EST-001 | Initial workflow submission capability | 10 hours | 8-14 hours | Team decomposition of UI, service, persistence, and tests | ASM-002 | Jordan Smith, Morgan Lee | Initial |
-
-DELETE the example and populate the actual table below.
--->
-
-| ID | Work Item | Estimate | Range / Uncertainty | Basis | Assumptions | Owner(s) | Status |
-|---|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |  |
+| EST-001 | TASK-001 Working agreements | 3 hrs | 2–4 hrs | Template sections known; mostly writing and review | PA-001 | Khaja Shabbir Ahmed | Done |
+| EST-002 | TASK-002 Role acknowledgements | 0.5 hr | 0.5–1 hr | One small commit per member | — | Joanelis Rivera Matos | Initial |
+| EST-003 | TASK-003 Charter TBDs | 2 hrs | 1–3 hrs | Depends on kickoff decisions | PA-002 | Hamza Bashar | Initial |
+| EST-004 | TASK-004 Kickoff meeting | 1 hr | 1–1.5 hrs | One meeting plus notes | PA-002 | Joanelis Rivera Matos | Initial |
+| EST-005 | TASK-005 Confirm slice and REQ IDs | 1 hr | 0.5–2 hrs | Team discussion; proposal already drafted in `scope.md` | PA-001 | Sydel Ugwu | Initial |
+| EST-006 | TASK-006 Initial requirements package | 5 hrs | 3–8 hrs | Three requirements plus acceptance criteria, assumptions and questions; wide range because requirements are new to the team | PA-001 | Sydel Ugwu | Initial |
+| EST-007 | TASK-007 Planning baseline (six files) | 5 hrs | 4–8 hrs | Six files, depends on requirements being confirmed | PA-001 | Khaja Shabbir Ahmed | Initial |
+| EST-008 | TASK-008 Initial decision record | 2 hrs | 1–3 hrs | One ADR with alternatives | — | Sydel Ugwu | Initial |
+| EST-009 | TASK-009 README cleanup | 1 hr | 0.5–2 hrs | Remove guidance and update status | — | Joanelis Rivera Matos | Initial |
+| EST-010 | TASK-010 Move A1 tag | 0.5 hr | 0.25–1 hr | Two Git commands plus verification | — | Joanelis Rivera Matos | Initial |
+| EST-011 | TASK-011 Word index and submission | 2 hrs | 1–3 hrs | Index of links, team table, changed-file list | — | Joanelis Rivera Matos | Initial |
+| EST-012 | TASK-012 Issues, milestone, Projects board | 3 hrs | 2–5 hrs | One issue per task; board setup is new to the team | PA-004 | Khaja Shabbir Ahmed | Initial |
+| EST-013 | TASK-013 A2 planning package expansion | 8 hrs | 6–12 hrs | Three new files plus updates to six existing ones | PA-001, PA-004 | Khaja Shabbir Ahmed | Initial |
 
 ## Estimation Assumptions
 
-<!--
-TEAM CONTENT REQUIRED WHEN IMPORTANT ASSUMPTIONS AFFECT ESTIMATES
-
-Do not duplicate the authoritative assumption record.
-
-Reference assumptions in:
-
-/docs/requirements/assumptions-open-questions.md
-
-This section may summarize only the assumptions that materially affect
-planning estimates.
-
-EXAMPLE ONLY:
-
 | Assumption Reference | Estimate(s) Affected | Effect if Incorrect |
 |---|---|---|
-| ASM-002 | EST-001, EST-003 | Additional workflow-state work may increase effort |
-
-Populate actual relationships below.
--->
-
-| Assumption Reference | Estimate(s) Affected | Effect if Incorrect |
-|---|---|---|
-|  |  |  |
+| PA-001: The Cycle 1 slice in `scope.md` is accepted without major change | EST-005, EST-006, EST-007, EST-013 | Requirements and planning would need rework (+2–4 hrs each) |
+| PA-002: A kickoff meeting can be held this week with most members | EST-003, EST-004 | Charter decisions slip; A1 charter stays incomplete |
+| PA-003: Each member can give roughly 3–5 hours per week to the project | All estimates, `schedule.md` | Targets move later; scope may need to be cut (R-008) |
+| PA-004: The team can use GitHub Issues and Projects with the current repo permissions | EST-012, EST-013 | Setup delayed until permissions are fixed |
 
 ## Estimate Confidence
 
-<!--
-TEAM CONTENT REQUIRED WHEN CONFIDENCE VARIES MATERIALLY
-
-A useful estimate includes some understanding of uncertainty.
-
-If your team uses confidence labels, define them.
-
-Example ONLY:
-
-High
-Work is well understood and similar work has already been completed.
-
-Medium
-Major work is understood, but some uncertainty remains.
-
-Low
-Important requirements, dependencies, or technical questions remain unresolved.
-
-You may use another approach.
-
-Do not assign confidence labels without thinking about what they mean.
--->
-
 | Estimate ID | Confidence | Reason |
 |---|---|---|
-|  |  |  |
+| EST-001 | High | Work is drafted and in review |
+| EST-002, EST-004, EST-009, EST-010 | High | Small, well-understood tasks |
+| EST-003, EST-005, EST-008, EST-011 | Medium | Depend on team decisions |
+| EST-006, EST-007 | Low–Medium | Requirements not yet written; first time for the team |
+| EST-012, EST-013 | Low | A2 expectations not fully explored yet |
 
 ## Estimate Changes
 
-<!--
-TEAM CONTENT REQUIRED WHEN AN ESTIMATE CHANGES MATERIALLY
-
-Estimates should be refined as the team learns.
-
-Do not rewrite history simply because an estimate turned out to be wrong.
-
-Preserve important changes so the team can learn from them.
-
-A blank table is intentional at project start.
--->
-
 | Date / Gate | Estimate ID | Previous Estimate | New Estimate | Reason for Change |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| — | — | — | — | No changes yet (initial baseline) |
 
 ## Estimate vs. Actual
 
-<!--
-TEAM CONTENT REQUIRED AS WORK COMPLETES
-
-Comparing estimates with actual outcomes helps teams improve engineering
-judgment.
-
-The goal is NOT to punish inaccurate estimates.
-
-The goal is to understand why reality differed from expectation.
-
-Actual may represent:
-
-- actual effort;
-- actual duration;
-- actual complexity encountered;
-- another agreed measurement.
-
-EXAMPLE ONLY:
-
 | Estimate ID | Estimated | Actual | Variance | What We Learned |
 |---|---|---|---|---|
-| EST-001 | 8-14 hours | 16 hours | Above range | Authentication integration required more investigation than expected |
-
-Populate actual completed-work observations below.
--->
-
-| Estimate ID | Estimated | Actual | Variance | What We Learned |
-|---|---|---|---|---|
-|  |  |  |  |  |
+| EST-001 | 3 hrs | To be recorded by owner | — | Actuals will be recorded as tasks complete |
 
 ## Planning Implications
 
-<!--
-TEAM CONTENT REQUIRED WHEN ESTIMATES AFFECT THE PLAN
-
-Document significant planning actions resulting from estimates.
-
-Examples:
-
-- scope reduced;
-- task split;
-- work moved earlier;
-- additional research scheduled;
-- risk added;
-- backup owner assigned;
-- milestone adjusted.
-
-Do not document trivial adjustments.
--->
-
 | Estimate / Evidence | Planning Impact | Related Scope / Schedule / Risk |
 |---|---|---|
-|  |  |  |
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Replace all blank scaffold rows with actual data or remove unnecessary rows.
-2. Confirm the estimation unit and method are understandable.
-3. Avoid unsupported precision.
-4. Identify important uncertainty.
-5. Reference assumptions rather than silently embedding them.
-6. Preserve meaningful estimate changes.
-7. Compare completed work against estimates where evidence exists.
-8. Update schedule or risk evidence when estimates materially change planning.
-9. Remove ALL instructional HTML comments.
-
-The completed file should show the team's evolving engineering judgment, not
-just a collection of numbers.
--->
+| Total remaining A1 effort (EST-002..011) ≈ 20 hrs (range ≈ 13–33 hrs) across five members | Feasible for the A1 grace window only if requirements start immediately | MS-005, MS-006, R-005 |
+| EST-006 and EST-007 have the lowest confidence and sit on the critical path | Requirements and planning owners should pair rather than work in sequence | R-005 |
+| Implementation not yet estimated | Cycle 1 build effort must be estimated in A2 before committing to A4 dates | R-003, R-007 |
