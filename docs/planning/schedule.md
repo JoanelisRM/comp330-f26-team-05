@@ -1,248 +1,65 @@
 # Schedule
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file records the team's current project schedule and milestone plan.
-
-A schedule should explain WHEN important work or evidence is expected to be
-ready and what dependencies influence that timing.
-
-Do not create a detailed calendar merely for appearance.
-
-Focus on:
-
-- phase gates;
-- meaningful milestones;
-- major deliverables;
-- important dependencies;
-- target dates;
-- current forecast;
-- schedule changes.
-
-The authoritative course deadlines remain defined by Sakai/course materials.
-
-This file records the team's project-specific execution plan within those
-constraints.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove instructional comments before the applicable phase-gate submission.
-- Examples are guidance only.
--->
+**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
+**Gate:** A1 — Project Launch (initial baseline) · **Last updated:** 2026-09-24
 
 ## Schedule Basis
 
-<!--
-TEAM CONTENT REQUIRED
-
-Briefly explain how this schedule was constructed.
-
-Consider:
-
-- course deadlines;
-- scope;
-- estimates;
-- dependencies;
-- team availability;
-- risk;
-- sequencing constraints.
-
-Do not restate the entire course schedule.
-
-Replace this comment with the team's actual planning basis.
--->
+- Official deadlines come from Sakai. The A1 and A2 dates below are derived from the week numbers in the assignment packages, assuming Week 1 began Monday 2026-08-24 and "end of week" means Sunday. **Verify against Sakai before relying on them.**
+- Internal readiness targets are set 2–3 days before the Sakai date to leave time for PR review and tagging.
+- Dates for A3–A6 will be filled in when those assignments are released.
+- Capacity assumption: see PA-003 in `estimates.md`.
 
 ## Milestones
 
-<!--
-TEAM CONTENT REQUIRED
-
-Use stable milestone IDs:
-
-MS-###
-
-Examples:
-
-MS-001
-MS-002
-
-Milestone
-Describe a meaningful project outcome, not simply "work on project."
-
-Target Date
-The current planned date.
-
-Required By
-Reference the phase gate or external deadline that constrains the milestone.
-
-Dependencies
-Reference predecessor work, requirements, decisions, or other evidence.
-
-Owner
-Identify primary coordination responsibility.
-
-Status
-Suggested values:
-
-- Planned
-- In Progress
-- Complete
-- At Risk
-- Deferred
-
-EXAMPLE ONLY:
-
 | ID | Milestone | Target Date | Required By | Dependencies | Owner | Status |
 |---|---|---|---|---|---|---|
-| MS-001 | Initial requirements baseline ready for review | YYYY-MM-DD | A2 | Team charter, initial stakeholder analysis | Planning & Process Lead | Planned |
-
-DELETE the example and populate the actual table below.
--->
-
-| ID | Milestone | Target Date | Required By | Dependencies | Owner | Status |
-|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |
+| MS-001 | Repository created from starter kit | 2026-09-08 | A1 | — | Joanelis Rivera Matos | Done |
+| MS-002 | Roles, charter and AI policy drafted | 2026-09-20 | A1 | MS-001 | Joanelis Rivera Matos | Done (charter has open TBDs) |
+| MS-003 | Kickoff meeting held and decisions recorded | TBD | A1 | Team availability | Joanelis Rivera Matos | Not recorded |
+| MS-004 | Working agreements and planning baseline merged | 2026-09-26 | A1 | PR reviews | Khaja Shabbir Ahmed | In Review |
+| MS-005 | Initial requirements baseline (REQ-001..003) | 2026-09-26 | A1 | Slice agreed | Sydel Ugwu | Not started |
+| MS-006 | A1 submitted and `a1-project-launch` tag on final commit | 2026-09-27 | A1 | MS-003..005 | Joanelis Rivera Matos | Planned |
+| MS-007 | GitHub Issues, Cycle 1 milestone and Projects board set up | 2026-09-30 | A2 | MS-005 | Khaja Shabbir Ahmed | Planned |
+| MS-008 | A2 planning package complete and `a2-planning-estimate` tag pushed | 2026-10-02 | A2 | MS-007 | Khaja Shabbir Ahmed | Planned |
 
 ## Phase-Gate Readiness
 
-<!--
-TEAM CONTENT REQUIRED
-
-Use this section to make the team's internal readiness plan visible.
-
-Do not duplicate the full assignment instructions.
-
-The point is to identify when the team intends to have its evidence ready
-relative to each applicable phase gate.
-
-EXAMPLE ONLY:
-
 | Gate | Internal Readiness Target | Key Evidence / Deliverables | Status |
 |---|---|---|---|
-| A2 | YYYY-MM-DD | Requirements, estimates, schedule, risk baseline | Planned |
-
-Populate actual planning below.
--->
-
-| Gate | Internal Readiness Target | Key Evidence / Deliverables | Status |
-|---|---|---|---|
-|  |  |  |  |
+| A1 — Project Launch | 2026-09-26 (Sakai: end of Week 4, grace to end of Week 5 ≈ 2026-09-27) | README, charter, roles, working agreements, AI policy/log, initial requirements, planning baseline, decision record, tag | In progress |
+| A2 — Planning & Estimation | 2026-10-02 (Sakai: end of Week 6 ≈ 2026-10-04, grace ≈ 2026-10-11) | Full planning package, Issues, Milestones, Projects board, team commitments, re-estimation, tag | Not started |
+| A3 — Architecture & Design | TBD (per Sakai) | Architecture, ADRs, component responsibilities, API contracts | Not started |
+| A4 — Implementation & Review | TBD (per Sakai) | Code for the Cycle 1 slice, PR reviews, tests | Not started |
+| A5 — Verification & Release | TBD (per Sakai) | Test evidence, release notes, known limitations | Not started |
+| A6 — Operational Maturity | TBD (per Sakai) | Observability, runbook, postmortem | Not started |
 
 ## Major Dependencies
 
-<!--
-TEAM CONTENT REQUIRED
-
-Document schedule dependencies that materially affect sequencing.
-
-Examples:
-
-- requirement must be clarified before architecture decision;
-- API contract needed before parallel implementation;
-- external service access required before integration;
-- test environment required before verification.
-
-Do not list trivial dependencies.
-
-EXAMPLE ONLY:
-
 | Predecessor / Dependency | Dependent Work | Schedule Impact if Delayed | Related Risk |
 |---|---|---|---|
-| Authentication decision | Protected workflow implementation | Blocks authorization implementation | R-003 |
-
-Populate actual dependencies below.
--->
-
-| Predecessor / Dependency | Dependent Work | Schedule Impact if Delayed | Related Risk |
-|---|---|---|---|
-|  |  |  |  |
+| Cycle 1 slice agreed | Requirements, scope confirmation, estimates | Blocks A1 requirements and all A2 planning | R-005 |
+| Requirements baseline (REQ-001..003) | Traceability, GitHub Issues, A2 estimates | Delays A2 | R-005 |
+| All A1 PRs merged | Moving the `a1-project-launch` tag | Wrong version graded | R-006 |
+| Tech stack decision (ADR-001) and local setup | A3 architecture, A4 implementation | Delays implementation | R-007 |
 
 ## Near-Term Planning Window
 
-<!--
-TEAM CONTENT REQUIRED
-
-The milestone schedule provides the broader view.
-
-Use this section for the next meaningful planning horizon.
-
-Depending on how your team works, that may be:
-
-- one week;
-- two weeks;
-- until the next phase gate.
-
-Avoid maintaining a second detailed task list here.
-
-Detailed work ownership belongs in:
-
-/docs/planning/task-plan.md
--->
-
 | Time Window | Planned Outcome | Related Milestone(s) | Key Dependency / Risk |
 |---|---|---|---|
-|  |  |  |  |
+| 2026-09-24 → 2026-09-27 | Finish A1: merge working agreements, planning baseline, requirements; fix charter TBDs; move tag | MS-004, MS-005, MS-006 | R-005, R-006 |
+| 2026-09-28 → 2026-10-04 | A2: refine requirements, create Issues/Milestone/Board, full estimates, team commitments | MS-007, MS-008 | R-008 |
 
 ## Schedule Changes
 
-<!--
-TEAM CONTENT REQUIRED WHEN MATERIAL SCHEDULE CHANGES OCCUR
-
-Plans change.
-
-Do not silently overwrite meaningful schedule changes.
-
-Record changes when:
-
-- a milestone moves materially;
-- a dependency causes delay;
-- scope change affects timing;
-- estimate refinement changes the forecast;
-- risk materializes;
-- work completes significantly earlier or later than expected.
-
-A blank table is intentional at project start.
--->
-
 | Date | Milestone / Gate | Previous Target | New Target | Reason | Related Evidence |
 |---|---|---|---|---|---|
-|  |  |  |  |  |  |
+| 2026-09-24 | A1 | End of Week 4 (recommended target) | End of Week 5 (grace window) | Launch evidence not complete by the recommended target | This file, R-005 |
 
 ## Schedule Risks
 
-<!--
-TEAM CONTENT REQUIRED
-
-Do not create a second risk register.
-
-Reference schedule-related risks maintained in:
-
-/docs/planning/risk-register.md
-
-Use this section only to identify which current risks materially threaten
-schedule outcomes.
--->
-
 | Risk ID | Affected Milestone / Gate | Schedule Exposure |
 |---|---|---|
-|  |  |  |
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Replace blank scaffold rows with actual planning data or remove unnecessary rows.
-2. Confirm dates agree with current course deadlines.
-3. Confirm milestones describe meaningful outcomes.
-4. Confirm major dependencies are visible.
-5. Confirm detailed work remains in task-plan.md rather than being duplicated here.
-6. Confirm schedule risks reference risk-register.md.
-7. Record material forecast changes rather than silently rewriting the schedule.
-8. Remove ALL instructional HTML comments.
-
-The completed schedule should show when meaningful project outcomes are
-expected and why the team believes that timing is achievable.
--->
+| R-005 | MS-005, A2 | High — requirements are the first dependency for all planning |
+| R-006 | MS-006 | Medium — quick to fix but must be done before grading |
+| R-008 | All gates | Medium — limited capacity across five members |
