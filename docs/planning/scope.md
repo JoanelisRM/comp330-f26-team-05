@@ -1,259 +1,71 @@
 # Project Scope
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file defines the current boundaries of the project.
-
-Scope should make clear:
-
-- what the team intends to deliver;
-- what capabilities are included;
-- what is explicitly outside the current scope;
-- important constraints affecting scope;
-- important dependencies;
-- what may be deferred; and
-- what conditions would require the scope to change.
-
-Scope is NOT the same as requirements.
-
-Requirements describe obligations the system must satisfy.
-
-Scope describes the boundaries of the work the team has agreed to undertake.
-
-At an early phase gate, scope may still evolve. Record uncertainty honestly
-instead of treating every possible feature as committed work.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove all instructional comments before the applicable phase-gate submission.
-- Examples inside comments are guidance only.
-- Do not copy example capabilities into your project unless they actually apply.
--->
+**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
+**Gate:** A1 — Project Launch (initial baseline) · **Last updated:** 2026-09-24
 
 ## Scope Statement
 
-<!--
-TEAM CONTENT REQUIRED
+In Cycle 1, CampusConnect will deliver one narrow, end-to-end vertical slice: a student submits a support request, staff view the submitted requests, and staff update a request's status. Cycle 1 uses synthetic data only and runs locally; it does not connect to any real Loyola system.
 
-Provide a concise statement describing what this project is intended to
-deliver during the current course/project period.
-
-A good scope statement establishes boundaries without attempting to reproduce
-every individual requirement.
-
-Consider:
-
-- primary system purpose;
-- primary users;
-- major capabilities;
-- expected delivery boundary.
-
-EXAMPLE ONLY:
-
-"The project will deliver a web-based workflow application that allows
-students to submit requests and authorized staff to review and process those
-requests through a defined lifecycle."
-
-Replace this entire comment with your team's actual scope statement.
--->
+> **Status:** Proposed. The vertical slice and the REQ IDs below are pending confirmation with the Architecture & Development Lead (Sydel Ugwu) when the initial requirements baseline is written in `/docs/requirements/`.
 
 ## In Scope
 
-<!--
-TEAM CONTENT REQUIRED
-
-Identify meaningful capabilities or work that are included in the current
-project boundary.
-
-Do not list every requirement.
-
-Use high-level scope items that help explain what the team has committed to
-deliver.
-
-EXAMPLE ONLY:
-
 | Scope ID | Included Capability / Work | Related Requirements | Notes |
 |---|---|---|---|
-| SCP-001 | Authenticated workflow submission | REQ-001, REQ-003 | Initial release capability |
-
-DELETE the example and populate the actual table below.
-
-Use stable IDs such as:
-
-SCP-001
-SCP-002
-SCP-003
--->
-
-| Scope ID | Included Capability / Work | Related Requirements | Notes |
-|---|---|---|---|
-|  |  |  |  |
+| SCP-001 | Student submits a support request (category, title, description) | REQ-001 (proposed) | Includes required-field validation |
+| SCP-002 | Staff view a list of submitted requests | REQ-002 (proposed) | Simple list; no filtering or search in Cycle 1 |
+| SCP-003 | Staff manually update request status (Open → In Progress → Resolved) | REQ-003 (proposed) | Status changes should be traceable |
+| SCP-004 | Launch and planning evidence (team, AI governance, requirements, planning) | — | A1/A2 phase-gate deliverables |
 
 ## Out of Scope
 
-<!--
-TEAM CONTENT REQUIRED
-
-Explicitly identify important capabilities or work that the team is NOT
-committing to deliver.
-
-Out-of-scope items are useful when:
-
-- they are plausible enough that a reviewer might otherwise assume they are included;
-- they were discussed and intentionally excluded;
-- they may become future work;
-- excluding them materially affects architecture or planning.
-
-Do not invent out-of-scope items merely to populate the table.
-
-EXAMPLE ONLY:
-
 | Item | Reason Excluded | Future Consideration |
 |---|---|---|
-| Native mobile application | Course delivery focuses on the web application | Possible future extension |
-
-Populate the actual table below.
--->
-
-| Item | Reason Excluded | Future Consideration |
-|---|---|---|
-|  |  |  |
+| Integration with real Loyola systems (login, student records) | Requires private data and institutional approval | Not planned; synthetic data only |
+| Real authentication / single sign-on | Adds security and integration work beyond Cycle 1 capacity | Revisit after Cycle 1 if required |
+| Native mobile application | Course delivery focuses on one application | Not planned |
+| Production deployment | No institutional production authorization for a course project | Demonstrate release-readiness evidence only |
 
 ## Scope Constraints
 
-<!--
-TEAM CONTENT REQUIRED
-
-Identify constraints that materially limit or shape what the team can deliver.
-
-Examples may include:
-
-- semester duration;
-- team size;
-- required technology;
-- required repository or deployment platform;
-- access limitations;
-- external-service constraints;
-- course requirements;
-- data limitations.
-
-Do not confuse a constraint with a risk.
-
-A constraint is an existing condition the team must work within.
-
-A risk is an uncertain future condition that may negatively affect the project.
-
-EXAMPLE ONLY:
-
 | Constraint | Impact on Scope | Related Evidence |
 |---|---|---|
-| Semester delivery window | Advanced administrative features may need to be deferred | Schedule |
-
-Populate the actual table below.
--->
-
-| Constraint | Impact on Scope | Related Evidence |
-|---|---|---|
-|  |  |  |
+| Semester timeline with six phase gates (A1–A6) | Cycle 1 must stay small enough to review and test properly | `schedule.md` |
+| Five student members with other courses and jobs | Limited weekly capacity; features must be deferred rather than rushed | `estimates.md` (PA-003), R-008 |
+| Technology: Java and Maven (per README) | Scope depends on the team becoming productive in this stack | R-007 |
+| Synthetic data only | No real student data may enter the repository | `/docs/security/data-handling-notes.md` |
 
 ## Dependencies Affecting Scope
 
-<!--
-TEAM CONTENT REQUIRED WHEN EXTERNAL OR INTERNAL DEPENDENCIES CAN AFFECT DELIVERY
-
-Identify dependencies that materially affect what the team can deliver.
-
-Examples:
-
-- external identity provider;
-- access to an API;
-- instructor-provided environment;
-- another component;
-- required data source;
-- availability of a team capability.
-
-A dependency is not automatically a risk.
-
-If uncertainty about a dependency creates meaningful risk, reference the
-corresponding risk-register entry.
--->
-
 | Dependency | Why It Matters | Owner / Source | Related Risk |
 |---|---|---|---|
-|  |  |  |  |
+| Initial requirements baseline (REQ-001..003) | Scope items cannot be confirmed until requirements exist | Sydel Ugwu | R-005 |
+| Tech stack / architecture decision (ADR-001) | Determines how the slice is built | Sydel Ugwu | R-007 |
+| Team capacity per member | Determines how much scope is realistic | All members | R-008 |
 
 ## Deferred Scope
 
-<!--
-TEAM CONTENT REQUIRED WHEN WORK HAS BEEN INTENTIONALLY DEFERRED
-
-Deferred work is different from work that was never in scope.
-
-Use this section when something was considered or initially planned but has
-been intentionally postponed.
-
-Reference affected requirements or planning evidence when appropriate.
-
-At project start, a blank table is acceptable.
--->
-
 | Item | Reason Deferred | Decision / Evidence | Reconsider By |
 |---|---|---|---|
-|  |  |  |  |
+| Admin / analytics dashboard | Needs a stable request model and agreed metrics first | This file | A3 |
+| Automatic routing of requests to staff | Needs workflow policy and access rules | This file | After Cycle 1 |
+| Email or in-app notifications | Needs failure-handling assumptions and test evidence | This file | After Cycle 1 |
+| AI-assisted request categorization | Needs validation plan, human approval boundary and AI-use disclosure | `docs/ai/ai-policy.md` | After Cycle 1 |
+| Search, filtering and sorting of requests | Not needed to prove the basic workflow | This file | A3 |
 
 ## Scope Change History
 
-<!--
-TEAM CONTENT REQUIRED WHEN MATERIAL SCOPE CHANGES OCCUR
-
-Do not silently expand or reduce project scope.
-
-Record material scope changes so later reviewers can understand why the
-project differs from an earlier baseline.
-
-A minor clarification does not necessarily require a scope-change record.
-
-A blank table is intentional at project start.
--->
-
 | Effective Gate | Change | Added / Removed | Reason | Related Evidence |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| A1 | Initial Cycle 1 scope baseline created | Added SCP-001..004 | Project launch | This file |
 
 ## Scope Acceptance Check
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before treating the scope as a usable baseline, ask:
-
-- Can the team explain what it is actually delivering?
-- Are major boundaries explicit?
-- Are likely misunderstandings addressed through out-of-scope statements?
-- Does the scope agree with the current requirements?
-- Does the scope appear feasible given estimates and schedule?
-- Are important dependencies visible?
-- Are deferred items distinguished from committed work?
-- Are material scope changes traceable?
-
-Do not leave this checklist in the completed artifact.
--->
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Replace all blank scaffold rows with actual content or remove unnecessary rows.
-2. Confirm In Scope agrees with requirements.md.
-3. Confirm deferred or removed requirements are reflected appropriately.
-4. Confirm significant dependencies and constraints are visible.
-5. Confirm scope is realistic relative to estimates.md and schedule.md.
-6. Record material scope changes rather than silently modifying the baseline.
-7. Remove ALL instructional HTML comments.
-
-The completed file should make the project's delivery boundary clear without
-becoming a duplicate requirements specification.
--->
+| Question | Current Answer |
+|---|---|
+| Is the Cycle 1 slice small enough to engineer and review well? | Yes — one workflow, three capabilities, synthetic data |
+| What is intentionally not being built? | Real integrations, real authentication, mobile app, production deployment |
+| What would justify expanding scope? | Slice implemented, reviewed and tested with spare capacity, and risks R-005/R-007/R-008 under control |
+| Which item carries the most scope risk? | SCP-003 (status workflow), because status rules are not yet defined |
+| Has the team confirmed this scope? | Not yet — to be confirmed with the requirements baseline |
