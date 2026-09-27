@@ -6,7 +6,7 @@ Students often need assistance with a variety of things, from asking about club 
 
 ## Project Status
 
-**Current Phase Gate:** A2 - Planning & Requirements
+**Current Phase Gate:** A2 — Planning & Requirements   
 **Release Cycle:** Cycle 1  
 **Status:** Active Development
 
