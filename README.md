@@ -6,7 +6,7 @@ Students often need assistance with a variety of things, from asking about club 
 
 ## Project Status
 
-**Current Phase Gate:** A1 — Project Launch  
+**Current Phase Gate:** A2 - Planning & Requirements
 **Release Cycle:** Cycle 1  
 **Status:** Active Development
 
@@ -17,7 +17,6 @@ Keep this section current throughout the semester.
 
 Use the current course phase-gate terminology:
 
-- A1 — Project Launch
 - A2 — Planning & Requirements
 - A3 — Architecture & Design
 - A4 — Implementation & Review
