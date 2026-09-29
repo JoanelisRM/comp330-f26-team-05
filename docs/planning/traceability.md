@@ -11,12 +11,12 @@ At A1, traceability is intentionally light: requirements are proposed, and there
 |---|---|---|---|---|---|---|
 | REQ-001 Student submits a support request (proposed) | Pending (AC-REQ-001-xx) | Not yet available | Not yet implemented | Not yet available | R-005, PA-001 | Proposed — SCP-001 |
 | REQ-002 | The system shall allow staff to view a list of submitted support requests showing each request's category, title, description, and current status. | Staff need to review submitted requests and see which requests still need attention. | Must | AC-REQ-002-01, AC-REQ-002-02 | Proposed |
+| REQ-003 Staff update request status (proposed) | Pending (AC-REQ-003-xx) | Not yet available | Not yet implemented | Not yet available | R-005, R-003 | Proposed — SCP-003 |
 
 ## Baseline Reconciliation
 
 The starter template used REQ-002 for requesters viewing their own request status. The team's proposed scope and traceability documents instead use REQ-002 for staff viewing submitted requests. This draft aligns REQ-002 with SCP-002 and the planning matrix. The former starter wording is not included in the proposed Cycle 1 baseline. This reconciliation remains pending team review.
 
-| REQ-003 Staff update request status (proposed) | Pending (AC-REQ-003-xx) | Not yet available | Not yet implemented | Not yet available | R-005, R-003 | Proposed — SCP-003 |
 
 ## Decision Traceability
 
