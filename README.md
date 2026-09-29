@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Students often need assistance with a variety of things, from asking about club events to needing overall academic support, but they don't know how or where to find help. The staff who can handle requests need a good system to organize these requests, prioritize them, maintain good communication, and keep record of such requests. CampusConnect, a workflow system and student support systems, provides an easier way for students to submit their requests and help the staff handle them quickly and efficiently. 
+Students often need assistance with a variety of things, from asking about club events to needing overall academic support, but they don't know how or where to find help. The staff who can handle requests need a good system to organize these requests, prioritize them, maintain good communication, and keep record of such requests. CampusConnect, a workflow system and student support system, will be the solution to this common problem. It's main function will be to provide an easier way for students to submit their requests and help the staff handle them quickly and efficiently. 
 
 ## Project Status
 
@@ -17,7 +17,6 @@ Keep this section current throughout the semester.
 
 Use the current course phase-gate terminology:
 
-- A2 — Planning & Requirements
 - A3 — Architecture & Design
 - A4 — Implementation & Review
 - A5 — Verification & Release
