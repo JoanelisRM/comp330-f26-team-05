@@ -38,8 +38,8 @@ A single requirement may have multiple acceptance criteria.
 
 | ID | Requirement Reference | Acceptance Criterion | Verification Method | Status |
 |---|---|---|---|---|
-| AC-REQ-001-01 | REQ-001 | Given an authenticated student and valid required information, when the student submits a workflow request, then the system creates the request and assigns it a unique identifier. | Automated test / demonstration | Proposed |
-| AC-REQ-001-02 | REQ-001 | Given an authenticated student whose submission is missing required information, when the student attempts to submit the request, then the system rejects the submission and identifies the missing information. | Automated test / demonstration | Proposed |
+| AC-REQ-001-01 | REQ-001 | Given a category, title, and description containing non-whitespace text, when a student submits a support request, then the system creates a request containing those values. | Planned automated test and manual demonstration | Proposed |
+| AC-REQ-001-02 | REQ-001 | Given a submission where any required field is empty or contains only whitespace, when the student submits it, then the system does not create a request and identifies each missing required field. | Planned automated tests covering each required field and manual demonstration | Proposed |
 | AC-REQ-002-01 | REQ-002 | Given an authenticated requester with an existing workflow request, when the requester views their requests, then the system displays the current status of that request. | Automated test / demonstration | Proposed |
 
 <!--
