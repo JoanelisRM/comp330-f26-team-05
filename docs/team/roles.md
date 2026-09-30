@@ -123,7 +123,7 @@ The **Evidence** column should reference a repository-visible confirmation made 
 |---|---|---|
 | Joanelis Rivera Matos | Yes | Commit Updated team members and GitHub identities in roles.md |
 | Khaja Shabbir Ahmed | Yes | Commit bcca00a |
-| Sydel Ugwu | Pending |  |
+| Sydel Ugwu | Yes | Commit Acknowledged developer and team responsibilities |
 | Hamza Bashar | Yes | Commit Updated team charter |
 | Nova Kurul | Yes | Commit Cleaned AI templates and established AI Policy/Logs for Phase A1 |
 
