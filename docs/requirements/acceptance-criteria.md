@@ -38,10 +38,20 @@ A single requirement may have multiple acceptance criteria.
 
 | ID | Requirement Reference | Acceptance Criterion | Verification Method | Status |
 |---|---|---|---|---|
-| AC-REQ-001-01 | REQ-001 | Given a category, title, and description containing non-whitespace text, when a student submits a support request, then the system creates a request containing those values. | Planned automated test and manual demonstration | Proposed |
-| AC-REQ-001-02 | REQ-001 | Given a submission where any required field is empty or contains only whitespace, when the student submits it, then the system does not create a request and identifies each missing required field. | Planned automated tests covering each required field and manual demonstration | Proposed |
-| AC-REQ-002-01 | REQ-002 | Given an authenticated requester with an existing workflow request, when the requester views their requests, then the system displays the current status of that request. | Automated test / demonstration | Proposed |
-
+| AC-REQ-001-01 | REQ-001 | Given a user in the student role who has provided a category, a title, and a description, when the user submits a support request, then the system creates the request, records it with a unique identifier and its submission time, and confirms the submission to the user. | Automated test / demonstration | Proposed |
+| AC-REQ-001-02 | REQ-001 | Given a user in the student role whose submission is missing the category, title, or description, when the user attempts to submit, then the system does not create the request and identifies which fields are missing. | Automated test | Proposed |
+| AC-REQ-002-01 | REQ-002 | Given one or more submitted support requests, when a user in the staff role opens the request list, then every submitted request is shown with its identifier, title, submission time, and current status. | Automated test / demonstration | Proposed |
+| AC-REQ-002-02 | REQ-002 | Given no support requests have been submitted, when a user in the staff role opens the request list, then the system shows an empty list with a message that there are no requests, and no error occurs. | Automated test | Proposed |
+| AC-REQ-002-03 | REQ-002 | Given a user in the student role, when the user attempts to open the staff request list, then the system denies access and shows no request data. | Automated test | Proposed |
+| AC-REQ-002-04 | REQ-002 | Given a user in the student role has just submitted a support request, when a user in the staff role opens the request list, then the new request appears in the list with its current status. | Automated integration test / demonstration | Proposed |
+| AC-REQ-003-01 | REQ-003 | Given a request with status Open, when a user in the staff role changes its status to In Progress, then the request's status becomes In Progress. | Automated test | Proposed |
+| AC-REQ-003-02 | REQ-003 | Given a request with status In Progress, when a user in the staff role changes its status to Resolved, then the request's status becomes Resolved. | Automated test | Proposed |
+| AC-REQ-003-03 | REQ-003 | Given a request in any status, when a user in the staff role attempts a status change outside the sequence Open → In Progress → Resolved (for example Open → Resolved, or Resolved → Open), then the system rejects the change, the status is unchanged, and the user is told why. | Automated test | Proposed |
+| AC-REQ-003-04 | REQ-003 | Given a user in the student role, when the user attempts to change the status of any request, then the system rejects the change and the status is unchanged. | Automated test | Proposed |
+| AC-REQ-003-05 | REQ-003 | Given a user in the staff role has changed a request's status, when the request list is next viewed, then the list shows the updated status. | Automated integration test / demonstration | Proposed |
+| AC-REQ-004-01 | REQ-004 | Given the repository and any data the system stores, when they are inspected, then all request data is synthetic and no real student personal information, credentials, or institutional records are present. | Inspection / code review | Proposed |
+| AC-REQ-005-01 | REQ-005 | Given a support request has been submitted and its status has been changed, when the request list is viewed again while the application is still running, then the request is present with its most recent status. | Automated integration test | Proposed |
+| AC-REQ-006-01 | REQ-006 | Given the Cycle 1 codebase, when it is reviewed, then all logic that depends on the user's role is located in a clearly identified part of the code, and no other part of the code checks the role directly. | Code review | Proposed |
 <!--
 DELETE THE SAMPLE ROWS ABOVE after your team has replaced them with actual
 project acceptance criteria.
@@ -49,6 +59,7 @@ project acceptance criteria.
 
 ## Writing Acceptance Criteria
 
+The team writes criteria in Given/ When/ Then form. Each criterion will describes one observable outcome and will be checkable by a single test or step.
 <!--
 Acceptance criteria should describe observable behavior or measurable outcomes.
 
