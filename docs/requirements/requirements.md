@@ -45,8 +45,14 @@ Recommended values are Proposed, Accepted, Changed, Deferred, or Removed.
 
 | ID | Requirement | Rationale | Priority | Acceptance Criteria Reference | Status |
 |---|---|---|---|---|---|
-| REQ-001 | The system shall allow a student to submit a support request containing a category, title, and description. The system shall reject submissions when any required field is empty or contains only whitespace and identify the missing fields. | Students need to describe their support needs clearly enough for staff to act on them. | Must | AC-REQ-001-01, AC-REQ-001-02 | Proposed |
-| REQ-002 | The system shall allow a requester to view the current status of each workflow request they submitted. | Requesters need visibility into workflow progress without relying on manual status inquiries. | Must | AC-REQ-002-01 | Proposed |
+| REQ-001 | The system shall allow an authenticated student to submit a workflow request containing all information required for processing. | Students need a controlled and traceable way to initiate a workflow. | Must | AC-REQ-001-01, AC-REQ-001-02 | Proposed |
+| REQ-002 | The system shall allow users in the support role to view a list of all submitted workflow requests, It should show each request's identifier, summary, submission time, and current status of the requests. Users who are authenticated student shall not have access to this list| Support staff cannot act on requests they cannot locate. The list closes the between submission and action, which is needed to demonstrate the workflow end to end. | Must | AC-REQ-002-01, AC-REQ-002-02, AC-REQ-002-03, AC-REQ-002-04 | Proposed |
+| REQ-003 | The system shall allow a user who has designation of support role to change a requests status only along the sequence of Open → In Progress → Resolved and it shall reject any other status change and it should not allow any status change attempted by a user in the student role. | A controlled cycle shows that requests are being taken care of and prevents a request from appearing resolved without being looked at or worked on. | Must | AC-REQ-003-01, AC-REQ-003-02, AC-REQ-003-03, AC-REQ-003-04, AC-REQ-003-05 | Proposed |
+| REQ-004 | The system should operate on synthetic data only and should not require or should store real student personal information, credentials, or it's institutional records | Access to students real data requires institutional approval and privacy controls which this project is not equipped with | Must | AC-REQ-004-01 | Proposed |
+| REQ-005 | The system should not lose a submitted request or change its status while the application is running. | User must be able to trust or tell that a submitted request exists when support staff works on it. | Must | AC-REQ-005-01 | Proposed |
+| REQ-006 | Logic that is dependent on the user's role shall be marked or kept in a way that it can be clearly identified as part of the codebase, so that simulated roles can be replaced when real authentication occurs without changes throughout the system |  |  | AC-REQ-006-01 | Proposed |
+| REQ-007 |  | |  |  |  |
+| REQ-008 |  |  |  |  |  |
 
 <!--
 DELETE THE SAMPLE ROWS ABOVE after your team has replaced them with actual
@@ -85,6 +91,7 @@ Before accepting a requirement, consider:
 
 ## Requirements and Design
 
+These requirements only establishes on what the system must do, it does not in any way establishes on how it will be built. The technology stack will be recorded in a different spot and the storage approach is to be decided. REQ-006 can be said that it concerns code structure.
 <!--
 Requirements normally describe WHAT must be true, not unnecessarily dictate
 HOW the system must be implemented.
@@ -108,6 +115,12 @@ decision artifact.
 
 ## Requirements and Uncertainty
 
+Unresolved issues are recorded in [assumption-open-questions.md](assumption-open-questions.md) because it can't be decided in requirement. The open questions that are most directly affected with this baseline are:
+
+- Which fields a student must complete when submitting a request. It affects REQ-001 and REQ-002.
+- Whether a Resolved request can be undone meaning it can reopened. It affects REQ-003.
+- How data provided in requests will be stored. It affects REQ-005
+
 <!--
 Do not invent an answer simply because a requirement is incomplete.
 
@@ -121,6 +134,17 @@ assumption disguised as a requirement.
 
 ## Requirements and Acceptance Criteria
 
+
+Each requirement REQ is linked to the criteria in [acceptance-criteria.md](acceptance-criteria.md) that shows that it has been met and each criterion references its requirement.
+
+| Requirement | Acceptance Criteria |
+|---|---|
+| REQ-001 | AC-REQ-001-01, AC-REQ-001-02 |
+| REQ-002 | AC-REQ-002-01, AC-REQ-002-02, AC-REQ-002-03, AC-REQ-002-04 |
+| REQ-003 | AC-REQ-003-01, AC-REQ-003-02, AC-REQ-003-03, AC-REQ-003-04, AC-REQ-003-05 |
+| REQ-004 | AC-REQ-004-01 |
+| REQ-005 | AC-REQ-005-01 |
+| REQ-006 | AC-REQ-006-01 |
 <!--
 A requirement establishes an obligation.
 
