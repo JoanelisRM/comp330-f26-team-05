@@ -1,13 +1,14 @@
 # Project Scope
 
-**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
-**Gate:** A1 — Project Launch (initial baseline) · **Last updated:** 2026-09-24
+**Owner:** Sydel Ugwu (Architecture & Development Lead) · **Backup:** Khaja Shabbir Ahmed
+
+**Gate:** A2 — Cycle 1 Planning and Estimation · **Last updated:** 2026-09-29
 
 ## Scope Statement
 
 In Cycle 1, CampusConnect will deliver one narrow, end-to-end vertical slice: a student submits a support request, staff view the submitted requests, and staff update a request's status. Cycle 1 uses synthetic data only and runs locally; it does not connect to any real Loyola system.
 
-> **Status:** Proposed. The vertical slice and the REQ IDs below are pending confirmation with the Architecture & Development Lead (Sydel Ugwu) when the initial requirements baseline is written in `/docs/requirements/`.
+> **Status:** Proposed for A2 team review. Cycle 1 covers student request submission, staff request listing, and staff status updates. Sydel Ugwu maintains scope and traceability. Confirmation of REQ-001 through REQ-003 and their acceptance criteria is pending coordination with Hamza, who is handling requirements for A2.
 
 ## In Scope
 
@@ -40,7 +41,7 @@ In Cycle 1, CampusConnect will deliver one narrow, end-to-end vertical slice: a 
 
 | Dependency | Why It Matters | Owner / Source | Related Risk |
 |---|---|---|---|
-| Initial requirements baseline (REQ-001..003) | Scope items cannot be confirmed until requirements exist | Sydel Ugwu | R-005 |
+| Requirements baseline and acceptance criteria (REQ-001 through REQ-003) | Confirm that each scope item matches the requirements and can be verified | Hamza (requirements); Sydel Ugwu (scope and traceability alignment) | R-005 |
 | Tech stack / architecture decision (ADR-001) | Determines how the slice is built | Sydel Ugwu | R-007 |
 | Team capacity per member | Determines how much scope is realistic | All members | R-008 |
 
@@ -59,6 +60,7 @@ In Cycle 1, CampusConnect will deliver one narrow, end-to-end vertical slice: a 
 | Effective Gate | Change | Added / Removed | Reason | Related Evidence |
 |---|---|---|---|---|
 | A1 | Initial Cycle 1 scope baseline created | Added SCP-001..004 | Project launch | This file |
+| A2 | Updated scope ownership and requirements coordination for A2 review | No capabilities added or removed | Align responsibilities with the team's A2 work allocation; scope confirmation remains pending | Requirements baseline in /docs/requirements/; traceability.md |
 
 ## Scope Acceptance Check
 

@@ -45,7 +45,7 @@ Recommended values are Proposed, Accepted, Changed, Deferred, or Removed.
 
 | ID | Requirement | Rationale | Priority | Acceptance Criteria Reference | Status |
 |---|---|---|---|---|---|
-| REQ-001 | The system shall allow an authenticated student to submit a workflow request containing all information required for processing. | Students need a controlled and traceable way to initiate a workflow. | Must | AC-REQ-001-01, AC-REQ-001-02 | Proposed |
+| REQ-001 | The system shall allow a student to submit a support request containing a category, title, and description. The system shall reject submissions when any required field is empty or contains only whitespace and identify the missing fields. | Students need to describe their support needs clearly enough for staff to act on them. | Must | AC-REQ-001-01, AC-REQ-001-02 | Proposed |
 | REQ-002 | The system shall allow a requester to view the current status of each workflow request they submitted. | Requesters need visibility into workflow progress without relying on manual status inquiries. | Must | AC-REQ-002-01 | Proposed |
 
 <!--
