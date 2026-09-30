@@ -20,7 +20,7 @@ Build tasks are planned for A4, with proposed owners. References below describe 
 
 | Requirement | Scope Item | Planned Build Tasks | Planned Verification Tasks | Acceptance Criteria Status |
 |---|---|---|---|---|
-| REQ-001 Student submits a support request with category, title, and description | SCP-001 | TASK-102 request model and synthetic store; TASK-103 submission and required-field validation; TASK-108 failed-submission logging | TASK-106 validation unit tests; TASK-109 end-to-end demonstration | Confirm final criteria and IDs through TASK-025 |
+| REQ-001 Student submits a support request with category, title, and description | SCP-001 | TASK-102 request model and synthetic store; TASK-103 submission and required-field validation; TASK-108 failed-submission logging | TASK-106 validation unit tests; TASK-109 end-to-end demonstration | AC-REQ-001-01 and AC-REQ-001-02 in [acceptance-criteria.md](../requirements/acceptance-criteria.md); both Proposed, pending team review |
 | REQ-002 Staff view submitted requests | SCP-002 | TASK-102 request model and synthetic store; TASK-104 staff request list | TASK-109 end-to-end demonstration, including staff list behavior | Confirm final criteria and IDs through TASK-025 |
 | REQ-003 Staff update request status | SCP-003 | TASK-102 request model and synthetic store; TASK-105 allowed status transitions; TASK-108 status-change logging | TASK-106 status-transition unit tests; TASK-109 end-to-end demonstration | Confirm final criteria and IDs through TASK-025 |
 
