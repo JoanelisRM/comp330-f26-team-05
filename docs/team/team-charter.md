@@ -2,7 +2,7 @@
 
 ## Team Identity
 
-**Team Name:**  TBD
+**Team Name:**  Academic Flow Team
 
 **Project:**  CampusConnect Workflow System
 
@@ -12,7 +12,7 @@ Joanelis Rivera Matos,
 Khaja Shabbir Ahmed,
 Hamza Bashar,
 Sydel Ugwu,
-Nova Kurul,
+Nova Kurul
 
 ## Team Purpose
 
