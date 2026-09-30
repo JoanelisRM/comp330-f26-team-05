@@ -1,6 +1,6 @@
 # Project Scope
 
-**Owner:** Sydel Ugwu (Architecture & Development Lead) · **Backup:** Joanelis Rivera Matos
+**Owner:** Sydel Ugwu (Architecture & Development Lead) · **Backup:** Khaja Shabbir Ahmed
 
 **Gate:** A2 — Cycle 1 Planning and Estimation · **Last updated:** 2026-09-29
 
