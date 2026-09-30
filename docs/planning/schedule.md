@@ -1,7 +1,7 @@
 # Schedule
 
 **Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
-**Gate:** A1 — Project Launch (initial baseline) · **Last updated:** 2026-09-24
+**Gate:** A2 — Planning & Requirements (initial baseline) · **Last updated:** 2026-09-29
 
 ## Schedule Basis
 
@@ -16,8 +16,8 @@
 |---|---|---|---|---|---|---|
 | MS-001 | Repository created from starter kit | 2026-09-08 | A1 | — | Joanelis Rivera Matos | Done |
 | MS-002 | Roles, charter and AI policy drafted | 2026-09-20 | A1 | MS-001 | Joanelis Rivera Matos | Done (charter has open TBDs) |
-| MS-003 | Kickoff meeting held and decisions recorded | TBD | A1 | Team availability | Joanelis Rivera Matos | Not recorded |
-| MS-004 | Working agreements and planning baseline merged | 2026-09-26 | A1 | PR reviews | Khaja Shabbir Ahmed | In Review |
+| MS-003 | Kickoff meeting held and decisions recorded | 2026-09-29 | A1 | Team availability | Joanelis Rivera Matos | Done |
+| MS-004 | Working agreements and planning baseline merged | 2026-09-26 | A1 | PR reviews | Khaja Shabbir Ahmed | Done |
 | MS-005 | Initial requirements baseline (REQ-001..003) | 2026-09-26 | A1 | Slice agreed | Sydel Ugwu | Not started |
 | MS-006 | A1 submitted and `a1-project-launch` tag on final commit | 2026-09-27 | A1 | MS-003..005 | Joanelis Rivera Matos | Planned |
 | MS-007 | GitHub Issues, Cycle 1 milestone and Projects board set up | 2026-09-30 | A2 | MS-005 | Khaja Shabbir Ahmed | Planned |
