@@ -1,15 +1,5 @@
 # Team Roles, Identities, and Evidence Ownership
 
-> **Starter Kit Example**
->
-> This file contains sample data showing what a completed team role record looks like.
-> Replace all sample student names, GitHub identities, role assignments, deliverable
-> ownership, and acknowledgement evidence with your team's actual information.
-> **Keep the instructor entry.**
->
-> Do not simply change the names. As a team, decide who will own and back up each
-> responsibility.
-
 Every student is a **Developer** and also holds at least one specialized engineering role. Each specialized role must have a primary owner and a different backup owner.
 
 The purpose of this file is to provide one authoritative, reviewable record of:
