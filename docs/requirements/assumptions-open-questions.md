@@ -1,256 +1,67 @@
 # Assumptions and Open Questions
-
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file contains sample assumptions and open questions showing how known
-uncertainty should be made visible and managed.
-
-Replace the sample entries with your team's actual assumptions and unresolved
-questions.
-
-Do not leave important uncertainty buried in conversations, meeting notes, or
-undocumented implementation choices.
-
-Remove instructional comments like this one as you complete the artifact.
--->
-
+ 
+Known uncertainty affecting the Cycle 1 requirements baseline in [requirements.md](requirements.md) and [acceptance-criteria.md](acceptance-criteria.md). Several assumptions come from tradeoffs accepted in [ADR-002](../decisions/ADR-002-cycle-1-scope-tradeoffs.md).
+ 
 ## Key Distinctions
-
-<!--
-Use these definitions while developing this artifact:
-
-ASSUMPTION
-Something the team is currently treating as true without sufficient
-confirmation.
-
-OPEN QUESTION
-Something the team explicitly recognizes that it does not yet know.
-
-REQUIREMENT
-An obligation the system must satisfy.
-
-ACCEPTANCE CRITERION
-An observable condition demonstrating that a requirement has been satisfied.
-
-Do not turn an assumption into a requirement simply because the team needs
-an answer.
--->
-
+ 
+- **Assumption:** something the team is treating as true without full confirmation.
+- **Open question:** something the team knows it does not yet know.
+- **Requirement:** an obligation the system must satisfy (see requirements.md).
+- **Acceptance criterion:** an observable condition showing a requirement is met (see acceptance-criteria.md).
+Assumptions are not turned into requirements just because the team needs an answer.
+ 
 ## Assumptions
-
-<!--
-Replace the sample rows below with your team's actual assumptions.
-
-Use IDs in the form:
-
-ASM-###
-
-Examples:
-ASM-001
-ASM-002
-ASM-003
-
-Track assumptions that could meaningfully affect requirements, architecture,
-schedule, verification, security, operations, or other engineering decisions.
--->
-
+ 
 | ID | Assumption | Basis | Related Evidence | Impact if Incorrect | Owner | Status |
 |---|---|---|---|---|---|---|
-| ASM-001 | Students will authenticate using an institution-supported identity provider. | Initial project context | REQ-001 | Authentication architecture and access-control requirements may need to change. | Jordan Smith | Unvalidated |
-| ASM-002 | A workflow request will have one current status at a time. | Initial domain interpretation | REQ-002 | The workflow model and status presentation may require redesign. | Morgan Lee | Unvalidated |
-
-<!--
-DELETE THE SAMPLE ROWS ABOVE after your team has replaced them with actual
-project assumptions.
--->
-
+| ASM-001 | In Cycle 1, the student and staff roles are simulated, and this is an acceptable substitute for real authentication. | ADR-002, TD-02 | REQ-001, REQ-002, REQ-003, REQ-006; AC-REQ-002-03, AC-REQ-003-04 | Real authentication would move into Cycle 1, adding significant security and integration work and likely delaying the schedule. | Hamza | Unvalidated |
+| ASM-002 | Synthetic data is sufficient to demonstrate and test the Cycle 1 slice. | ADR-002, TD-01 | REQ-004, AC-REQ-004-01 | Real data would need institutional approval and privacy controls the project does not have. | Hamza | Unvalidated |
+| ASM-003 | Running the system locally is sufficient for the Cycle 1 demonstration and assessment. | ADR-002, TD-06 | ADR-002 | Hosted deployment would need infrastructure and security work not in the current plan. | Joanelis | Unvalidated |
+| ASM-004 | A support request has exactly one current status at any time. | Team interpretation of the Cycle 1 workflow | REQ-003; AC-REQ-003-01 to AC-REQ-003-05 | The request model and request list would need redesign. | Joanelis | Unvalidated |
+| ASM-005 | A newly submitted request starts with the status Open. | REQ-003 sequence begins at Open | REQ-001, REQ-003; AC-REQ-002-04, AC-REQ-003-01 | The status sequence in REQ-003 and its criteria would need a new starting status. | Hamza | Unvalidated |
+| ASM-006 | Status changes only move forward one step at a time; a Resolved request cannot be reopened in Cycle 1. | ADR-002, Decision item 3 | REQ-003, AC-REQ-003-03, Q-002 | REQ-003 and AC-REQ-003-03 would need to allow additional transitions. | Joanelis | Unvalidated |
+| ASM-007 | The Cycle 1 slice fits within the team's available weekly hours. | ADR-002; risk R-008 | REQ-001 to REQ-006; `docs/planning/estimates.md` | Scope would need to shrink further, or work would reach later phases untested (R-003). | Hamza | Unvalidated |
+ 
 ### Assumption Status
-
-<!--
-Recommended values:
-
-Unvalidated
-- The team is currently treating the assumption as true but has not confirmed it.
-
-Validated
-- Sufficient evidence supports the assumption.
-
-Invalidated
-- Evidence demonstrates that the assumption was incorrect.
-
-Superseded
-- New information or a formal decision replaced the assumption.
-
-When an assumption is validated or invalidated, update every affected
-requirement, decision, risk, plan, architecture artifact, or other evidence.
-
-Do not simply change the status and stop there.
--->
-
+ 
+Status values: **Unvalidated** (treated as true, not confirmed), **Validated** (confirmed by evidence), **Invalidated** (shown to be wrong), **Superseded** (replaced by a new decision). All assumptions are currently Unvalidated.
+ 
 ## Open Questions
-
-<!--
-Replace the sample rows below with your team's actual open questions.
-
-Use IDs in the form:
-
-Q-###
-
-Examples:
-Q-001
-Q-002
-Q-003
-
-State each uncertainty as a real question so the team can determine when it
-has actually been answered.
--->
-
+ 
 | ID | Question | Related Evidence | Owner | Needed By | Status / Resolution |
 |---|---|---|---|---|---|
-| Q-001 | Can a requester cancel a workflow after submission? | REQ-001 | Taylor Nguyen | A2 | Open |
-| Q-002 | Who is permitted to view workflow history? | REQ-002 | Casey Patel | A2 | Open |
-| Q-003 | How long must completed workflow records be retained? | Requirements / Operations | Riley Chen | A3 | Open |
-
-<!--
-DELETE THE SAMPLE ROWS ABOVE after your team has replaced them with actual
-project questions.
--->
-
+| Q-001 | Which information must a student provide when submitting a support request? | REQ-001, REQ-002, AC-REQ-001-02 | Hamza | Before implementation | Resolved: category, title, and description, as planned in `docs/planning/traceability.md` (REQ-001, TASK-103). Recorded in REQ-001 and AC-REQ-001-01/02. |
+| Q-002 | Can a Resolved request be reopened, or can a request move back to an earlier status? | REQ-003, AC-REQ-003-03, ASM-006 | Joanelis | Before implementation | Open |
+| Q-003 | How will support request data be stored, and must it persist after the application restarts? | REQ-005, AC-REQ-005-01; ADR-002 known technical debt | Joanelis | A3 | Open |
+| Q-004 | Should the system prevent or flag duplicate submissions of the same request? | REQ-001; acceptance-criteria.md (Positive and Negative Conditions) | Hamza | A3 | Open |
+| Q-005 | Should students be able to view the status of requests they submitted? | REQ-001, REQ-002 | Hamza | A3 | Open |
+| Q-006 | Can a student edit or cancel a request after submitting it? | REQ-001, REQ-003 | Joanelis | A3 | Open |
+| Q-007 | Should the system record who changed a request's status and when? | REQ-003 | Hamza | Before implementation | Open |
+| Q-008 | What technology stack will the system use? | ADR-001 (pending) | Hamza | Before implementation | Open (to be answered by ADR-001) |
+ 
 ### Open-Question Guidance
-
-<!--
-RELATED EVIDENCE
-
-Identify requirements, acceptance criteria, architecture decisions, risks,
-plans, security decisions, operational expectations, or other artifacts that
-may be affected by the answer.
-
-OWNER
-
-Assign someone responsible for driving the question toward resolution.
-Ownership does not mean that person must solve the question alone.
-
-NEEDED BY
-
-Identify the earliest phase gate or engineering decision that would be
-materially affected if the question remained unresolved.
-
-Examples:
-A2
-A3
-Before architecture decision
-Before implementation
-
-STATUS / RESOLUTION
-
-Recommended states:
-Open
-Investigating
-Resolved
-Deferred
-
-When a question is resolved, record the answer and reference the authoritative
-evidence where practical.
-
-Example:
-
-Resolved — Requesters may cancel only while status is Submitted.
-See REQ-007 and ADR-003.
-
-Do not erase the original question if it influenced engineering decisions.
--->
-
+ 
+**Needed By** is the earliest phase gate or decision that would be affected if the question stayed open. When a question is resolved, its row is kept, the resolution and its evidence are recorded in the Status / Resolution column, and the related requirements and criteria are updated.
+ 
 ## Resolving Assumptions
-
-<!--
-When an assumption is validated or invalidated:
-
-1. Record the result.
-2. Identify the supporting evidence.
-3. Review every requirement, decision, risk, design element, or plan that
-   depended on the assumption.
-4. Update affected artifacts.
-5. Preserve traceability to the original assumption where useful.
-
-Example:
-
-ASM-001
-  ->
-Authentication capability confirmed
-  ->
-Authentication requirements refined
-  ->
-Architecture decision updated
-  ->
-Acceptance criteria updated
-
-The value is not simply recording the assumption. The value is understanding
-what depended on it.
--->
-
+ 
+When an assumption is validated or invalidated, the owner records the result and evidence, then reviews and updates every item listed in its Related Evidence column. For example, if ASM-006 is invalidated because requests can be reopened, REQ-003 and AC-REQ-003-03 must both change, and Q-002 is marked Resolved.
+ 
 ## Resolving Open Questions
-
-<!--
-When an open question is answered:
-
-1. Record the resolution.
-2. Identify where the authoritative answer now exists.
-3. Update affected requirements and other engineering evidence.
-4. Preserve the question when it provides useful engineering history.
-
-An answer that exists only in a meeting, text message, or chat does not create
-durable repository evidence.
--->
-
+ 
+A question is resolved only when the answer is recorded in the repository, not only in chat or a meeting. The resolution references where the answer now lives (a requirement, criterion, or decision record), and affected artifacts are updated in the same change where practical.
+ 
 ## Managing Unknowns
-
-<!--
-"We do not know yet" is an acceptable engineering state.
-
-At an early phase gate, some questions will legitimately remain unresolved.
-
-Do not manufacture certainty simply to make the repository appear complete.
-
-For an unresolved item, the team should be able to explain:
-
-- Why does this matter?
-- What could it affect?
-- Who owns resolving it?
-- When must it be resolved?
-- What artifacts will need to change after it is resolved?
-
-That demonstrates engineering control over uncertainty.
--->
-
+ 
+Some questions will legitimately remain open at A2. Questions marked "Before implementation" and still open (Q-002, Q-007, Q-008) have the highest priority, because implementation of the Cycle 1 slice depends on their answers. Questions marked A3 can remain open without blocking Cycle 1.
+ 
 ## Relationship to Risk
-
-<!--
-Some assumptions and open questions create meaningful project risk.
-
-If an unresolved matter could significantly affect:
-
-- scope;
-- schedule;
-- architecture;
-- security;
-- data integrity;
-- verification;
-- deployment;
-- operations; or
-- stakeholder acceptance;
-
-consider linking it to the project's risk documentation.
-
-An assumption and a risk are not the same thing.
-
-The assumption describes something being treated as true despite uncertainty.
-
-The risk describes a potential consequence and how the team intends to manage it.
--->
-
+ 
+- ASM-007 is tied to R-008 (limited weekly hours) and R-003 (work reaching later phases untested).
+- Q-008 is tied to R-002 and R-007 (team experience with Git workflow and Java/Maven).
+- ASM-001 is tied to the technical debt accepted in ADR-002 for simulated roles.
 ## Expectations
-
+ 
 - Record important assumptions explicitly.
 - Record unresolved matters as clear questions.
 - Assign owners.
@@ -261,15 +72,3 @@ The risk describes a potential consequence and how the team intends to manage it
 - Preserve meaningful history rather than silently overwriting prior understanding.
 - Link assumptions and questions to risks when the potential consequence warrants it.
 - Never invent certainty simply to make an artifact appear complete.
-
-<!--
-As the project matures, this file should become more precise and better
-connected to other engineering evidence. It should not merely accumulate
-unresolved items.
-
-Before the applicable phase-gate submission:
-1. Replace all sample assumptions and questions.
-2. Confirm ownership and needed-by dates.
-3. Update resolved items and affected downstream evidence.
-4. Remove instructional HTML comments.
--->
