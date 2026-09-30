@@ -10,7 +10,7 @@ At A1, traceability is intentionally light: requirements are proposed, and there
 | Requirement | Acceptance Criteria | Architecture / Design | Implementation | Verification | Risk / Assumption | Status |
 |---|---|---|---|---|---|---|
 | REQ-001 Student submits a support request (proposed) | Pending (AC-REQ-001-xx) | Not yet available | Not yet implemented | Not yet available | R-005, PA-001 | Proposed — SCP-001 |
-| REQ-002 | The system shall allow staff to view a list of submitted support requests showing each request's category, title, description, and current status. | Staff need to review submitted requests and see which requests still need attention. | Must | AC-REQ-002-01, AC-REQ-002-02 | Proposed |
+| REQ-002 Staff view submitted requests (proposed) | Pending confirmation with requirements owner | Not yet available | Not yet implemented | Not yet available | R-005, PA-001 | Proposed — SCP-002 |
 | REQ-003 Staff update request status (proposed) | Pending (AC-REQ-003-xx) | Not yet available | Not yet implemented | Not yet available | R-005, R-003 | Proposed — SCP-003 |
 
 ## Baseline Reconciliation
