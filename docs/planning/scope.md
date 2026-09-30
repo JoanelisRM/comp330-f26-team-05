@@ -59,6 +59,7 @@ In Cycle 1, CampusConnect will deliver one narrow, end-to-end vertical slice: a 
 
 | Effective Gate | Change | Added / Removed | Reason | Related Evidence |
 |---|---|---|---|---|
+| A1 | Initial Cycle 1 scope baseline created | Added SCP-001..004 | Project launch | This file |
 | A2 | Updated scope ownership and requirements coordination for A2 review | No capabilities added or removed | Align responsibilities with the team's A2 work allocation; scope confirmation remains pending | Requirements baseline in /docs/requirements/; traceability.md |
 
 ## Scope Acceptance Check
