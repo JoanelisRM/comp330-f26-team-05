@@ -76,42 +76,21 @@ boundary.
 
 ## Interfaces and Dependencies
 
-<!--
-TEAM CONTENT REQUIRED
-
-Describe the important interactions among components and external systems.
-
-Focus on dependencies that matter architecturally.
-
-For each important interaction, consider:
-
-- direction of dependency;
-- type of interface;
-- data exchanged;
-- synchronous versus asynchronous behavior;
-- failure behavior;
-- trust boundaries;
-- security implications; and
-- whether a formal interface contract is required.
-
-Detailed contracts belong in:
-
-/docs/architecture/api-contracts.md
--->
-
 | Source | Target | Interaction | Interface / Protocol | Notes |
 |---|---|---|---|---|
-| Web Client | Application Service | Submit and retrieve workflow requests | HTTPS / JSON | Authenticated requests |
-| Application Service | Identity Provider | Obtain trusted user identity | Provider-defined protocol | External dependency |
-| Application Service | Persistence Layer | Store and retrieve workflow state | Internal interface | Application-controlled boundary |
+| Presentation Layer | Logic Layer | Students submits a request | HTTP / JSON on localhost (proposed) | Requests will be simulated |
+| Presentation Layer | Logic Layer | Staff views a list of submitted requests | HTTP / JSON on localhost (proposed) | Submitted requests will be simulated and synthetic |
+| Presentation Layer | Logic Layer | Staff changes a request's status | HTTP / JSON on localhost (proposed) | This status change will be temporary during a run |
+| Logic Layer | Data Layer | Store and retrieve requests | HTTP / JSON on localhost (proposed) | Storing and retrieving will be temporary during a run |
+| Logic Layer | Logic Layer | Decide what the simulated role will do | HTTP / JSON on localhost (proposed) | Team decision |
 
 
 ## Data and State Ownership
 
 | Data / State | Authoritative Owner | Persistence | Notes |
 |---|---|---|---|
-| Workflow Request | Application Service | Database | Request simulated data will be stored in the database layer |
-| User Data | Application Service | Database | Synthetic user data will be stored in the database layer |
+| Workflow Request | Data Layer | Database | Request simulated data will be stored in the data layer |
+| User Data | Data Layer | Database | Synthetic user data will be stored in the data layer |
 
 ## Constraints and Assumptions
 
@@ -124,53 +103,16 @@ Detailed contracts belong in:
 
 ## Architecture Diagram
 
-<!--
-TEAM CONTENT REQUIRED
-
-Replace this comment with your team's current architecture diagram.
-
-A diagram should make important system structure easier to understand than
-prose alone.
-
-Mermaid is acceptable because GitHub renders Mermaid diagrams.
-
-EXAMPLE ONLY — DO NOT RETAIN AS YOUR PROJECT ARCHITECTURE:
-
-    ```mermaid
-    flowchart LR
-        User[User]
-        Web[Web Client]
-        App[Application Service]
-        Identity[Identity Provider]
-        Data[Persistence Layer]
-        DB[(Database)]
-
-        User --> Web
-        Web --> App
-        App --> Identity
-        App --> Data
-        Data --> DB
-    ```
-
-Your actual diagram should:
-
-- use the same component names as the architecture documentation;
-- show important system and external boundaries;
-- show meaningful interaction or dependency directions;
-- remain understandable without requiring source-code knowledge; and
-- remain current when the architecture changes.
-
-DELETE THIS ENTIRE COMMENT and replace it with your actual diagram.
--->
+The current Architecture Diagram can be found in 'docs/architecture/architecture-diagram.png'
 
 ## Architectural Qualities and Tradeoffs
 
 | Quality / Concern | Architectural Response | Tradeoff / Consequence |
 |---|---|---|
-| Scalability | Ensure the system can handle large amounts of data | Addition of latency in every call |
 | Usability | Ensure the system is easy for users to carry out their tasks | Could lead to long testing sessions |
-| Reliability | Ensure the system is able to perform its functions consistently with little error | Increases complexity |
-| Maintainability | Ensure the system can be updated and changed without major issues | Could lead to overly complex code |
+| Reliability | Submitted requests and the status changes won't be lost while the application is still running | Increases complexity |
+| Maintainability | Role checks will be in one place so simulated roles can be changed and used for real login later | Could lead to overly complex code |
+
 
 ## Key Architectural Decisions
 
