@@ -32,7 +32,7 @@ Status values: **Unvalidated** (treated as true, not confirmed), **Validated** (
 |---|---|---|---|---|---|
 | Q-001 | Which information must a student provide when submitting a support request? | REQ-001, REQ-002, AC-REQ-001-02 | Hamza | Before implementation | Resolved: category, title, and description, as planned in `docs/planning/traceability.md` (REQ-001, TASK-103). Recorded in REQ-001 and AC-REQ-001-01/02. |
 | Q-002 | Can a Resolved request be reopened, or can a request move back to an earlier status? | REQ-003, AC-REQ-003-03, ASM-006 | Joanelis | Before implementation | Open |
-| Q-003 | How will support request data be stored, and must it persist after the application restarts? | REQ-005, AC-REQ-005-01; ADR-002 known technical debt | Joanelis | A3 | Open |
+| Q-003 | How will support request data be stored, and must it persist after the application restarts? | REQ-005, AC-REQ-005-01; ADR-002 known technical debt | Joanelis | A3 | Resolved: The system will only store data temporarily in memory during a run |
 | Q-004 | Should the system prevent or flag duplicate submissions of the same request? | REQ-001; acceptance-criteria.md (Positive and Negative Conditions) | Hamza | A3 | Open |
 | Q-005 | Should students be able to view the status of requests they submitted? | REQ-001, REQ-002 | Hamza | A3 | Open |
 | Q-006 | Can a student edit or cancel a request after submitting it? | REQ-001, REQ-003 | Joanelis | A3 | Open |
