@@ -1,12 +1,6 @@
 # Architecture
 
 <!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file is the authoritative system-level description of your architecture.
-
-It should explain:
-
 - what the system is and what surrounds it;
 - how the system is structurally organized;
 - the major components and their responsibilities;
@@ -20,77 +14,25 @@ incomplete. State uncertainty explicitly rather than inventing detail.
 
 Do not use this file as a source-code inventory. Focus on meaningful
 architectural structure and engineering reasoning.
-
-IMPORTANT:
-
-- Text inside HTML comments like this is Starter Kit guidance.
-- Delete instructional comments before the applicable phase-gate submission.
-- Sample tables and examples are provided only to demonstrate structure.
-- Replace all sample project data with your team's actual engineering evidence.
-- Do not simply rename the sample components and treat the example as your architecture.
 -->
 
 ## System Context
 
-<!--
-TEAM CONTENT REQUIRED
-
-Describe the system from the outside looking in.
-
-Identify, where relevant:
-
-- primary users or actors;
-- external systems or services;
-- important data sources or destinations;
-- trust or organizational boundaries; and
-- what is inside versus outside the system being engineered.
-
-Keep this at the SYSTEM level. Detailed component interactions belong later.
-
-EXAMPLE ONLY — DELETE AND REPLACE:
-
-"The Workflow System allows students to submit requests and authorized staff
-to review and process them. Users access the system through a web application.
-The system relies on an external identity provider for authentication and a
-database for persistent workflow records."
-
-Replace this entire comment with your team's actual system-context description.
--->
+The CampusConnect Workflow System allows students to submit requests. Authorized staff are then able to view these requests, process them, and sends the completed information back to the student. Users are able to access the system through a locally run web application.
 
 ## Architectural Structure
 
-<!--
-TEAM CONTENT REQUIRED
+### Layered Application
+Presentation Layer -> 
+- What the users and staff are able to see, such as the user interface. Users can access the site and send out their requests but that's how much they're able to access. Staff have access to a similar interface specifically to review sent in requests and solve them.
 
-Describe the overall architectural approach.
+Logic Layer -> 
+- Responsible for coordinating the application, processing commands, and making logical decisions and evaluations. It also moves and processes data between the presentation layer to logic, between the logic to data, and vice versa.
 
-Possible structures might include:
+Data Layer -> 
+- Where the data is stored and retrieved from the logic layer. The necessary data here includes request data, records, and user data. 
 
-- layered application;
-- client/server;
-- modular monolith;
-- service-oriented architecture;
-- event-driven architecture;
-- another justified structure; or
-- a combination of patterns.
-
-Do not choose an architectural label merely because it sounds appropriate.
-Explain how the actual system is organized.
-
-Consider:
-
-- separation of concerns;
-- major execution boundaries;
-- data flow;
-- control flow;
-- state ownership;
-- deployment boundaries; and
-- major architectural patterns.
-
-If the architecture is still provisional, state that explicitly.
-
-Replace this entire comment with your team's actual architectural description.
--->
+The architecture is provisional. It may be prone to change, but chances are low due to the relatively small scope.
 
 ## Major Components and Responsibilities
 
@@ -126,8 +68,6 @@ DELETE AND REPLACE THEM WITH YOUR ACTUAL COMPONENTS.
 | Identity Provider | Authenticates users and provides trusted identity information. | External service |
 
 <!--
-DELETE AND REPLACE ALL SAMPLE ROWS ABOVE.
-
 Do not list every class, file, package, or library.
 
 A component should represent a meaningful architectural responsibility or
@@ -157,9 +97,6 @@ For each important interaction, consider:
 Detailed contracts belong in:
 
 /docs/architecture/api-contracts.md
-
-THE ROWS BELOW ARE SAMPLE DATA.
-DELETE AND REPLACE THEM WITH YOUR ACTUAL INTERACTIONS.
 -->
 
 | Source | Target | Interaction | Interface / Protocol | Notes |
@@ -168,84 +105,22 @@ DELETE AND REPLACE THEM WITH YOUR ACTUAL INTERACTIONS.
 | Application Service | Identity Provider | Obtain trusted user identity | Provider-defined protocol | External dependency |
 | Application Service | Persistence Layer | Store and retrieve workflow state | Internal interface | Application-controlled boundary |
 
-<!--
-DELETE AND REPLACE ALL SAMPLE ROWS ABOVE.
--->
 
 ## Data and State Ownership
 
-<!--
-TEAM CONTENT REQUIRED WHEN DATA OR STATE OWNERSHIP IS ARCHITECTURALLY SIGNIFICANT
-
-Identify where important system state is authoritative.
-
-This is not intended to become a complete database design.
-
-Consider:
-
-- Which component owns important state?
-- Where is authoritative persistent data stored?
-- Which data is derived or cached?
-- Which external systems remain authoritative for information they provide?
-- Which components are permitted to modify important state?
-- What consistency assumptions exist?
-
-THE ROWS BELOW ARE SAMPLE DATA.
-DELETE AND REPLACE THEM WITH YOUR ACTUAL STATE OWNERSHIP.
-
-If this section is genuinely not useful for your architecture, the team may
-remove the section after making that decision.
--->
-
 | Data / State | Authoritative Owner | Persistence | Notes |
 |---|---|---|---|
-| Workflow request | Application Service | Database | Persistence Layer provides durable storage |
-| User identity | Identity Provider | External | Application consumes identity but does not own it |
-
-<!--
-DELETE AND REPLACE ALL SAMPLE ROWS ABOVE.
--->
+| Workflow Request | Application Service | Database | Request simulated data will be stored in the database layer |
+| User Data | Application Service | Database | Synthetic user data will be stored in the database layer |
 
 ## Constraints and Assumptions
 
-<!--
-TEAM CONTENT REQUIRED
-
-Record constraints and assumptions that materially influence the architecture.
-
-A CONSTRAINT is something the architecture must operate within.
-
-Examples may include:
-
-- required deployment platform;
-- required programming language;
-- required external service;
-- security requirement;
-- institutional technology limitation; or
-- compatibility requirement.
-
-An ASSUMPTION is something currently being treated as true without sufficient
-confirmation.
-
-Do not recreate detailed assumption tracking here.
-
-Reference authoritative assumptions in:
-
-/docs/requirements/assumptions-open-questions.md
-
-Similarly, reference risks and decision records rather than duplicating them.
-
-THE ROW BELOW IS SAMPLE DATA.
-DELETE AND REPLACE IT WITH ACTUAL PROJECT EVIDENCE.
--->
-
 | ID / Reference | Type | Description | Architectural Impact |
 |---|---|---|---|
-| ASM-001 | Assumption | Users authenticate through an institution-supported identity provider. | Architecture relies on external authentication rather than local credential storage. |
-
-<!--
-DELETE AND REPLACE THE SAMPLE ROW ABOVE.
--->
+| ASM-001 | Assumption | The student and staff roles are simulated as a substitute for real authentication | The architecture doesn't rely on any external services |
+| ASM-002 | Assumption | Running the system locally is sufficient for Cycle 1 | The architecture doesn't rely on infrastructure |
+| ASM-003 | Assumption | Each piece of data will be synthetic | The architecture doesn't rely on any external database, similar to ASM-001 |
+| CNST-001 | Constraint | The program must be programmed and run through Java | The architecture relies on a single programming language |
 
 ## Architecture Diagram
 
@@ -290,66 +165,23 @@ DELETE THIS ENTIRE COMMENT and replace it with your actual diagram.
 
 ## Architectural Qualities and Tradeoffs
 
-<!--
-TEAM CONTENT REQUIRED
-
-Identify qualities that materially influence your architecture.
-
-Examples might include:
-
-- maintainability;
-- reliability;
-- security;
-- testability;
-- scalability;
-- performance;
-- usability;
-- recoverability; or
-- deployability.
-
-Do not create a generic list of desirable qualities.
-
-Document qualities that actually influenced architectural choices and explain
-the consequences or tradeoffs involved.
-
-THE ROW BELOW IS SAMPLE DATA.
-DELETE AND REPLACE IT WITH ACTUAL PROJECT EVIDENCE.
--->
-
 | Quality / Concern | Architectural Response | Tradeoff / Consequence |
 |---|---|---|
-| Maintainability | Separate workflow logic from presentation and persistence responsibilities. | Adds explicit interfaces and some structural overhead. |
-
-<!--
-DELETE AND REPLACE THE SAMPLE ROW ABOVE.
--->
+| Scalability | Ensure the system can handle large amounts of data | Addition of latency in every call |
+| Usability | Ensure the system is easy for users to carry out their tasks | Could lead to long testing sessions |
+| Reliability | Ensure the system is able to perform its functions consistently with little error | Increases complexity |
+| Maintainability | Ensure the system can be updated and changed without major issues | Could lead to overly complex code |
 
 ## Key Architectural Decisions
 
-<!--
-TEAM CONTENT REQUIRED
-
-Summarize significant architectural decisions here without duplicating the
-complete decision records.
-
-Reference the authoritative ADR or other decision artifact.
-
-A decision belongs here when it materially shapes the architecture.
-
-If a decision has not yet been made, reference the appropriate open question
-rather than pretending the architecture is settled.
-
-THE ROW BELOW IS SAMPLE DATA.
-DELETE AND REPLACE IT WITH ACTUAL PROJECT DECISIONS.
--->
-
 | Decision | Summary | Evidence |
 |---|---|---|
-| ADR-001 | Use a modular application structure for the initial system. | `/docs/decisions/ADR-001.md` |
+| ADR-001 | There is no real student data for a database. It will all be synthetic. | `/docs/decisions/ADR-002-cycle-1-scope-tradeoffs.md` 
+| ADR-002 | There is no real login or authentication. Both student and staff roles will be simulated | `/docs/decisions/ADR-002-cycle-1-scope-tradeoffs.md` |
+| ADR-003 | Status changes will be done manually by staff instead of using automatic routing and assigment | `/docs/decisions/ADR-002-cycle-1-scope-tradeoffs.md` |
+| ADR-004 | The data will be stored via simple list instead of dashboards that need sorting, searching, and filtering | `/docs/decisions/ADR-002-cycle-1-scope-tradeoffs.md` |
+| ADR-005 | The program will run locally instead of being deployed | `/docs/decisions/ADR-002-cycle-1-scope-tradeoffs.md` |
 
-<!--
-DELETE AND REPLACE THE SAMPLE ROW ABOVE.
--->
 
 ## Architecture Evolution
 
@@ -393,21 +225,3 @@ A blank table is intentional at project start.
 - Make significant architectural tradeoffs explicit.
 - Record uncertainty rather than manufacturing architectural certainty.
 - Update related engineering evidence when the architecture materially changes.
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Replace all sample project data.
-2. Replace all placeholder sections with actual team content.
-3. Confirm component names agree with component-responsibilities.md.
-4. Confirm important interfaces agree with api-contracts.md.
-5. Confirm decision and assumption references are valid.
-6. Confirm the architecture diagram represents the current system.
-7. Review the document for stale or contradictory information.
-8. Remove all instructional HTML comments.
-
-A reviewer should be able to understand the major system structure and the
-engineering reasoning behind it without reading the source code.
--->
