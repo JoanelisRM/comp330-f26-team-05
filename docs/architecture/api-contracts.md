@@ -1,447 +1,380 @@
 # API and Interface Contracts
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+**Owner:** Hamza Bashar (Quality & Review Lead) · **Backup:** TBD
+**Gate:** A3 — Architecture and Design · **Status:** Proposed, pending team review
+**Tracking issue:** #12
 
-This file records significant contracts between architectural components and
-between the system and external systems.
+This file defines the contracts between the layers of the CampusConnect Cycle 1 vertical slice: a student submits a support request, staff view the list of requests, and staff move a request through Open → In Progress → Resolved.
 
-"API" does not mean only public HTTP endpoints.
+**Component names.** This file uses the layer names from the Architectural Structure section of [`architecture.md`](architecture.md): **Presentation Layer**, **Logic Layer**, and **Data Layer**. If the team settles on different names (see review finding ARF-003 on PR #21), this file will be updated to match.
 
-A contract may describe:
-
-- HTTP/REST interactions;
-- internal service interfaces;
-- events or messages;
-- external service integrations;
-- command/query boundaries;
-- file or data exchange formats; or
-- other interactions where both sides need a stable, reviewable agreement.
-
-Do not document every function call.
-
-Document interfaces whose behavior, data, errors, security expectations, or
-evolution matter to the architecture.
-
-Use component names consistent with:
-
-/docs/architecture/architecture.md
-/docs/architecture/component-responsibilities.md
-
-IMPORTANT:
-
-- Text inside HTML comments like this is Starter Kit guidance.
-- Delete instructional comments before the applicable phase-gate submission.
-- Sample contracts and sample data must be replaced with your team's actual
-  interface contracts.
-- Do not simply rename the example endpoints or fields.
--->
+**What is settled vs. proposed.** The behavior in each contract (inputs, outputs, failures, role rules) comes from the requirements and acceptance criteria and is the part the team must agree on. HTTP paths, status codes, and JSON field names are **proposed** so the team has something concrete to review; they may change when ADR-001 (tech stack) is written.
 
 ## Contract Summary
 
-<!--
-TEAM CONTENT REQUIRED
-
-Use unique identifiers in the form:
-
-API-###
-
-Examples:
-
-API-001
-API-002
-API-003
-
-The API prefix may be used for significant interface contracts even when the
-interaction is not HTTP.
-
-If your team adopts another consistent identifier convention, document it and
-use it throughout the repository.
-
-Recommended status values:
-
-- Proposed
-- Accepted
-- Implemented
-- Verified
-- Changed
-- Deprecated
-- Removed
-
-THE ROWS BELOW ARE SAMPLE DATA.
-DELETE AND REPLACE THEM WITH ACTUAL PROJECT CONTRACTS.
--->
-
 | ID | Consumer | Provider | Purpose | Interface / Protocol | Related Requirements | Status |
 |---|---|---|---|---|---|---|
-| API-001 | Web Client | Application Service | Submit a new workflow request | HTTPS / JSON | REQ-001 | Proposed |
-| API-002 | Web Client | Application Service | Retrieve workflow request status | HTTPS / JSON | REQ-002 | Proposed |
-| API-003 | Application Service | Identity Provider | Obtain trusted authenticated identity | Provider-defined authentication protocol | REQ-001 | Proposed |
+| API-001 | Presentation Layer | Logic Layer | Student submits a support request | HTTP / JSON on localhost (proposed) | REQ-001, REQ-004, REQ-005 | Proposed |
+| API-002 | Presentation Layer | Logic Layer | Staff view the list of submitted requests | HTTP / JSON on localhost (proposed) | REQ-002, REQ-005 | Proposed |
+| API-003 | Presentation Layer | Logic Layer | Staff change a request's status | HTTP / JSON on localhost (proposed) | REQ-003, REQ-005 | Proposed |
+| API-004 | Logic Layer | Data Layer | Store and retrieve support requests | Internal Java interface | REQ-001, REQ-002, REQ-003, REQ-005 | Proposed |
+| API-005 | Logic Layer (all operations) | Logic Layer role check | Decide what the simulated role may do | Internal Java interface | REQ-002, REQ-003, REQ-006 | Proposed |
 
-<!--
-DELETE AND REPLACE ALL SAMPLE ROWS ABOVE.
--->
+There are no external-system contracts in Cycle 1. The system runs locally, uses synthetic data, and has no real login or third-party service (ADR-002: TD-01, TD-02, TD-06).
 
 ## Detailed Contracts
 
-<!--
-TEAM CONTENT REQUIRED FOR SIGNIFICANT CONTRACTS
+### API-001 — Submit Support Request
 
-Use a detailed subsection for each important interface contract.
-
-Suggested structure:
-
-### API-### — Contract Name
-
-**Consumer:**
-**Provider:**
-**Purpose:**
-**Related Requirements:**
-**Status:**
-
-#### Interaction
-
-Describe the interaction and its direction.
-
-For HTTP:
-- include method and path when known.
-
-For events:
-- identify producer, consumer, and event.
-
-For internal interfaces:
-- identify the architectural boundary.
-
-#### Request / Input
-
-Describe meaningful input.
-
-Use a table, schema, example, or link to authoritative schema evidence.
-
-#### Response / Output
-
-Describe expected output.
-
-#### Failure Behavior
-
-Describe important failure conditions and how they are represented.
-
-#### Authentication / Authorization
-
-Describe security expectations relevant to the interaction.
-
-#### Contract Rules
-
-Describe important:
-
-- invariants;
-- preconditions;
-- postconditions;
-- idempotency expectations;
-- ordering requirements;
-- transaction expectations; or
-- other behavior both sides must understand.
-
-#### Verification
-
-Reference tests or other evidence demonstrating that the implementation
-conforms to the contract.
-
-#### Notes / Open Questions
-
-Reference unresolved questions instead of inventing missing contract details.
-
-The contracts below are WORKED EXAMPLES ONLY.
-
-DELETE AND REPLACE THEM WITH YOUR ACTUAL PROJECT CONTRACTS.
--->
-
-### API-001 — Submit Workflow Request
-
-<!--
-SAMPLE CONTRACT — DELETE AND REPLACE BEFORE SUBMISSION
--->
-
-**Consumer:** Web Client  
-**Provider:** Application Service  
-**Purpose:** Submit a new workflow request for processing.  
-**Related Requirements:** `REQ-001`  
+**Consumer:** Presentation Layer (student view)
+**Provider:** Logic Layer
+**Purpose:** Let a student create a new support request.
+**Related Requirements:** REQ-001, REQ-004, REQ-005
 **Status:** Proposed
 
 #### Interaction
 
-`POST /api/requests`
+`POST /api/requests` (proposed)
 
-The Web Client sends an authenticated request to create a workflow request.
+The student fills in the submission form; the Presentation Layer sends the fields and the current simulated role to the Logic Layer.
 
 #### Request / Input
 
 | Field | Required | Description |
 |---|---|---|
-| `requestType` | Yes | Identifies the type of workflow being requested. |
-| `description` | Yes | User-provided information required to process the request. |
+| `category` | Yes | Type of help needed. The list of allowed categories is not yet defined (see C-Q1). |
+| `title` | Yes | Short title of the request. |
+| `description` | Yes | What the student needs help with. Synthetic content only (REQ-004). |
+| Simulated role | Yes | Must be `student`. How the role is sent is not yet decided (see API-005 and C-Q2). |
 
-<!--
-THE FIELDS ABOVE ARE SAMPLE DATA.
-
-DELETE AND REPLACE THEM WITH YOUR ACTUAL CONTRACT.
-
-Do not infer project fields merely because they appear in this example.
--->
+A field counts as missing if it is absent, empty, or only whitespace.
 
 #### Response / Output
 
-On successful creation, the service returns a representation containing the
-new request identifier and current workflow status.
+On success the Logic Layer returns the created request:
 
-<!--
-As the contract matures, document protocol details such as response structures
-or status codes when they are actually known.
+| Field | Description |
+|---|---|
+| `id` | Unique identifier assigned by the system (REQ-001). |
+| `status` | Always `Open` for a new request (ASM-005). |
+| `submittedAt` | Submission time recorded by the system, not by the client. |
+| `category`, `title`, `description` | As stored. |
 
-Do not invent protocol detail simply to make an early artifact look complete.
--->
+Proposed HTTP status: `201 Created`.
 
 #### Failure Behavior
 
-The service rejects requests that are invalid or unauthorized and returns
-enough structured information for the consumer to distinguish relevant
-failure conditions.
+| Condition | Result | Proposed status | Evidence |
+|---|---|---|---|
+| One or more required fields missing | No request is created; the response lists **every** missing field by name. | `400` | AC-REQ-001-02 |
+| Role is not `student` | No request is created. | `403` | REQ-001 (see C-Q3) |
+| Request could not be stored | No request is created and the client is told it failed. The system must never report success for a request it did not save. | `500` | REQ-005 |
+| Same request submitted twice | Not handled in Cycle 1; both are created. | — | Q-004 (open) |
 
 #### Authentication / Authorization
 
-The interaction requires an authenticated user.
-
-The Application Service remains responsible for authoritative authorization
-decisions.
+No real authentication in Cycle 1 (ASM-001). The simulated role is checked by the Logic Layer through API-005, never by the Presentation Layer alone.
 
 #### Contract Rules
 
-- A successful response represents a workflow request that was actually created.
-- Invalid required input must not create a workflow request.
-- The client must not infer success solely from local state.
+- The Logic Layer assigns `id`, `status`, and `submittedAt`. Values for these sent by the client are ignored.
+- A success response means the request is stored and will appear in API-002 (AC-REQ-002-04).
+- Invalid input must not create a partial or empty request.
 
 #### Verification
 
-`AC-REQ-001-01`, `AC-REQ-001-02`
-
-<!--
-THE REFERENCES ABOVE ARE SAMPLE DATA.
-
-Replace them with actual verification evidence.
-
-As implementation matures, verification may also reference:
-
-- integration tests;
-- contract tests;
-- end-to-end tests; or
-- other repository-visible evidence.
--->
+AC-REQ-001-01, AC-REQ-001-02, AC-REQ-002-04 — planned unit tests (TASK-106) and the end-to-end demonstration (TASK-109).
 
 #### Notes / Open Questions
 
-None currently documented.
+C-Q1, C-Q2, C-Q3, Q-004.
 
 ---
 
-### API-002 — Retrieve Workflow Status
+### API-002 — List Submitted Requests
 
-<!--
-SAMPLE CONTRACT — DELETE AND REPLACE BEFORE SUBMISSION
--->
-
-**Consumer:** Web Client  
-**Provider:** Application Service  
-**Purpose:** Retrieve the current state of a workflow request.  
-**Related Requirements:** `REQ-002`  
+**Consumer:** Presentation Layer (staff view)
+**Provider:** Logic Layer
+**Purpose:** Let staff see every submitted request so they can act on it.
+**Related Requirements:** REQ-002, REQ-005
 **Status:** Proposed
 
 #### Interaction
 
-`GET /api/requests/{requestId}`
+`GET /api/requests` (proposed)
 
 #### Request / Input
 
-The consumer provides the identifier of the workflow request being retrieved.
+The simulated role only. No filtering, search, or sorting in Cycle 1 (ADR-002, TD-04).
 
 #### Response / Output
 
-The service returns the request's current workflow status when the authenticated
-user is authorized to view the request.
+A list in which each item contains:
+
+| Field | Description |
+|---|---|
+| `id` | Request identifier. |
+| `title` | Request title. |
+| `submittedAt` | Submission time. |
+| `status` | Current status: `Open`, `In Progress`, or `Resolved`. |
+
+REQ-002 also mentions a "summary" field, but AC-REQ-002-01 does not. This needs a decision (see C-Q4).
+
+Proposed HTTP status: `200 OK`.
 
 #### Failure Behavior
 
-The contract must distinguish relevant conditions such as:
-
-- request does not exist;
-- caller is not authorized to view the request; and
-- service cannot currently complete the operation.
+| Condition | Result | Proposed status | Evidence |
+|---|---|---|---|
+| No requests exist | An empty list, not an error. The Presentation Layer shows a "no requests" message. | `200` | AC-REQ-002-02 |
+| Role is `student` | Access denied and **no request data** in the response. | `403` | AC-REQ-002-03 |
+| Requests could not be read | An error, not an empty list. An empty list would wrongly tell staff there is nothing to do. | `500` | REQ-005 |
 
 #### Authentication / Authorization
 
-The caller must be authenticated.
-
-The provider determines whether the caller is authorized to view the identified
-request.
+Staff role only, checked in the Logic Layer through API-005. Hiding the staff page in the user interface is not enough on its own.
 
 #### Contract Rules
 
-- A caller must not receive protected request information solely because they know a request identifier.
-- Returned status must represent authoritative application state.
+- Every stored request is returned, including ones submitted moments earlier (AC-REQ-002-04).
+- Each status shown is the current stored status, including changes made through API-003 (AC-REQ-003-05).
+- The order of the list is not part of the contract in Cycle 1.
 
 #### Verification
 
-`AC-REQ-002-01`
+AC-REQ-002-01, AC-REQ-002-02, AC-REQ-002-03, AC-REQ-002-04, AC-REQ-003-05 — planned tests (TASK-106) and demonstration (TASK-109).
 
 #### Notes / Open Questions
 
-None currently documented.
+C-Q4.
 
-<!--
-DELETE AND REPLACE ALL SAMPLE CONTRACTS ABOVE.
+---
 
-The examples demonstrate the expected structure and level of reasoning.
+### API-003 — Change Request Status
 
-They do NOT define required behavior for your project.
--->
+**Consumer:** Presentation Layer (staff view)
+**Provider:** Logic Layer
+**Purpose:** Let staff move a request forward through its lifecycle.
+**Related Requirements:** REQ-003, REQ-005
+**Status:** Proposed
+
+#### Interaction
+
+`PATCH /api/requests/{id}/status` (proposed)
+
+#### Request / Input
+
+| Field | Required | Description |
+|---|---|---|
+| `id` (in path) | Yes | The request to change. |
+| `status` | Yes | The requested new status. |
+| Simulated role | Yes | Must be `staff`. |
+
+#### Response / Output
+
+The updated request with its new `status`. Proposed HTTP status: `200 OK`.
+
+#### Allowed Transitions
+
+| From | To | Allowed? |
+|---|---|---|
+| Open | In Progress | Yes |
+| In Progress | Resolved | Yes |
+| Any other combination (for example Open → Resolved, Resolved → Open, In Progress → Open) | — | **No** |
+
+Based on ASM-006. If Q-002 decides that resolved requests can be reopened, this table, REQ-003, and AC-REQ-003-03 must change together.
+
+#### Failure Behavior
+
+| Condition | Result | Proposed status | Evidence |
+|---|---|---|---|
+| Transition not in the table above | Rejected; status unchanged; the response says why (for example "Open can only move to In Progress"). | `409` | AC-REQ-003-03 |
+| Role is `student` | Rejected; status unchanged. | `403` | AC-REQ-003-04 |
+| `status` value is not one of the three known statuses | Rejected; status unchanged. | `400` | REQ-003 |
+| No request with that `id` | Rejected. | `404` | — |
+| Change could not be saved | Error returned; the system must not report the new status. | `500` | REQ-005 |
+
+#### Authentication / Authorization
+
+Staff role only, checked in the Logic Layer through API-005.
+
+#### Contract Rules
+
+- **The transition rule is enforced only in the Logic Layer.** The Presentation Layer may hide buttons for invalid moves, but that is a convenience, not the enforcement.
+- A rejected change leaves the request exactly as it was.
+- After a successful change, API-002 shows the new status (AC-REQ-003-05).
+- Each status change is logged (TASK-108). Whether the log records *who* made the change is still open (Q-007).
+
+#### Verification
+
+AC-REQ-003-01 through AC-REQ-003-05 — planned unit tests for every allowed and rejected transition (TASK-106) and demonstration (TASK-109).
+
+#### Notes / Open Questions
+
+Q-002, Q-007, C-Q5.
+
+---
+
+### API-004 — Request Storage (Logic Layer → Data Layer)
+
+**Consumer:** Logic Layer
+**Provider:** Data Layer
+**Purpose:** Keep support requests and their current status.
+**Related Requirements:** REQ-001, REQ-002, REQ-003, REQ-005
+**Status:** Proposed
+
+#### Interaction
+
+An internal Java interface (proposed name `RequestRepository`) that the Logic Layer calls. The Presentation Layer never calls the Data Layer directly.
+
+#### Operations
+
+| Operation | Input | Output |
+|---|---|---|
+| Save a new request | A complete, already-validated request | The stored request with its `id` |
+| List all requests | — | Every stored request (possibly empty) |
+| Find one request | `id` | The request, or "not found" |
+| Update status | `id`, new status | The updated request, or "not found" |
+
+#### Failure Behavior
+
+If a save or update fails, the Data Layer reports the failure to the Logic Layer instead of failing silently, so the Logic Layer can return the `500` cases in API-001 and API-003.
+
+#### Contract Rules
+
+- **The Data Layer stores; it does not decide.** Validation, role checks, and the transition rule all live in the Logic Layer.
+- Data saved stays available for as long as the application is running (REQ-005, AC-REQ-005-01).
+- Whether data survives a restart depends on the storage decision (Q-003). The interface stays the same either way, so the storage can change later without changing the Logic Layer.
+- Only synthetic data is stored (REQ-004).
+
+#### Verification
+
+AC-REQ-005-01 — planned integration test (TASK-106 / TASK-109).
+
+#### Notes / Open Questions
+
+Q-003.
+
+---
+
+### API-005 — Simulated Role Check (inside the Logic Layer)
+
+**Consumer:** Every Logic Layer operation (API-001, API-002, API-003)
+**Provider:** One role-check component in the Logic Layer
+**Purpose:** Keep every role decision in one place.
+**Related Requirements:** REQ-002, REQ-003, REQ-006
+**Status:** Proposed
+
+#### Interaction
+
+Each operation asks the role-check component one question: "may this role perform this action?" No other code compares role values directly.
+
+#### Rules
+
+| Action | Student | Staff |
+|---|---|---|
+| Submit a request (API-001) | Allowed | Not allowed (see C-Q3) |
+| List all requests (API-002) | **Denied** | Allowed |
+| Change a status (API-003) | **Denied** | Allowed |
+
+#### Contract Rules
+
+- All role logic lives in this one component (REQ-006, AC-REQ-006-01), so simulated roles can later be replaced by real login without changes across the codebase.
+- An unknown or missing role is treated as having no permissions.
+- **Known limitation:** in Cycle 1 the role is chosen by the user, not proven. This is acceptable only because the data is synthetic and the system runs locally (ASM-001, ADR-002 TD-02). It must not be used with real data.
+
+#### Verification
+
+AC-REQ-002-03, AC-REQ-003-04 (tests); AC-REQ-006-01 (code review).
+
+#### Notes / Open Questions
+
+C-Q2.
 
 ## Data Contract Guidance
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+Field tables in this file are the authoritative contract for Cycle 1. No OpenAPI or other schema file exists yet. If one is added, this file will link to it rather than repeat every field.
 
-Where an interface exchanges structured data, document the contract at an
-appropriate level of precision.
+**Proposed common error shape** for all API-001 to API-003 failures:
 
-Possible approaches include:
-
-- Markdown field tables;
-- JSON examples;
-- JSON Schema;
-- OpenAPI;
-- protocol definitions;
-- typed interfaces; or
-- another repository-visible schema.
-
-Avoid maintaining several independent definitions of the same contract.
-
-If OpenAPI or another machine-readable artifact becomes authoritative, this
-file may summarize the architectural contract and link to that source instead
-of duplicating every field.
-
-Example:
-
-Authoritative schema:
-/openapi/openapi.yaml
-
-Architecture evidence:
-This file summarizes the interface and links to the authoritative schema.
--->
+| Field | Description |
+|---|---|
+| `error` | Short machine-readable code, for example `MISSING_FIELDS`, `FORBIDDEN`, `INVALID_TRANSITION`, `NOT_FOUND`. |
+| `message` | Human-readable explanation shown to the user. |
+| `missingFields` | Only for `MISSING_FIELDS`: the list of missing field names. |
 
 ## Failure Contracts
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+Shared rules for every contract in this file:
 
-Failure behavior is part of an interface contract.
+- **No false success.** A success response is sent only after the change is actually stored.
+- **No partial changes.** A rejected or failed operation leaves stored data exactly as it was.
+- **Errors are not empty results.** A storage failure is reported as an error, never as an empty list.
+- **Denied means no data.** A denied request returns no request content.
 
-Do not define only the successful path.
-
-Consider relevant conditions such as:
-
-- invalid input;
-- missing required data;
-- unauthorized access;
-- forbidden operations;
-- missing resources;
-- duplicate requests;
-- dependency failures;
-- timeout;
-- concurrency conflicts;
-- unavailable services; or
-- partial completion.
-
-Not every contract needs every failure condition.
-
-Document failures consumers need to understand or that materially affect
-system behavior.
--->
+Not covered in Cycle 1: duplicate submissions (Q-004) and two staff members changing the same request at the same moment (C-Q5).
 
 ## Security Boundaries
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+| Boundary | Rule | Evidence |
+|---|---|---|
+| Presentation → Logic | The Logic Layer re-checks the role and all input. Nothing the Presentation Layer hides or disables counts as enforcement. | API-005 |
+| Logic → Data | Only the Logic Layer talks to the Data Layer. | API-004 |
+| Data content | Synthetic data only; no real names, student IDs, emails, or credentials. | REQ-004, AC-REQ-004-01 |
+| Identity | Roles are simulated and unverified. Accepted Cycle 1 technical debt. | ASM-001, ADR-002 TD-02 |
 
-For contracts crossing trust boundaries, consider:
+## AI and Tool Boundary
 
-- authentication;
-- authorization;
-- confidentiality;
-- integrity;
-- input validation;
-- secret handling;
-- sensitive-data exposure;
-- least privilege;
-- replay behavior; and
-- duplicate-operation concerns.
+**Cycle 1 has no AI in the product.** AI-assisted categorization is deferred until there is a validation plan and a human-approval step (ADR-002, TD-05; R-004). No contract in this file calls an AI model or external tool.
 
-Do not rely on a user interface to enforce an authoritative security rule.
+As the assignment allows, the boundary questions are applied below to the system's one privileged action, **changing a request's status** (API-003):
 
-Reference authoritative security requirements or decisions rather than
-unnecessarily duplicating them.
--->
+| Boundary | Cycle 1 answer |
+|---|---|
+| Read | Staff can read all requests. Students cannot read the staff list. |
+| Infer | The system draws no conclusions on its own; staff choose every status change. |
+| Call | No external APIs or services are called. |
+| Change | Only `status` can change, only forward one step, only by staff. |
+| Approve | The staff member making the change is the human decision-maker; no automatic changes. |
+| Observe | Rejected transitions and denied requests return clear errors and are visible in the log (TASK-108). |
+| Log | Status changes and failed submissions are logged (TASK-108). Recording *who* changed a status is open (Q-007). |
+| Recover | There is no "undo" in Cycle 1; whether a resolved request can be reopened is open (Q-002). Synthetic data can be reset by restarting with fresh data. |
 
 ## Contract Compatibility and Change
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-An interface change may affect multiple components.
-
-Before materially changing an accepted contract:
-
-1. identify consumers;
-2. identify affected requirements and acceptance criteria;
-3. determine compatibility impact;
-4. update provider and consumer evidence;
-5. update tests;
-6. record a significant architectural decision when appropriate; and
-7. preserve enough history to understand the change.
-
-Do not silently change one side of a contract while leaving the other side
-documented against an older interface.
-
-The blank table below is intentional at project start.
--->
-
 | Effective Gate | Contract | Change | Compatibility Impact | Related Evidence |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| A3 | API-001 to API-005 | Initial contracts replace the starter-kit samples | None; no implementation exists yet | Issue #12 |
+
+Before changing an accepted contract, the person making the change updates both the consumer and provider sides, the affected acceptance criteria, and the related tests in the same pull request.
 
 ## Verification and Traceability
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+| Contract | Requirement | Acceptance Criteria | Planned Verification |
+|---|---|---|---|
+| API-001 | REQ-001 | AC-REQ-001-01, AC-REQ-001-02 | TASK-106 unit tests; TASK-109 demo |
+| API-002 | REQ-002 | AC-REQ-002-01 to AC-REQ-002-04 | TASK-106; TASK-109 |
+| API-003 | REQ-003 | AC-REQ-003-01 to AC-REQ-003-05 | TASK-106; TASK-109 |
+| API-004 | REQ-005 | AC-REQ-005-01 | Integration test; TASK-109 |
+| API-005 | REQ-006 | AC-REQ-006-01, AC-REQ-002-03, AC-REQ-003-04 | Code review; TASK-106 |
 
-Important contracts should become traceable to implementation and verification.
+No contract is marked Implemented or Verified; there is no code yet.
 
-A useful evidence chain may look like:
+## Open Contract Questions
 
-REQ-001
-  ->
-AC-REQ-001-01
-  ->
-API-001
-  ->
-Provider implementation
-  ->
-Consumer implementation
-  ->
-Contract or integration test
+Questions marked "New" should be added to [`assumptions-open-questions.md`](../requirements/assumptions-open-questions.md) so they are tracked in one place.
 
-The exact chain will evolve as the project matures.
-
-Do not claim that a contract is Verified until appropriate evidence exists.
--->
+| ID | Question | Affects | Status |
+|---|---|---|---|
+| C-Q1 | What are the allowed request categories? | API-001 | New |
+| C-Q2 | How does the Presentation Layer send the simulated role (for example a role picker that sets a header)? | API-001 to API-005 | New; depends on ADR-001 |
+| C-Q3 | Can staff also submit requests, or only students? | API-001, API-005 | New |
+| C-Q4 | Does the staff list include a "summary"? REQ-002 says yes; AC-REQ-002-01 does not. | API-002 | New |
+| C-Q5 | What happens if two staff change the same request at the same time? | API-003 | New; likely deferred |
+| Q-002 | Can a resolved request be reopened? | API-003 | Existing, open |
+| Q-003 | How is data stored, and must it survive a restart? | API-004 | Existing, open |
+| Q-004 | Should duplicate submissions be prevented? | API-001 | Existing, open |
+| Q-007 | Should the system record who changed a status? | API-003 | Existing, open |
 
 ## Expectations
 
@@ -456,21 +389,3 @@ Do not claim that a contract is Verified until appropriate evidence exists.
 - Update both sides of a contract when it changes.
 - Add verification evidence as implementation matures.
 - Record unresolved behavior explicitly rather than inventing contract details.
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Delete and replace all sample contracts and sample data.
-2. Confirm every retained contract represents an actual architectural interface.
-3. Confirm consumer and provider names agree with component-responsibilities.md.
-4. Confirm component names agree with architecture.md.
-5. Confirm requirement and acceptance-criteria references are valid.
-6. Confirm documented interfaces match the current implementation where implementation exists.
-7. Confirm important failure and security behavior is represented.
-8. Remove all instructional HTML comments.
-
-A reviewer should be able to understand what each side of an important
-architectural boundary is entitled to expect from the other.
--->
