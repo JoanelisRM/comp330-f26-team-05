@@ -1,434 +1,57 @@
 # Architecture Review
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+**Tracking issues:** #15 (Architecture Review Evidence), #16 (Review Workflow Evidence)
 
-This file records a review of the project's current architecture.
-
-An architecture review should evaluate whether the architecture is appropriate
-for the requirements, constraints, risks, quality concerns, and evidence
-currently available.
-
-The goal is NOT to ask:
-
-"Does the architecture diagram look complete?"
-
-The goal is to ask questions such as:
-
-- Does the architecture address important requirements?
-- Are component responsibilities clear?
-- Are important interfaces and dependencies understood?
-- Are architectural assumptions visible?
-- Are important failure and security boundaries explicit?
-- Are significant architectural decisions justified?
-- Are there contradictions among architecture artifacts?
-- What risks or unresolved questions remain?
-- What must change before the architecture can be considered ready?
-
-Reference the authoritative architecture evidence in:
-
-/docs/architecture/architecture.md
-/docs/architecture/component-responsibilities.md
-/docs/architecture/api-contracts.md
-/docs/decisions/
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove ALL instructional comments before the applicable phase-gate submission.
-- Examples inside comments are guidance only.
-- Do not claim that an architecture was reviewed if the review did not occur.
--->
+**Document status:** In progress. This file records the review activity completed so far; remaining sections will be added as the review continues.
 
 ## Review Identification
 
-**Review Date:**  
-**Applicable Gate / Milestone:**  
-**Architecture Baseline / Commit:**  
-**Reviewer(s):**  
+**Review Date:** 2026-10-15
+**Applicable Gate / Milestone:** A3 — Cycle 1 Architecture and Review Package
+**Architecture Baseline / Commit:** `docs/architecture/architecture.md` as proposed in PR #21 (branch `JoanelisRMBranch`, commit `e1e4370`)
+**Reviewer(s):** Hamza Bashar (reviewer); Joanelis Rivera Matos (author of PR #21)
 
-<!--
-TEAM CONTENT REQUIRED
-
-Identify exactly what architecture baseline was reviewed.
-
-Where practical, reference:
-
-- Git commit;
-- branch;
-- phase-gate baseline;
-- architecture version.
-
-Do not leave placeholder metadata in the completed review.
--->
+The review was carried out as a GitHub pull-request review on PR #21. Each finding and author response below can be traced to that PR's conversation.
 
 ## Review Scope
 
-<!--
-TEAM CONTENT REQUIRED
+**Included:** `docs/architecture/architecture.md` (PR #21), checked for consistency with `requirements.md`, `assumptions-open-questions.md`, and ADR-002.
 
-Describe what was included in this review.
-
-Possible evidence may include:
-
-- architecture.md;
-- architecture diagram;
-- component-responsibilities.md;
-- api-contracts.md;
-- ADRs;
-- requirements;
-- acceptance criteria;
-- assumptions;
-- risk register.
-
-Also identify anything explicitly excluded.
-
-Replace this comment with the actual review scope.
--->
-
-## Architecture Summary
-
-<!--
-TEAM CONTENT REQUIRED
-
-Briefly summarize the architecture being reviewed.
-
-Do not reproduce architecture.md.
-
-Capture only enough context for the review findings to make sense.
-
-Replace this comment with the actual summary.
--->
-
-## Review Criteria
-
-<!--
-TEAM CONTENT REQUIRED
-
-Identify the criteria used to evaluate the architecture.
-
-Use only criteria that matter to the project.
-
-Possible areas include:
-
-- requirements alignment;
-- separation of responsibilities;
-- interface clarity;
-- data ownership;
-- security;
-- reliability;
-- maintainability;
-- testability;
-- deployability;
-- observability;
-- failure handling;
-- operational support;
-- scalability;
-- traceability.
-
-EXAMPLE ONLY:
-
-| Review Area | Review Question | Related Evidence |
-|---|---|---|
-| Requirements alignment | Does the architecture provide a credible path to satisfy the current requirements? | requirements.md, architecture.md |
-| Responsibility boundaries | Are important component responsibilities and non-responsibilities explicit? | component-responsibilities.md |
-
-Delete the example and populate the actual table below.
--->
-
-| Review Area | Review Question | Related Evidence |
-|---|---|---|
-|  |  |  |
+**Not yet reviewed:** `component-responsibilities.md`, `data-context.md` (PR #22), and the architecture diagram. `api-contracts.md` is authored by the reviewer and is reviewed by another team member in its own pull request.
 
 ## Findings
 
-<!--
-TEAM CONTENT REQUIRED
-
-Record actual review findings.
-
-Use stable identifiers:
-
-ARF-###
-
-Examples:
-
-ARF-001
-ARF-002
-
-Finding Type may include:
-
-- Strength
-- Concern
-- Gap
-- Risk
-- Question
-- Required Change
-
-Severity / Importance should use a simple team-defined scale when useful.
-
-Suggested values:
-
-- High
-- Medium
-- Low
-
-Do not manufacture findings merely to populate the review.
-
-EXAMPLE ONLY:
-
 | ID | Type | Finding | Importance | Evidence | Required Action |
 |---|---|---|---|---|---|
-| ARF-001 | Concern | Authorization responsibility is described in architecture.md but not explicitly assigned in component-responsibilities.md | Medium | Architecture / component responsibility comparison | Clarify authoritative authorization boundary |
+| ARF-001 | Concern | "Handle large amounts of data" (Scalability) does not fit the size of the project: Cycle 1 is a small slice with synthetic data running locally, so scalability is not driving any design choice. Suggested replacing the qualities with ones based on established requirements: correctness of the status rules Open → In Progress → Resolved (REQ-003); reliability, meaning submitted requests and status changes are not lost while the app is running (REQ-005); and maintainability, meaning role checks are in one place so simulated roles can later be swapped for real login (REQ-006). | Medium | PR #21 review comment on `architecture.md` line 170 | ARA-001 |
+| ARF-002 | Gap | "Database" is listed as the persistence for request and user data, but how data will be stored is still undecided (Q-003 in `assumptions-open-questions.md`). Suggested something like "undecided" so the document does not imply a decision that has not been made. Also raised for consideration: since roles are simulated (ASM-001), is user data actually stored in Cycle 1? | Medium | PR #21 review comment on lines 113–114 | ARA-002 |
+| ARF-003 | Concern | The Architectural Structure section names the parts Presentation, Logic, and Data Layer, but the "Major Components and Responsibilities" and "Interfaces and Dependencies" tables, and the owner column in "Data and State Ownership", still use the template names Web Client, Application Service, and Persistence Layer. Asked for those tables to use Presentation, Logic, and Data Layer, because the names also have to match in `component-responsibilities.md` and `api-contracts.md`. | High | PR #21 review comment on line 26 | ARA-003 |
 
-DELETE the example and populate actual findings below.
--->
+### Author Responses and Dispositions
 
-| ID | Type | Finding | Importance | Evidence | Required Action |
-|---|---|---|---|---|---|
-|  |  |  |  |  |  |
-
-## Requirements Alignment
-
-<!--
-TEAM CONTENT REQUIRED
-
-Evaluate whether important requirements have a plausible architectural
-realization.
-
-Do not attempt to duplicate the complete traceability matrix.
-
-Focus on architectural relationships significant enough to review.
-
-EXAMPLE ONLY:
-
-| Requirement / Concern | Architectural Response | Review Result | Gap / Action |
+| ID | Author Response (summary) | Disposition | Date |
 |---|---|---|---|
-| REQ-001 | Web Client -> Application Service -> Persistence Layer | Adequate | None |
+| ARF-001 | Agreed and will update the qualities. | **Accepted** | 2026-10-15 |
+| ARF-002 | Agreed that no permanent storage is needed; proposed that the system store data only temporarily, in memory, during a run, and offered to update Q-003. | **Accepted**; in-memory storage proposed, pending team confirmation | 2026-10-15 |
+| ARF-003 | The Data and State Ownership owner column was an oversight. The other tables were left as template until `component-responsibilities.md` and `api-contracts.md` are settled. | **Accepted** (data ownership); **Accepted / Deferred** (component and interface tables) | 2026-10-15 |
 
-Populate actual evidence below.
--->
-
-| Requirement / Concern | Architectural Response | Review Result | Gap / Action |
-|---|---|---|---|
-|  |  |  |  |
-
-## Component and Responsibility Review
-
-<!--
-TEAM CONTENT REQUIRED
-
-Review whether component boundaries are clear enough to prevent:
-
-- duplicated responsibility;
-- missing responsibility;
-- ambiguous ownership;
-- security responsibility leakage;
-- architectural coupling that contradicts the intended design.
-
-Reference:
-
-/docs/architecture/component-responsibilities.md
-
-Populate findings only where useful.
--->
-
-| Component / Boundary | Review Result | Concern / Strength | Action |
-|---|---|---|---|
-|  |  |  |  |
-
-## Interface and Dependency Review
-
-<!--
-TEAM CONTENT REQUIRED
-
-Review important interfaces and dependencies.
-
-Consider:
-
-- consumer/provider clarity;
-- input/output expectations;
-- failure behavior;
-- security expectations;
-- external dependencies;
-- compatibility concerns.
-
-Reference:
-
-/docs/architecture/api-contracts.md
--->
-
-| Interface / Dependency | Review Result | Concern / Strength | Action |
-|---|---|---|---|
-|  |  |  |  |
-
-## Quality Attribute Review
-
-<!--
-TEAM CONTENT REQUIRED
-
-Evaluate quality concerns that actually matter to the architecture.
-
-Examples may include:
-
-- security;
-- maintainability;
-- reliability;
-- testability;
-- performance;
-- deployability;
-- recoverability;
-- observability.
-
-Do not include a quality merely because it appears in this comment.
-
-EXAMPLE ONLY:
-
-| Quality Concern | Current Architectural Support | Evidence | Remaining Concern |
-|---|---|---|---|
-| Testability | Business logic separated from presentation boundary | architecture.md, tests | Integration boundary still needs explicit contract tests |
-
-Populate actual review evidence below.
--->
-
-| Quality Concern | Current Architectural Support | Evidence | Remaining Concern |
-|---|---|---|---|
-|  |  |  |  |
-
-## Architecture Risks and Open Questions
-
-<!--
-TEAM CONTENT REQUIRED
-
-Reference rather than duplicate authoritative risks and open questions.
-
-Relevant sources:
-
-/docs/planning/risk-register.md
-/docs/requirements/assumptions-open-questions.md
-
-Capture only those that materially affect architecture readiness.
--->
-
-| Risk / Question | Architectural Impact | Required Resolution / Monitoring |
-|---|---|---|
-|  |  |  |
-
-## Decision Record Review
-
-<!--
-TEAM CONTENT REQUIRED
-
-Review whether significant architectural choices have appropriate decision
-evidence.
-
-Reference ADRs from:
-
-/docs/decisions/
-
-Questions to consider:
-
-- Was a meaningful choice made?
-- Were alternatives considered?
-- Are tradeoffs visible?
-- Does the current architecture agree with the ADR?
-- Has evidence changed enough to revisit the decision?
-
-Populate actual evidence below.
--->
-
-| ADR / Decision | Review Result | Current? | Revisit Needed? | Notes |
-|---|---|---|---|---|
-|  |  |  |  |  |
+No findings were rejected.
 
 ## Required Actions
 
-<!--
-TEAM CONTENT REQUIRED
-
-Convert review findings requiring work into concrete actions.
-
-Use action IDs when useful:
-
-ARA-###
-
-Examples:
-
-ARA-001
-ARA-002
-
-Actions should have:
-
-- clear outcome;
-- owner;
-- target;
-- evidence of completion.
-
-EXAMPLE ONLY:
-
 | Action ID | Required Action | Driver | Owner | Target | Status |
 |---|---|---|---|---|---|
-| ARA-001 | Clarify authorization ownership in component-responsibilities.md | ARF-001 | Architecture & Development Lead | Before A3 review | Planned |
-
-DELETE the example and populate actual actions below.
--->
-
-| Action ID | Required Action | Driver | Owner | Target | Status |
-|---|---|---|---|---|---|
-|  |  |  |  |  |  |
+| ARA-001 | Replace the quality attributes with ones based on REQ-003, REQ-005, and REQ-006 | ARF-001 | Joanelis Rivera Matos |  | Open |
+| ARA-002 | Replace "Database" on lines 113–114 with "undecided" or, once the team confirms it, the in-memory approach; update Q-003 in `assumptions-open-questions.md` to match | ARF-002 | Joanelis Rivera Matos |  | Open |
+| ARA-003 | Use Presentation / Logic / Data Layer names in the Data and State Ownership, Major Components, and Interfaces and Dependencies tables | ARF-003 | Joanelis Rivera Matos |  | Open (tables deferred by author) |
 
 ## Review Conclusion
 
-<!--
-TEAM CONTENT REQUIRED
+**Review Outcome:** Not yet concluded
 
-State the review conclusion based on the evidence.
 
-Suggested outcomes:
-
-- Ready
-- Ready with Minor Actions
-- Conditionally Ready
-- Not Ready
-
-Define the conclusion in terms of the architecture baseline reviewed.
-
-Do not mark architecture Ready merely because the document is complete.
-
-The conclusion should reflect whether significant architecture risks, gaps,
-contradictions, or unresolved decisions remain.
-
-Replace this comment with the actual conclusion and rationale.
--->
-
-**Review Outcome:**  
 
 ## Follow-Up
 
-<!--
-TEAM CONTENT REQUIRED WHEN REVIEW ACTIONS REMAIN
-
-State when or how open architecture-review actions will be checked.
-
-If no follow-up is required, state that explicitly.
--->
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Complete review identification.
-2. Confirm the architecture baseline actually reviewed.
-3. Base findings on real engineering evidence.
-4. Do not invent strengths or concerns.
-5. Confirm component and interface names agree with architecture artifacts.
-6. Reference risks, assumptions, and ADRs rather than duplicating them.
-7. Convert meaningful findings into concrete actions.
-8. Base the review outcome on evidence, not document completeness.
-9. Remove unused sections.
-10. Remove ALL instructional HTML comments.
-
-The completed review should demonstrate critical evaluation of the architecture,
-not merely approval of the team's own design.
--->
+- Re-check `architecture.md` after the author pushes updates to PR #21; resolve each review thread only after the fix is confirmed.
+- Review the remaining artifacts listed under Review Scope and add their findings to this file.
