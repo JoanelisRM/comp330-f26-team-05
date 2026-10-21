@@ -27,6 +27,8 @@ In Cycle 1, CampusConnect will deliver one narrow, end-to-end vertical slice: a 
 | Real authentication / single sign-on | Adds security and integration work beyond Cycle 1 capacity | Revisit after Cycle 1 if required |
 | Native mobile application | Course delivery focuses on one application | Not planned |
 | Production deployment | No institutional production authorization for a course project | Demonstrate release-readiness evidence only |
+| Keeping requests after the application restarts | Q-003 resolved: Cycle 1 stores data in memory only during a run (accepted risk R-013) | Add storage behind the Data Layer interface (API-004) if needed later |
+| Runtime AI behavior in the product | No AI reads, infers, calls or changes anything in Cycle 1 (ADR-002 TD-05) | Revisit only with a validation plan and human approval step |
 
 ## Scope Constraints
 
@@ -61,6 +63,7 @@ In Cycle 1, CampusConnect will deliver one narrow, end-to-end vertical slice: a 
 |---|---|---|---|---|
 | A1 | Initial Cycle 1 scope baseline created | Added SCP-001..004 | Project launch | This file |
 | A2 | Updated scope ownership and requirements coordination for A2 review | No capabilities added or removed | Align responsibilities with the team's A2 work allocation; scope confirmation remains pending | Requirements baseline in /docs/requirements/; traceability.md |
+| A3 | Architecture decisions applied to scope: local Java layered application (ADR-001), in-memory storage with no persistence after restart (Q-003), no runtime AI | Out of Scope: +2 items; no capabilities removed | Keep scope consistent with the A3 architecture | ADR-001, Q-003, `re-estimation.md` (issue #17) |
 
 ## Scope Acceptance Check
 
