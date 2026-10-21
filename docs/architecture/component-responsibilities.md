@@ -1,381 +1,145 @@
 # Component Responsibilities
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+**Owner:** Khaja Shabbir Ahmed · **Backup:** not yet assigned · **Tracking issue:** #11
+**Status:** Proposed — pending team review · **Last updated:** 2026-10-21
+**Based on:** ADR-001 (local Java layered architecture), API-001..API-005 (`api-contracts.md`), the architecture diagram, and REQ-001..REQ-006, as of `main` 6c0c830.
 
-This file defines the responsibilities and boundaries of the system's major
-architectural components.
-
-It should make clear:
-
-- what each component owns;
-- what each component is responsible for;
-- what each component explicitly does NOT own;
-- what each component depends on;
-- what depends on each component; and
-- where important architectural responsibility boundaries exist.
-
-This is NOT a source-code directory, package inventory, class list, or list
-of every technical dependency.
-
-Use the same component names used in:
-
-/docs/architecture/architecture.md
-
-IMPORTANT:
-
-- Text inside HTML comments like this is Starter Kit guidance.
-- Delete instructional comments before the applicable phase-gate submission.
-- Sample rows and sample component descriptions must be replaced with your
-  team's actual architecture.
-- Do not simply rename the sample components and retain the example design.
--->
+This file answers one question: **"Which component is responsible for this behavior, state, or decision?"** Component names match ADR-001, the API contracts and the diagram. There is **no Identity Provider and no external database** in Cycle 1 (ASM-001, ADR-002 TD-02, Q-003).
 
 ## Component Responsibility Matrix
 
-<!--
-TEAM CONTENT REQUIRED
-
-Replace the sample rows below with your team's actual major components.
-
-COLUMN GUIDANCE
-
-Component
-Use the authoritative architectural component name.
-
-Primary Responsibilities
-Describe what the component is accountable for.
-
-Does Not Own
-Explicitly identify responsibilities that could otherwise become ambiguous.
-This helps prevent responsibility leakage and architectural drift.
-
-Depends On
-Identify significant architectural dependencies.
-
-Used By
-Identify significant consumers.
-
-Related Requirements
-Reference requirements materially implemented, constrained, or supported by
-the component.
-
-THE ROWS BELOW ARE SAMPLE DATA.
-DELETE AND REPLACE THEM.
--->
-
 | Component | Primary Responsibilities | Does Not Own | Depends On | Used By | Related Requirements |
 |---|---|---|---|---|---|
-| Web Client | Present workflow information, collect user input, and initiate application actions | Authoritative workflow rules, durable data storage, authentication authority | Application Service | End Users | REQ-001, REQ-002 |
-| Application Service | Enforce workflow behavior, coordinate domain operations, and make application-level authorization decisions | User-interface rendering, identity-provider internals, physical database implementation | Identity Provider, Persistence Layer | Web Client | REQ-001, REQ-002 |
-| Persistence Layer | Provide controlled durable storage and retrieval of application state | Workflow policy, presentation logic, user authentication | Database | Application Service | REQ-001, REQ-002 |
-| Identity Provider | Establish authenticated user identity | Application workflow authorization and business rules | External identity infrastructure | Application Service | REQ-001 |
-
-<!--
-DELETE AND REPLACE ALL SAMPLE ROWS ABOVE.
-
-Do not create a component merely because a repository folder or package exists.
-
-A component should represent a meaningful architectural responsibility or
-boundary.
--->
+| **Presentation Layer** (student view, staff view) | Collect request fields; show the staff request list and status controls; show results, validation errors and denials; send the user's simulated role with each action | Validation rules, role decisions, the status transition rule, storage, IDs or timestamps | Logic Layer (API-001..003) | Student, Staff | REQ-001, REQ-002, REQ-003 |
+| **Logic Layer — Request Workflow** | Validate submissions; assign `id`, `Open` status and `submittedAt`; enforce Open → In Progress → Resolved; reject everything else; report success only after storage succeeds; emit log events | Screen layout, how data is physically stored, role comparisons (asks Role Check) | Role Check (API-005), Data Layer (API-004), Logging | Presentation Layer | REQ-001, REQ-002, REQ-003, REQ-005 |
+| **Logic Layer — Role Check** | The **only** place that decides whether a simulated role may submit, list or change status; treats unknown/missing roles as no permission | Proving identity (roles are unverified in Cycle 1), workflow rules, storage | — | Request Workflow | REQ-002, REQ-003, REQ-006 |
+| **Data Layer** (`RequestRepository`, in-memory) | Store and return synthetic requests and their current status while the app runs; report save/update failures explicitly | Validation, role checks, transition rules, IDs, anything the user sees | — | Request Workflow only | REQ-004, REQ-005 |
+| **Logging** (planned, TASK-108) | Record failed submissions, denied actions and status changes so problems can be diagnosed | Deciding anything; storing request data; real student data or credentials | — | Request Workflow | REQ-003, REQ-004 |
 
 ## Detailed Component Responsibilities
 
-<!--
-TEAM CONTENT REQUIRED WHERE ADDITIONAL DETAIL IS USEFUL
+### Presentation Layer
 
-Use one subsection for each major component when the responsibility matrix
-alone is not sufficient.
-
-Suggested structure:
-
-### Component Name
-
-**Purpose**
-
-Describe why the component exists.
+**Purpose** — The only part of the system people interact with: a student view to submit a request, and a staff view to list requests and change status.
 
 **Owns**
-
-- Important responsibility or state owned by this component.
+- the submission form (category, title, description) and the staff list and status controls;
+- choosing and sending the simulated role (mechanism still open, C-Q2);
+- turning Logic Layer responses into messages (e.g. listing every missing field, "no requests yet", "Open can only move to In Progress").
 
 **Does Not Own**
+- deciding whether input is valid or a role is allowed — it may pre-check or hide buttons for convenience, but **the Logic Layer always re-checks** (API-003 contract rule);
+- creating IDs, statuses or timestamps;
+- calling the Data Layer.
 
-- Related responsibility intentionally assigned elsewhere.
+**Inputs** — user actions; Logic Layer responses and the common error shape (`error`, `message`, `missingFields`).
+**Outputs** — API-001 submit, API-002 list, API-003 status change, each with the simulated role.
 
-**Inputs**
+**Failure Responsibilities** — Show every error the Logic Layer returns. Never show a request as submitted or a status as changed unless the Logic Layer confirmed it. Show a storage error as an error, not as an empty list.
 
-- Important commands, events, requests, or data received.
+**Related Evidence** — REQ-001..003 · AC-REQ-001-02, AC-REQ-002-02 · API-001..003 · ADR-001 · TASK-103, TASK-104, TASK-105
 
-**Outputs**
+### Logic Layer — Request Workflow
 
-- Important responses, events, state changes, or information produced.
+**Purpose** — Holds the rules of the Cycle 1 workflow so they can be tested without the user interface.
 
-**Dependencies**
+**Owns**
+- required-field validation (absent, empty or whitespace = missing) and listing every missing field;
+- assigning `id`, initial status `Open` and `submittedAt`, ignoring any values the client sends;
+- the transition rule Open → In Progress → Resolved, and rejecting all other changes with the status unchanged;
+- "no false success": confirming only after the Data Layer has stored the change;
+- sending log events for failed submissions, denials and status changes.
 
-- Important internal or external dependencies.
+**Does Not Own** — role comparisons (always asks Role Check), physical storage, presentation.
+
+**Inputs** — API-001..003 calls with fields and simulated role.
+**Outputs** — created/updated request or the list; errors `400`, `403`, `404`, `409`, `500` as defined in the contracts; API-004 calls; log events.
 
 **Failure Responsibilities**
 
-Describe what the component is responsible for when:
+| Situation | Responsibility |
+|---|---|
+| Missing fields | Create nothing; return every missing field (AC-REQ-001-02) |
+| Role not allowed | Ask Role Check; return `403` with no request data (AC-REQ-002-03, AC-REQ-003-04) |
+| Transition not allowed | Leave status unchanged; return `409` with the reason (AC-REQ-003-03) |
+| Unknown request `id` | Return `404` |
+| Data Layer fails | Return `500`; never report success; never return an empty list in place of an error (REQ-005) |
 
-- input is invalid;
-- a dependency fails;
-- an operation cannot be completed; or
-- another meaningful failure occurs.
+**Related Evidence** — REQ-001, REQ-002, REQ-003, REQ-005 · AC-REQ-001-01..AC-REQ-003-05 · API-001..004 · ADR-001 · TASK-103..106
 
-**Related Evidence**
+### Logic Layer — Role Check
 
-- Requirements:
-- Acceptance Criteria:
-- API / Interface Contracts:
-- Decisions:
-- Tests:
+**Purpose** — Keep **every** role decision in one place so simulated roles can later be replaced by real login without changes across the codebase (REQ-006).
 
-The two sections below are WORKED EXAMPLES ONLY.
+**Owns** — the permission table: student may submit; only staff may list and change status; unknown or missing role = no permission.
 
-DELETE AND REPLACE THEM WITH ACTUAL COMPONENT DESCRIPTIONS.
--->
+**Does Not Own** — verifying who the user really is. In Cycle 1 the role is chosen by the user, not proven; this is acceptable only with synthetic data on a local machine (ASM-001, ADR-002 TD-02).
 
-### Web Client
+**Inputs** — role + action. **Outputs** — allowed / denied.
 
-<!--
-SAMPLE COMPONENT — DELETE AND REPLACE BEFORE SUBMISSION
--->
+**Failure Responsibilities** — Deny by default when the role is missing or unknown.
 
-**Purpose**
+**Related Evidence** — REQ-006 · AC-REQ-006-01 (code review), AC-REQ-002-03, AC-REQ-003-04 · API-005 · TASK-110
 
-Provide the interactive interface through which users access workflow capabilities.
+### Data Layer
 
-**Owns**
+**Purpose** — Hold the authoritative copy of each synthetic request and its current status while the application runs.
 
-- presentation of workflow information;
-- collection of user input;
-- client-side interaction state; and
-- communication of user-initiated operations to the Application Service.
+**Owns** — save, list all, find one, update status (API-004), using an **in-memory** implementation (Q-003, resolved 2026-10-15). The interface stays the same if storage changes later.
 
-**Does Not Own**
+**Does Not Own** — any decision: validation, roles and transitions live in the Logic Layer. The Presentation Layer never calls it directly.
 
-- authoritative workflow rules;
-- durable workflow state;
-- authentication authority; or
-- direct database access.
+**Inputs** — already-validated requests and status updates from Request Workflow. **Outputs** — stored request(s), "not found", or an explicit failure.
 
-**Inputs**
+**Failure Responsibilities** — Report failures to the Logic Layer; never fail silently. Data is lost when the application stops — an accepted Cycle 1 limitation (R-013).
 
-- user actions;
-- application responses; and
-- authenticated session context.
+**Related Evidence** — REQ-004, REQ-005 · AC-REQ-005-01 · API-004 · ADR-001 · TASK-102
 
-**Outputs**
+### Logging
 
-- application requests; and
-- rendered user-visible state.
+**Purpose** — Make important behavior observable so failures can be diagnosed (A3 "Observe" and "Log" boundary questions).
 
-**Dependencies**
+**Owns** — recording failed submissions, denied actions and status changes (TASK-108).
 
-- Application Service.
+**Does Not Own** — request data (the Data Layer is authoritative), decisions, or real personal data — logs contain synthetic data only (REQ-004).
 
-**Failure Responsibilities**
+**Open** — log destination is TBD (diagram); whether a status-change entry records *who* and *when* depends on Q-007.
 
-The client should present application or connectivity failures without
-manufacturing successful state or silently hiding relevant failures.
-
-**Related Evidence**
-
-- Requirements: `REQ-001`, `REQ-002`
-- API / Interface Contracts: `API-001`, `API-002`
-
-### Application Service
-
-<!--
-SAMPLE COMPONENT — DELETE AND REPLACE BEFORE SUBMISSION
--->
-
-**Purpose**
-
-Coordinate application behavior and enforce workflow-level rules.
-
-**Owns**
-
-- workflow orchestration;
-- application-level validation;
-- application authorization decisions based on trusted identity;
-- coordination of persistence operations; and
-- application-level error handling.
-
-**Does Not Own**
-
-- browser presentation;
-- external authentication mechanisms; or
-- physical database implementation details.
-
-**Inputs**
-
-- authenticated application requests.
-
-**Outputs**
-
-- application responses;
-- workflow state changes; and
-- persistence operations.
-
-**Dependencies**
-
-- Identity Provider;
-- Persistence Layer.
-
-**Failure Responsibilities**
-
-The service must reject invalid or unauthorized operations and must not report
-a successful state change when the required operation was not completed.
-
-**Related Evidence**
-
-- Requirements: `REQ-001`, `REQ-002`
-- API / Interface Contracts: `API-001`, `API-002`
-
-<!--
-DELETE AND REPLACE THE SAMPLE COMPONENT SECTIONS ABOVE.
-
-You do not need a lengthy detailed subsection for every component if the
-responsibility matrix already makes the boundary clear.
-
-Use additional detail where ownership, failure behavior, or architectural
-boundaries would otherwise remain ambiguous.
--->
+**Related Evidence** — REQ-003, REQ-004 · API-003 contract rules · TASK-108 · Q-007
 
 ## Responsibility Boundaries
 
-<!--
-TEAM CONTENT REQUIRED FOR IMPORTANT OR EASILY CONFUSED BOUNDARIES
-
-Document boundaries where ambiguity could create defects or architectural
-drift.
-
-Questions to consider where relevant:
-
-- Where is input validated?
-- Where are authoritative authorization decisions made?
-- Which component owns authoritative state?
-- Which components may modify that state?
-- Where are business rules enforced?
-- Who handles retries or failures?
-- Who converts between internal and external representations?
-- Who owns audit or logging responsibilities?
-- Where are transaction boundaries established?
-
-Do not answer irrelevant questions merely to fill the table.
-
-THE ROWS BELOW ARE SAMPLE DATA.
-DELETE AND REPLACE THEM.
--->
-
 | Concern | Owning Component | Boundary / Rule |
 |---|---|---|
-| Workflow rule enforcement | Application Service | User-interface code may guide users but does not establish authoritative workflow validity. |
-| Persistent workflow state | Persistence Layer / Database | Application components access durable state through the persistence boundary. |
-| User authentication | Identity Provider | The application consumes trusted identity but does not manage user credentials. |
-
-<!--
-DELETE AND REPLACE ALL SAMPLE ROWS ABOVE.
--->
+| Input validation | Logic Layer — Request Workflow | The Presentation Layer may pre-check, but only the Logic Layer decides |
+| Role / permission decisions | Logic Layer — Role Check | No other code compares role values (REQ-006) |
+| Status transition rule | Logic Layer — Request Workflow | Enforced only here; hidden buttons are not enforcement |
+| Authoritative request state | Data Layer | Only the Logic Layer reads or writes it (API-004) |
+| IDs, initial status, timestamps | Logic Layer — Request Workflow | Client-sent values are ignored |
+| User-facing error messages | Presentation Layer | Displays what the Logic Layer returns; does not invent success |
+| Logging | Logic Layer emits, Logging records | No real data or credentials in logs |
+| Human approval point | Staff (via Presentation Layer) | Every status change is chosen by a staff member; nothing changes automatically |
 
 ## Shared Responsibilities
 
-<!--
-Some concerns legitimately span multiple components.
-
-Examples may include:
-
-- security;
-- observability;
-- validation;
-- error handling;
-- performance;
-- logging; or
-- traceability.
-
-Do not assign an important cross-cutting concern vaguely to "everyone."
-
-Describe how responsibility is divided.
-
-THE ROW BELOW IS SAMPLE DATA.
-DELETE AND REPLACE IT.
-
-If this section adds no meaningful information to your architecture, the team
-may remove it after making that decision.
--->
-
 | Concern | Components | Responsibility Split |
 |---|---|---|
-| Security | Web Client, Application Service, Identity Provider | Identity Provider establishes identity; Application Service enforces authorization; Web Client presents permitted actions but is not the authoritative security boundary. |
+| Security (simulated) | Presentation, Role Check, Data Layer | Presentation sends the role; Role Check decides; Data Layer is reachable only through the Logic Layer. Roles are unverified (known limitation). |
+| Error handling | Request Workflow, Data Layer, Presentation | Data Layer reports failures; Request Workflow turns them into contract errors; Presentation shows them |
+| Synthetic data only (REQ-004) | Presentation, Data Layer, Logging | Forms and test data use synthetic content; nothing real is stored or logged |
 
-<!--
-DELETE AND REPLACE THE SAMPLE ROW ABOVE.
--->
+## Consistency Notes for Review
+
+These differences between artifacts were found while writing this map and need an owner decision:
+
+| Artifact | Difference | Suggested Action | Related |
+|---|---|---|---|
+| `architecture.md` | Components and interfaces tables still use template names (Web Client, Application Service, Persistence Layer, **Identity Provider**) | Use the names in this file | ARA-003, R-015 |
+| `architecture-diagram.png` | Says "Q-003 open"; `assumptions-open-questions.md` marks Q-003 resolved (in-memory) on 2026-10-15 | Update the diagram note | Q-003 |
+| `data-context.md` (PR #22) | Lists an Application Database, IAM, Student IDs / emails and AI prompt context | Align with REQ-004, ASM-001, Q-003 and ADR-002 TD-05 | PR #22 |
 
 ## Component Changes
 
-<!--
-Component boundaries may evolve.
-
-When a component is:
-
-- added;
-- removed;
-- split;
-- merged; or
-- given materially different responsibilities;
-
-review and update:
-
-1. this file;
-2. architecture.md;
-3. the architecture diagram;
-4. api-contracts.md;
-5. significant decision records;
-6. affected requirements and acceptance criteria;
-7. tests; and
-8. relevant risk or operational evidence.
-
-Use the table below for meaningful changes.
-
-A blank table is intentional at project start.
--->
-
 | Effective Gate | Component | Change | Reason | Related Decision |
 |---|---|---|---|---|
-|  |  |  |  |  |
-
-## Expectations
-
-- Use the same component names throughout architecture evidence.
-- Assign clear primary responsibilities.
-- Make important non-responsibilities explicit where ambiguity could matter.
-- Identify meaningful architectural dependencies.
-- Document important failure responsibilities.
-- Link components to relevant requirements and interface contracts.
-- Avoid duplicating source-code structure without architectural meaning.
-- Avoid vague shared ownership of critical responsibilities.
-- Update component boundaries when the architecture changes.
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Delete and replace all sample component data.
-2. Confirm every listed component exists in the current architecture.
-3. Confirm component names agree with architecture.md.
-4. Confirm interactions agree with api-contracts.md.
-5. Review for missing, overlapping, or ambiguous responsibilities.
-6. Confirm referenced requirements and contracts exist.
-7. Remove all instructional HTML comments.
-
-A reviewer should be able to use this file to answer:
-
-"Which component is responsible for this behavior, state, or architectural
-decision?"
--->
+| A3 | All | Starter-kit sample components replaced with Presentation / Logic (Request Workflow, Role Check) / Data layers and Logging; Identity Provider removed | Match ADR-001 and the API contracts; no real authentication in Cycle 1 | ADR-001, ADR-002 TD-02, API-001..005 |
