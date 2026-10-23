@@ -1,65 +1,71 @@
 # Schedule
 
-**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Joanelis Rivera Matos
-**Gate:** A2 — Planning & Requirements (initial baseline) · **Last updated:** 2026-09-29
+**Owner:** Joanelis Rivera Matos (Team Lead) · **Backup:** Hamza Bashar
+**Gate:** A3 — Cycle 1 Architecture and Review · **Last updated:** 2026-10-21 (updated under issue #17)
 
 ## Schedule Basis
 
-- Official deadlines come from Sakai. The A1 and A2 dates below are derived from the week numbers in the assignment packages, assuming Week 1 began Monday 2026-08-24 and "end of week" means Sunday. **Verify against Sakai before relying on them.**
-- Internal readiness targets are set 2–3 days before the Sakai date to leave time for PR review and tagging.
-- Dates for A3–A6 will be filled in when those assignments are released.
-- Capacity assumption: see PA-003 in `estimates.md`.
+- Official deadlines come from Sakai. Dates below are **actual dates from repository evidence** (tags, merges) where available; future dates say "per Sakai" until confirmed.
+- The A1 version of this file used week-number estimates that turned out to be wrong (A2 was actually due 2026-09-29), so those estimates have been removed.
+- Internal readiness target: all gate PRs merged and reviewed **at least one day** before the Sakai deadline, so the tag can be created and checked.
+- Capacity assumption: PA-003 in `estimates.md`.
 
 ## Milestones
 
-| ID | Milestone | Target Date | Required By | Dependencies | Owner | Status |
+| ID | Milestone | Target / Actual Date | Required By | Dependencies | Owner | Status |
 |---|---|---|---|---|---|---|
 | MS-001 | Repository created from starter kit | 2026-09-08 | A1 | — | Joanelis Rivera Matos | Done |
-| MS-002 | Roles, charter and AI policy drafted | 2026-09-20 | A1 | MS-001 | Joanelis Rivera Matos | Done (charter has open TBDs) |
-| MS-003 | Kickoff meeting held and decisions recorded | 2026-09-29 | A1 | Team availability | Joanelis Rivera Matos | Done |
-| MS-004 | Working agreements and planning baseline merged | 2026-09-26 | A1 | PR reviews | Khaja Shabbir Ahmed | Done |
-| MS-005 | Initial requirements baseline (REQ-001..003) | 2026-09-26 | A1 | Slice agreed | Sydel Ugwu | Not started |
-| MS-006 | A1 submitted and `a1-project-launch` tag on final commit | 2026-09-27 | A1 | MS-003..005 | Joanelis Rivera Matos | Planned |
-| MS-007 | GitHub Issues, Cycle 1 milestone and Projects board set up | 2026-09-30 | A2 | MS-005 | Khaja Shabbir Ahmed | Planned |
-| MS-008 | A2 planning package complete and `a2-planning-estimate` tag pushed | 2026-10-02 | A2 | MS-007 | Khaja Shabbir Ahmed | Planned |
+| MS-004 | Working agreements and planning baseline merged | 2026-09-25 | A1 | — | Khaja Shabbir Ahmed | Done (PR #1, #2) |
+| MS-003 | Kickoff meeting recorded | 2026-09-29 | A1 | — | Joanelis Rivera Matos | Done (per A2 schedule update) |
+| MS-005 | Requirements baseline REQ-001..006 | 2026-09-29 | A2 | — | Hamza Bashar / Sydel Ugwu | Done |
+| MS-008 | A2 package and `a2-planning-estimate` tag | 2026-09-29 (Sakai 23:55) | A2 | MS-005 | Joanelis Rivera Matos | Done — tag on ffe1842 |
+| MS-009 | A3 architecture PRs merged (overview, diagram, ADR-001, contracts, review, test strategy) | 2026-10-15 | A3 | MS-005 | See `task-plan.md` Part 1 | Done (PRs #21, #23, #24, #25) |
+| MS-010 | `a3-architecture-review` tag | 2026-10-16 | A3 | MS-009 | Joanelis Rivera Matos | Done — tag on 6c0c830, with six A3 issues still open |
+| MS-011 | Architecture baseline accepted (ADR-001 / ADR-002 acceptance recorded; ARA-001..003 closed) | Start of A4 | A4 | MS-010 | Sydel Ugwu / Joanelis Rivera Matos | Not started (R-018, R-015) |
+| MS-012 | Framework / transport decision ADR (TASK-111) | First week of A4 | A4 | MS-011 | Sydel Ugwu | Not started (R-014) |
+| MS-013 | Every member builds and runs the skeleton (TASK-101) | After MS-012 | A4 | MS-012 | Sydel Ugwu | Not started |
+| MS-014 | Integration checkpoint: slice runs end to end on `main` (TASK-109) | Per Sakai A4 date, minus review buffer | A4 | MS-013 | Joanelis Rivera Matos | Not started |
 
 ## Phase-Gate Readiness
 
-| Gate | Internal Readiness Target | Key Evidence / Deliverables | Status |
+| Gate | Sakai Deadline | Key Evidence / Deliverables | Status |
 |---|---|---|---|
-| A1 — Project Launch | 2026-09-26 (Sakai: end of Week 4, grace to end of Week 5 ≈ 2026-09-27) | README, charter, roles, working agreements, AI policy/log, initial requirements, planning baseline, decision record, tag | In progress |
-| A2 — Planning & Estimation | 2026-10-02 (Sakai: end of Week 6 ≈ 2026-10-04, grace ≈ 2026-10-11) | Full planning package, Issues, Milestones, Projects board, team commitments, re-estimation, tag | Not started |
-| A3 — Architecture & Design | TBD (per Sakai) | Architecture, ADRs, component responsibilities, API contracts | Not started |
-| A4 — Implementation & Review | TBD (per Sakai) | Code for the Cycle 1 slice, PR reviews, tests | Not started |
-| A5 — Verification & Release | TBD (per Sakai) | Test evidence, release notes, known limitations | Not started |
-| A6 — Operational Maturity | TBD (per Sakai) | Observability, runbook, postmortem | Not started |
+| A1 — Project Launch | Passed | Launch package | Graded (tag on starter commit; one-time instructor exception) |
+| A2 — Planning & Estimation | 2026-09-29 | Planning package, requirements, issues, tag | Submitted — tag `a2-planning-estimate` → ffe1842 |
+| A3 — Architecture & Review | Per Sakai (tag created 2026-10-16) | Architecture package, ADRs, contracts, review evidence, test strategy, updated planning | Tagged with open items (see `task-plan.md`) |
+| A4 — Implementation & Review | Per Sakai | Cycle 1 slice code, reviewed PRs, tests | Not started |
+| A5 — Verification & Release | Per Sakai | Test evidence, release notes, known limitations | Not started |
+| A6 — Operational Maturity | Per Sakai | Observability, runbook, postmortem | Not started |
 
 ## Major Dependencies
 
 | Predecessor / Dependency | Dependent Work | Schedule Impact if Delayed | Related Risk |
 |---|---|---|---|
-| Cycle 1 slice agreed | Requirements, scope confirmation, estimates | Blocks A1 requirements and all A2 planning | R-005 |
-| Requirements baseline (REQ-001..003) | Traceability, GitHub Issues, A2 estimates | Delays A2 | R-005 |
-| All A1 PRs merged | Moving the `a1-project-launch` tag | Wrong version graded | R-006 |
-| Tech stack decision (ADR-001) and local setup | A3 architecture, A4 implementation | Delays implementation | R-007 |
+| Framework / transport ADR (TASK-111) | All build tasks TASK-101..110 | Blocks A4 entirely | R-014 |
+| ARA-003 component names | Component map (#11), implementation package names | Rework of code and docs | R-015 |
+| Q-002, Q-007 answered | Status change (TASK-105), logging (TASK-108) | Rework of API-003 and tests | R-017 |
+| All gate PRs merged and reviewed | Gate tag | Work missing from the graded snapshot | R-006, R-009 |
 
 ## Near-Term Planning Window
 
 | Time Window | Planned Outcome | Related Milestone(s) | Key Dependency / Risk |
 |---|---|---|---|
-| 2026-09-24 → 2026-09-27 | Finish A1: merge working agreements, planning baseline, requirements; fix charter TBDs; move tag | MS-004, MS-005, MS-006 | R-005, R-006 |
-| 2026-09-28 → 2026-10-04 | A2: refine requirements, create Issues/Milestone/Board, full estimates, team commitments | MS-007, MS-008 | R-008 |
+| 2026-10-21 → A4 start | Close open A3 items (#8, #11, #13, #16, #17, #19); record ADR acceptance; close ARA-001..003 | MS-011 | R-015, R-018 |
+| First A4 week | Framework ADR; skeleton builds on every machine; owners confirm build estimates | MS-012, MS-013 | R-014, R-007 |
+| Remaining A4 weeks | Build TASK-102..108, then integration checkpoint | MS-014 | R-008, R-013 |
 
 ## Schedule Changes
 
 | Date | Milestone / Gate | Previous Target | New Target | Reason | Related Evidence |
 |---|---|---|---|---|---|
-| 2026-09-24 | A1 | End of Week 4 (recommended target) | End of Week 5 (grace window) | Launch evidence not complete by the recommended target | This file, R-005 |
+| 2026-09-24 | A1 | End of Week 4 | End of Week 5 (grace) | Launch evidence late | A1 schedule |
+| 2026-09-29 | A2 | ≈ 2026-10-04 (week-number estimate) | 2026-09-29 | Actual Sakai deadline confirmed by Team Lead | Commit 331fbfb |
+| 2026-10-21 | A4 build | Not scheduled | 2–3 weeks likely, up to 5 (≈ 44 hrs, 26–76) | First build estimates | `estimates.md`, `re-estimation.md` |
 
 ## Schedule Risks
 
 | Risk ID | Affected Milestone / Gate | Schedule Exposure |
 |---|---|---|
-| R-005 | MS-005, A2 | High — requirements are the first dependency for all planning |
-| R-006 | MS-006 | Medium — quick to fix but must be done before grading |
-| R-008 | All gates | Medium — limited capacity across five members |
+| R-014 | MS-012 and all of A4 | High — nothing can be built before the framework decision |
+| R-008 | A4 | Medium–High — the high estimate (76 hrs) may not fit the A4 window |
+| R-009 / R-006 | Every gate | Medium — tagging before work is merged leaves it out of the graded snapshot |
