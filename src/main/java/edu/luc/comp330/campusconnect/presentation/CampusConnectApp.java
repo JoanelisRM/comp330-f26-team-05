@@ -148,7 +148,7 @@ public class CampusConnectApp {
             return;
         }
 
-        sendResult(exchange, 404, "{"status":"NOT_FOUND","message":"Endpoint not found"}");
+        sendResult(exchange, 404, "{\"status\":\"NOT_FOUND\",\"message\":\"Endpoint not found\"}");
     }
 
     private static int mapHttpCode(SupportRequestService.StatusCode code, int successCode) {
@@ -165,7 +165,7 @@ public class CampusConnectApp {
         if (json == null) {
             return null;
         }
-        String pattern = """ + key + """;
+        String pattern = "\"" + key + "\"";
         int idx = json.indexOf(pattern);
         if (idx < 0) {
             return null;
@@ -188,14 +188,14 @@ public class CampusConnectApp {
     private static String toJsonSingleResponse(ServiceResult<SupportRequest> res) {
         if (res.data() == null) {
             return String.format(
-                    "{"status":"%s","missingFields":%s,"message":"%s"}",
+                    "{\"status\":\"%s\",\"missingFields\":%s,\"message\":\"%s\"}",
                     res.statusCode(),
                     res.missingFields(),
                     escape(res.message()));
         }
         SupportRequest r = res.data();
         return String.format(
-                "{"status":"%s","request":{"requestId":"%s","category":"%s","title":"%s","requestStatus":"%s","synthetic":%b}}",
+                "{\"status\":\"%s\",\"request\":{\"requestId\":\"%s\",\"category\":\"%s\",\"title\":\"%s\",\"requestStatus\":\"%s\",\"synthetic\":%b}}",
                 res.statusCode(),
                 escape(r.getRequestId()),
                 escape(r.getCategory()),
@@ -207,18 +207,18 @@ public class CampusConnectApp {
     private static String toJsonListResponse(ServiceResult<List<SupportRequest>> res) {
         if (res.data() == null) {
             return String.format(
-                    "{"status":"%s","message":"%s"}",
+                    "{\"status\":\"%s\",\"message\":\"%s\"}",
                     res.statusCode(),
                     escape(res.message()));
         }
         return String.format(
-                "{"status":"%s","count":%d}",
+                "{\"status\":\"%s\",\"count\":%d}",
                 res.statusCode(),
                 res.data().size());
     }
 
     private static String escape(String s) {
-        return s == null ? "" : s.replace(""", "\"");
+        return s == null ? "" : s.replace("\"", "\\\"");
     }
 
     private static void sendResult(HttpExchange exchange, int statusCode, String json) throws IOException {
