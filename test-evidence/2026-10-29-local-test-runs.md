@@ -42,3 +42,19 @@ Check that the new tests detect the bugs: `CampusConnectAppSubmitTest` run again
 ## RUN-007 — Demo runner
 
 `mvn -q exec:java` on `e2c5958`: seven scripted steps, `totalEvents=7, successes=4, rejectionsOrDenials=3`: submit, reject blank fields, deny student status change, staff list (1 request), Open → In Progress, In Progress → Resolved, reject Resolved → Open.
+
+## RUN-008 — Integration rehearsal for TASK-109 (#39)
+
+A throwaway local copy of `main` (`45f6ad2`) with the code PRs merged in stack order: #57 `663fbd0` → #58 `a897b31` → #61 `49adb8e` → #67 `e2c5958` → #62 `bdff8e0` → #60 `d2737d1`. **Every merge was clean.** Then the TC-013 steps were run on one server process, with no restart (`--serve 18762`).
+
+| Step | Request | Response | Result |
+|---|---|---|---|
+| 1 | `mvn -B test` | `Tests run: 18, Failures: 0, Errors: 0` (service 5, repository 5, HTTP 8), `BUILD SUCCESS` | Pass |
+| 2 | `POST` as `STUDENT` | `201`, `REQ-1001`, `OPEN`, `submittedAt` present | Pass |
+| 3 | `GET` as `STAFF` | `200 {"status":"SUCCESS","count":1}` | **Fail**: no request data (RF-02) |
+| 4 | `PATCH` → `IN_PROGRESS`, then → `RESOLVED` | `200`, `200`; responses show the new status | Pass |
+| 5 | `PATCH` → `OPEN` | `409 INVALID_TRANSITION` | Pass |
+| 6 | `GET` as `STAFF` | `200 {"status":"SUCCESS","count":1}` | **Fail**: status not visible (RF-02) |
+| — | `GET` and `PATCH` as `STUDENT` | `403`, `403` | Pass |
+
+The server log had one line per action (8 actions: 5 `INFO`, 3 `WARN`), each with the simulated role and, where there is one, the request ID.

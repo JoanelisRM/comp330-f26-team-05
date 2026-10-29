@@ -24,7 +24,7 @@
 | TC-010 | Every role decision is made in one place in the Logic Layer | AC-REQ-006-01, R-016 | Code review | Read the code in PRs #57, #58 and #61: only `RoleCheckService` decides; the Presentation Layer passes the header on; the Data Layer has no role logic | Pass (review, 2026-10-29) |
 | TC-011 | The repository and stored data contain synthetic data only | AC-REQ-004-01, REQ-004 | Inspection | Manual inspection before the A4 tag | Not run |
 | TC-012 | `mvn test` builds and the full suite passes | RF-01 | Build | Local runs; CI not configured (R-019) | Pass: #57, #58, PR #67. **Fail:** #61, #62, #60 (RUN-001..004) |
-| TC-013 | End-to-end run on `main` without a restart: submit, list, Open → In Progress → Resolved, list | TASK-109, AC-REQ-005-01, R-013 | System (manual) | Steps below | Not run (no code on `main`) |
+| TC-013 | End-to-end run on `main` without a restart: submit, list, Open → In Progress → Resolved, list | TASK-109, AC-REQ-005-01, R-013 | System (manual) | Steps below | Not run on `main`. Rehearsal on a local merge of all code PRs: **Fail** at steps 3 and 6 (RF-02), other steps pass (RUN-008) |
 
 ## Detailed Test Cases
 
@@ -50,7 +50,9 @@ Automated cases are described by their test methods. Only the manual cases need 
 | 5 | Try Resolved → Open | `409`, status unchanged |
 | 6 | `GET /api/requests` as `STAFF` (no restart) | The request is listed with status Resolved |
 
-**Owner:** Joanelis Rivera Matos (#39) · **Backup:** Khaja Shabbir Ahmed. Record the result here and in `test-evidence/`.
+**Rehearsal (RUN-008, 2026-10-29):** run on a local merge of #57 → #58 → #61 → #67 → #62 → #60 (no conflicts). Steps 1, 2, 4 and 5 pass; steps 3 and 6 return only `{"count":1}`, so the listed status cannot be checked (RF-02). TC-013 cannot pass until TASK-104 (#34) returns the request fields.
+
+**Owner:** Joanelis Rivera Matos (#39) · **Backup:** Khaja Shabbir Ahmed. Record the official run on `main` here and in `test-evidence/`.
 
 ## Regression Cases
 
@@ -67,7 +69,7 @@ Findings from `docs/release/known-limitations.md` and the tests that protect aga
 
 ## Test Execution Results
 
-Commits, commands and output for RUN-001..RUN-007 are in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md). RUN-006 and RUN-007 are on the #33 fix branch (PR #67).
+Commits, commands and output for RUN-001..RUN-008 are in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md). RUN-006 and RUN-007 are on the #33 fix branch (PR #67).
 
 ## Blocked or Not-Run Tests
 
@@ -76,5 +78,5 @@ Commits, commands and output for RUN-001..RUN-007 are in [`test-evidence/2026-10
 | TC-006 | Fails: staff list returns only a count | Joanelis Rivera Matos (TASK-104, #34) | Return the request fields, add an automated test |
 | TC-007, TC-008 | Not automated yet | Hamza Bashar (TASK-106, #36) | Add tests once the code PRs merge |
 | TC-011 | Inspection planned for the tag | Khaja Shabbir Ahmed | Inspect the repository before the A4 tag |
-| TC-013 | No application code on `main` | Joanelis Rivera Matos (#39) | Run after the code PRs merge |
+| TC-013 | No application code on `main`; rehearsal fails at steps 3 and 6 (RF-02) | Joanelis Rivera Matos (#39) | Fix TASK-104, merge the code PRs in the RUN-008 order, then run on `main` |
 | All | No CI (R-019) | Nova Kurul (#47) | Re-run every case in CI once `ci.yml` exists |
