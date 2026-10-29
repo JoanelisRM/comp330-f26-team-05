@@ -1,383 +1,80 @@
 # Test Cases
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
+**Owner:** Khaja Shabbir Ahmed · **Backup:** Hamza Bashar
+**Gate:** A4 — Cycle 1 Construction and Integration · **Last updated:** 2026-10-29 · **Tracking issue:** #53
+**Status:** Proposed — pending review by the backup owner
 
-This file records significant executable or manually verifiable test scenarios.
+**How this file relates to the others.** The mapping of the existing unit tests to acceptance criteria is in `test-strategy.md` (being rewritten in PR #62) and is not repeated here. This file adds the HTTP-level, integration, regression, review and end-to-end cases, and records what actually ran. Raw results: [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md). Automated tests live in `src/test/java` (Maven) and run with `mvn test`.
 
-A test case should define enough information that another engineer can
-understand:
-
-- what behavior is being tested;
-- what requirement or acceptance criterion it supports;
-- what starting condition is required;
-- what actions or inputs are used;
-- what result is expected;
-- what actually occurred when executed.
-
-Not every unit test belongs in this file.
-
-Use this artifact for tests important enough to support requirements,
-acceptance criteria, release verification, defect regression, security,
-integration, or other meaningful engineering evidence.
-
-Automated test code may remain the authoritative executable artifact.
-
-In that case, this file may summarize the important scenario and reference
-the executable test rather than duplicating every detail.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove ALL instructional comments before the applicable phase-gate submission.
-- Examples are guidance only.
-- Do not record a test as Passed unless it was actually executed.
--->
+**Important:** no application code is on `main` yet. Every result below is for an open PR or the #33 fix PR (#67), and must be re-run on `main` after the code merges (TC-013).
 
 ## Test Case Catalog
 
-<!--
-TEAM CONTENT REQUIRED
-
-Use stable test-case IDs:
-
-TC-###
-
-Examples:
-
-TC-001
-TC-002
-TC-003
-
-COLUMN GUIDANCE
-
-Test Case
-Short descriptive title.
-
-Related Requirement / Criterion
-Reference REQ and AC identifiers.
-
-Type
-Examples:
-- Functional
-- Negative
-- Security
-- Regression
-- Integration
-- Acceptance
-- Recovery
-
-Automation
-Suggested values:
-- Automated
-- Manual
-- Mixed
-
-Status
-Suggested values:
-- Draft
-- Ready
-- Passed
-- Failed
-- Blocked
-- Not Run
-- Deprecated
-
-EXAMPLE ONLY:
-
-| ID | Test Case | Related Requirement / Criterion | Type | Automation | Status |
+| ID | Test Case | Requirement / Finding | Type | How Verified | Status (Run) |
 |---|---|---|---|---|---|
-| TC-001 | Submit valid workflow request | REQ-001 / AC-REQ-001-01 | Acceptance | Automated | Ready |
-| TC-002 | Reject missing required description | REQ-001 / AC-REQ-001-02 | Negative | Automated | Ready |
-
-DELETE the examples and populate the actual table below.
--->
-
-| ID | Test Case | Related Requirement / Criterion | Type | Automation | Status |
-|---|---|---|---|---|---|
-|  |  |  |  |  |  |
+| TC-001 | Valid submission over HTTP returns `201` with a system-assigned ID, status Open, `description` and `submittedAt`; ID, status or time sent by the client are ignored | REQ-001, AC-REQ-001-01, API-001, RF-05 | Integration (HTTP) | `CampusConnectAppSubmitTest`: `validSubmission…`, `clientSuppliedIdStatusAndTimeAreIgnored` | Pass (RUN-006) |
+| TC-002 | Missing, whitespace-only or malformed fields return `400`, list every missing field as a valid JSON array, and store nothing | AC-REQ-001-02, RF-04 | Negative | `CampusConnectAppSubmitTest`: `missingFields…`, `whitespaceOnlyFields…`, `malformedBody…` | Pass (RUN-006); Fail on PR #61 (RUN-005 #7) |
+| TC-003 | Staff role or no role cannot submit (`403`); nothing stored | REQ-001, API-005 | Security | `CampusConnectAppSubmitTest`: `staffOrMissingRoleCannotSubmit` | Pass (RUN-006) |
+| TC-004 | Quotes and backslashes in a field are stored and returned exactly | RF-03, REQ-005 | Boundary | `CampusConnectAppSubmitTest`: `quotesAndBackslashesInFieldsArePreserved` | Pass (RUN-006); Fail on PR #61 (RUN-005 #2) |
+| TC-005 | A storage failure returns `500` and never reports success | API-001 failure table, REQ-005 | Failure path | `CampusConnectAppSubmitTest`: `storageFailureReturns500AndNeverSuccess` | Pass (RUN-006); no response on PR #61 |
+| TC-006 | Staff list over HTTP shows each request's ID, title, submission time and status | AC-REQ-002-01, RF-02 | Integration (HTTP) | Manual (`curl`); automated test to come with TASK-104 (#34) | **Fail** (RUN-005 #3) |
+| TC-007 | Empty list returns no requests and a "no requests" message, with no error | AC-REQ-002-02 | Boundary | Not yet automated | Not run |
+| TC-008 | Submit → staff list → change status → list again shows the request with its latest status, without a restart | AC-REQ-002-04, AC-REQ-003-05, AC-REQ-005-01 | Integration | Not yet automated; the demo runner covers part of it (RUN-007) | Not run |
+| TC-009 | Student cannot open the staff list or change a status; the status stays unchanged | AC-REQ-002-03, AC-REQ-003-04 | Security | `SupportRequestServiceTest#roleCheckDeniesStudentFromListingOrUpdatingRequests` (PR #62) | Pass only with the RF-01 fix (RUN-004b); build fails as-is |
+| TC-010 | Every role decision is made in one place in the Logic Layer | AC-REQ-006-01, R-016 | Code review | Read the code in PRs #57, #58 and #61: only `RoleCheckService` decides; the Presentation Layer passes the header on; the Data Layer has no role logic | Pass (review, 2026-10-29) |
+| TC-011 | The repository and stored data contain synthetic data only | AC-REQ-004-01, REQ-004 | Inspection | Manual inspection before the A4 tag | Not run |
+| TC-012 | `mvn test` builds and the full suite passes | RF-01 | Build | Local runs; CI not configured (R-019) | Pass: #57, #58, PR #67. **Fail:** #61, #62, #60 (RUN-001..004) |
+| TC-013 | End-to-end run on `main` without a restart: submit, list, Open → In Progress → Resolved, list | TASK-109, AC-REQ-005-01, R-013 | System (manual) | Steps below | Not run (no code on `main`) |
 
 ## Detailed Test Cases
 
-<!--
-TEAM CONTENT REQUIRED
+Automated cases are described by their test methods. Only the manual cases need steps.
 
-Use a detailed subsection for important test cases.
+### TC-006 — Staff list over HTTP
 
-Suggested structure:
-
-### TC-### — Test Case Name
-
-**Purpose**
-What behavior is this test intended to verify?
-
-**Related Requirement(s)**
-REQ-###
-
-**Related Acceptance Criteria**
-AC-REQ-###-##
-
-**Type**
-Functional / Negative / Security / Regression / Integration / Acceptance / etc.
-
-**Automation**
-Automated / Manual / Mixed
-
-**Environment**
-Where the test is executed.
-
-#### Preconditions
-
-What must already be true?
-
-#### Test Data
-
-What meaningful data is required?
-
-Do not include passwords, tokens, or protected data.
-
-#### Steps
-
-1.
-2.
-3.
-
-#### Expected Result
-
-State observable behavior.
-
-#### Actual Result
-
-Populate only after execution.
-
-#### Evidence
-
-Reference:
-- automated test;
-- CI run;
-- runtime evidence;
-- screenshot where appropriate;
-- issue;
-- log;
-- other reviewable evidence.
-
-#### Status
-
-Not Run / Passed / Failed / Blocked
-
-#### Notes / Defects
-
-Reference defects discovered during execution.
-
-Copy and adapt this structure for each significant test case.
--->
-
-## Positive-Path Cases
-
-<!--
-TEAM CONTENT REQUIRED
-
-Ensure important valid workflows are covered.
-
-Do not assume successful-path testing alone demonstrates correctness.
-
-Use this section as an index or summary if useful.
-
-Remove this section if the catalog already provides enough clarity.
--->
-
-| Test Case ID | Behavior Verified | Result |
+| Step | Action | Expected Result |
 |---|---|---|
-|  |  |  |
+| 1 | Start the server (`--serve`) and submit two requests as `STUDENT` | Two `201` responses |
+| 2 | `GET /api/requests` with `X-Simulated-Role: STAFF` | `200`; both requests with ID, title, submission time and status |
 
-## Negative-Path Cases
+**Actual (RUN-005):** `{"status":"SUCCESS","count":2}`, a count with no request data. **Decision:** Fix, under TASK-104 (#34).
 
-<!--
-TEAM CONTENT REQUIRED
+### TC-013 — End-to-end on `main`
 
-Identify important invalid or prohibited conditions.
+| Step | Action | Expected Result |
+|---|---|---|
+| 1 | `mvn test` on the latest `main` | `BUILD SUCCESS`, all tests pass |
+| 2 | Start the server; submit one request as `STUDENT` | `201`, ID `REQ-1001`, status Open |
+| 3 | `GET /api/requests` as `STAFF` | The request is listed with status Open |
+| 4 | Change the status to In Progress, then to Resolved, as `STAFF` | Two `200` responses |
+| 5 | Try Resolved → Open | `409`, status unchanged |
+| 6 | `GET /api/requests` as `STAFF` (no restart) | The request is listed with status Resolved |
 
-Possible areas include:
-
-- missing required input;
-- malformed input;
-- unauthorized action;
-- invalid state transition;
-- duplicate operation;
-- missing resource;
-- dependency failure.
-
-Do not create negative cases merely to increase test count.
-
-Focus on meaningful behavior.
--->
-
-| Test Case ID | Negative Condition | Expected Protection / Behavior | Result |
-|---|---|---|---|
-|  |  |  |  |
-
-## Boundary and Edge Cases
-
-<!--
-TEAM CONTENT REQUIRED WHEN RELEVANT
-
-Boundary testing may include:
-
-- empty values;
-- maximum/minimum values;
-- duplicate input;
-- unusual sequence;
-- state transition boundary;
-- timing or ordering edge.
-
-Do not manufacture edge cases that are irrelevant to the system.
-
-Populate actual meaningful cases below.
--->
-
-| Test Case ID | Boundary / Edge Condition | Why It Matters | Result |
-|---|---|---|---|
-|  |  |  |  |
-
-## Security Cases
-
-<!--
-TEAM CONTENT REQUIRED WHEN SECURITY BEHAVIOR IS TESTED
-
-Reference:
-
-/docs/security/permission-boundaries.md
-
-Possible security test scenarios:
-
-- unauthenticated request denied;
-- unauthorized user denied;
-- resource ownership enforced;
-- invalid token handled;
-- sensitive data not exposed.
-
-Do not treat UI visibility as security verification.
-
-Populate actual security cases below.
-
-Remove this section if security cases are indexed elsewhere.
--->
-
-| Test Case ID | Security Rule | Expected Result | Evidence |
-|---|---|---|---|
-|  |  |  |  |
+**Owner:** Joanelis Rivera Matos (#39) · **Backup:** Khaja Shabbir Ahmed. Record the result here and in `test-evidence/`.
 
 ## Regression Cases
 
-<!--
-TEAM CONTENT REQUIRED WHEN DEFECTS HAVE BEEN FIXED
+Findings from `docs/release/known-limitations.md` and the tests that protect against them.
 
-Reference:
-
-/docs/quality/defect-log.md
-
-A meaningful fixed defect should often produce regression coverage when
-practical.
-
-EXAMPLE ONLY:
-
-| Test Case ID | Defect ID | Behavior Protected | Evidence |
+| Finding | Behavior Protected | Test Case | Evidence |
 |---|---|---|---|
-| TC-014 | DEF-006 | Whitespace-only description rejected | Automated integration test |
-
-DELETE the example and populate actual regression cases below.
--->
-
-| Test Case ID | Defect ID | Behavior Protected | Evidence |
-|---|---|---|---|
-|  |  |  |  |
+| RF-01 | The project compiles and every test runs | TC-012 | RUN-003, RUN-004 |
+| RF-02 | The staff list returns the requests, not only a count | TC-006 | RUN-005 #3 |
+| RF-03 | Quotes and backslashes are not cut off | TC-004 | RUN-006 |
+| RF-04 | Error responses are valid JSON | TC-002 | RUN-006 |
+| RF-05 | The submit response includes `submittedAt` and `description` | TC-001 | RUN-006 |
+| RF-06 | `?role=` works in any position | None. Low severity; disposition open | RUN-005 #5 |
 
 ## Test Execution Results
 
-<!--
-TEAM CONTENT REQUIRED AS TESTS ARE EXECUTED
-
-Preserve actual execution results.
-
-Do not change a failed result to Passed without preserving evidence that the
-failure was corrected and the test rerun.
-
-Use execution identifiers when useful:
-
-TEST-RUN-###
-
-EXAMPLE ONLY:
-
-| Run ID | Date | Test Case | Environment | Result | Evidence | Defect / Follow-Up |
-|---|---|---|---|---|---|---|
-| TEST-RUN-001 | YYYY-MM-DD | TC-001 | CI | Passed | CI run reference | None |
-
-DELETE the example and populate actual executions below.
--->
-
-| Run ID | Date | Test Case | Environment | Result | Evidence | Defect / Follow-Up |
-|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |
+Commits, commands and output for RUN-001..RUN-007 are in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md). RUN-006 and RUN-007 are on the #33 fix branch (PR #67).
 
 ## Blocked or Not-Run Tests
 
-<!--
-TEAM CONTENT REQUIRED
-
-Do not silently omit tests that were expected but could not run.
-
-Document:
-
-- which test;
-- why it could not execute;
-- release impact;
-- planned action.
-
-A blank table is correct when all planned important tests were executed.
--->
-
-| Test Case ID | Reason Not Executed | Impact | Planned Action |
+| Test Case | Reason | Owner | Next Action |
 |---|---|---|---|
-|  |  |  |  |
-
-## Test Case Changes
-
-<!--
-TEAM CONTENT REQUIRED WHEN TEST CASES CHANGE MATERIALLY
-
-A test case may change because:
-
-- requirement changed;
-- acceptance criterion changed;
-- interface changed;
-- defect exposed a missing condition;
-- test expectation was incorrect.
-
-Do not silently rewrite test history when a meaningful expectation changes.
-
-A blank table is intentional at project start.
--->
-
-| Date / Gate | Test Case ID | Change | Reason | Related Evidence |
-|---|---|---|---|---|
-|  |  |  |  |  |
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Include only test cases meaningful to project verification.
-2. Confirm requirement and acceptance-criteria references exist.
-3. Include negative and boundary behavior where relevant.
-4. Verify security cases against actual permission rules.
-5. Link fixed defects to regression tests where practical.
-6. Record actual execution results honestly.
-7. Do not claim Passed unless a test actually ran successfully.
-8. Record blocked or unexecuted important tests.
-9. Preserve meaningful test-case changes.
-10. Remove ALL instructional HTML comments.
-
-The completed artifact should show what important behaviors were tested and
-what actually happened when those tests were executed.
--->
+| TC-006 | Fails: staff list returns only a count | Joanelis Rivera Matos (TASK-104, #34) | Return the request fields, add an automated test |
+| TC-007, TC-008 | Not automated yet | Hamza Bashar (TASK-106, #36) | Add tests once the code PRs merge |
+| TC-011 | Inspection planned for the tag | Khaja Shabbir Ahmed | Inspect the repository before the A4 tag |
+| TC-013 | No application code on `main` | Joanelis Rivera Matos (#39) | Run after the code PRs merge |
+| All | No CI (R-019) | Nova Kurul (#47) | Re-run every case in CI once `ci.yml` exists |
