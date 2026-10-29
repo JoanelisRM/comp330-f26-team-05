@@ -46,3 +46,5 @@ For significant AI-assisted work requiring more detailed verification evidence, 
 - Record what was actually done with the AI output.
 - Link detailed verification evidence when appropriate.
 - Keep entries concise but specific enough to be reviewable.
+
+| 2026-10-29 | Gemini | Issue #44: Drafted reusable Pull Request template (.github/pull_request_template.md) | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
