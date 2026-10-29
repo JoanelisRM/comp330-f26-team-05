@@ -36,36 +36,13 @@ The architecture is provisional. It may be prone to change, but chances are low 
 
 ## Major Components and Responsibilities
 
-<!--
-TEAM CONTENT REQUIRED
-
-Summarize the major architectural components.
-
-Keep this table at a high level. More detailed responsibility boundaries
-belong in:
-
-/docs/architecture/component-responsibilities.md
-
-Use stable component names consistently across:
-
-- architecture.md;
-- component-responsibilities.md;
-- api-contracts.md;
-- architecture diagrams;
-- decision records;
-- implementation; and
-- verification evidence.
-
-THE ROWS BELOW ARE SAMPLE DATA.
-DELETE AND REPLACE THEM WITH YOUR ACTUAL COMPONENTS.
--->
-
 | Component | Primary Responsibility | Key Dependencies |
 |---|---|---|
-| Web Client | Provides the user-facing workflow interface and communicates user actions to the application service. | Application Service |
-| Application Service | Enforces application workflows and coordinates domain operations. | Identity Provider, Persistence Layer |
-| Persistence Layer | Stores and retrieves durable workflow data. | Database |
-| Identity Provider | Authenticates users and provides trusted identity information. | External service |
+| Presentation Layer | Collect request fields, show the staff request list and status controls, show results, validation errors and denials, and send the user's simulated role with each action | Logic Layer |
+| Logic Layer: Request Workflow | Validate submissions, assigns `id`, `Open` status and `submittedAt,` enforces Open → In Progress → Resolved, reject everything else; report success only after storage succeeds, and emit log events | Role Check, Data Layer, Logging |
+| Logic Layer: Role Check | The only place that decides whether a simulated role may submit, list or change status, and treats unknown/missing roles as no permission | - | 
+| Data Layer | Store and return synthetic requests and their current status while the app runs, and reports save/update failures explicitly | — |
+| Logging (planned, TASK-108) | Record failed submissions, denied actions and status changes so problems can be diagnosed | — |
 
 <!--
 Do not list every class, file, package, or library.
