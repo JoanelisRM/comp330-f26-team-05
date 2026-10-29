@@ -107,6 +107,17 @@ public class CampusConnectApp {
     }
 
     private void handleRequestsEndpoint(HttpExchange exchange) throws IOException {
+        try {
+            routeRequest(exchange);
+        } catch (RuntimeException e) {
+            // API-001: a request that could not be stored must never be reported as a success.
+            auditLogger.log("ERROR", "REQUEST_FAILED", null, "N/A", "FAILED",
+                    e.getClass().getSimpleName() + ": " + e.getMessage());
+            sendResult(exchange, 500, "{\"status\":\"ERROR\",\"message\":\"Request could not be completed\"}");
+        }
+    }
+
+    private void routeRequest(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod().toUpperCase();
         String path = exchange.getRequestURI().getPath();
         String role = exchange.getRequestHeaders().getFirst("X-Simulated-Role");
@@ -290,12 +301,14 @@ public class CampusConnectApp {
         }
         SupportRequest r = res.data();
         return String.format(
-                "{\"status\":\"%s\",\"request\":{\"requestId\":\"%s\",\"category\":\"%s\",\"title\":\"%s\",\"requestStatus\":\"%s\",\"synthetic\":%b}}",
+                "{\"status\":\"%s\",\"request\":{\"requestId\":\"%s\",\"category\":\"%s\",\"title\":\"%s\",\"description\":\"%s\",\"requestStatus\":\"%s\",\"submittedAt\":\"%s\",\"synthetic\":%b}}",
                 res.statusCode(),
                 escape(r.getRequestId()),
                 escape(r.getCategory()),
                 escape(r.getTitle()),
+                escape(r.getDescription()),
                 r.getStatus(),
+                r.getSubmittedAt(),
                 r.isSynthetic());
     }
 
