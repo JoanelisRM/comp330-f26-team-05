@@ -1,5 +1,9 @@
 # Tests
 
+> **CampusConnect:** this is a Maven project, so the JUnit 5 tests live in
+> `src/test/java`, not in this folder. Run them with `mvn test`. Test cases and
+> results: [`docs/testing/test-cases.md`](../docs/testing/test-cases.md).
+
 This directory contains executable tests used to verify the behavior of the
 project's source code.
 
