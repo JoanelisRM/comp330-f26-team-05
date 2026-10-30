@@ -1,7 +1,7 @@
 # Code Review Evidence — Assignment 4
 
 **Owner:** Hamza Bashar (Quality & Review Lead) · **Backup / Reviewer:** Khaja Shabbir Ahmed
-**Gate:** A4 — Cycle 1 Construction and Integration · **Tracking issue:** #50
+**Gate:** A4 — Cycle 1 Construction and Integration · **Tracking issues:** #50 (Code Review Evidence), #45 (Reviewed Pull Request Evidence)
 **Last updated:** 2026-10-29 · **Status as of:** `main` at `c80f777`
 
 This file indexes the pull request reviews Hamza Bashar carried out during A4. The authoritative evidence is the review threads on each PR. This file summarizes each finding's risk category, fix direction, required evidence, and outcome, so a reviewer can see in one place what was raised and what happened to it.
@@ -22,6 +22,19 @@ This file indexes the pull request reviews Hamza Bashar carried out during A4. T
 | #62 | Sydel Ugwu | Unit tests | CRF-011..CRF-014 | Request changes | Open; no update since the review |
 | #66 | Khaja Shabbir Ahmed | Risk register and known limitations | CRF-015..CRF-019 | Request changes → **Approved** | Fixed in `38ba88a`; merged `136cc55` |
 | #74 | Khaja Shabbir Ahmed | Requirement and task traceability | CRF-020..CRF-022 | Request changes → **Approved** | Fixed in `fef4b2a`, `a99c99a`; merged `c80f777` |
+
+## Reviewed Pull Request Evidence (#45)
+
+A4 asks for at least one meaningful pull request showing review comments, author response, status checks, and a merge or no-merge decision. The strongest examples:
+
+| PR | Review Comments | Author Response | Status Checks | Decision |
+|---|---|---|---|---|
+| **#66** Risk register and known limitations (Khaja) | 5 findings, CRF-015..CRF-019, each with category, fix direction and evidence | Fixed in `38ba88a`, with a "Fixed" reply on each thread; `main` merged in, keeping all AI-log rows | None: no CI existed (R-019); reviewer and author ran `mvn test` locally instead | Request changes → fixes checked → **Approved** → merged `136cc55` |
+| **#74** Traceability (Khaja) | 3 findings, CRF-020..CRF-022 | Fixed in `fef4b2a` and `a99c99a`, with a "Fixed" reply on each thread | None (R-019) | Request changes → fixes checked → **Approved** → merged `c80f777` |
+| **#56** ADR-0003 (Sydel) | 5 findings, CRF-001..CRF-005; follow-up CRF-023 | ADR fixed in `47b4379`, each fix labelled with its CRF number | None (R-019) | Request changes → **Approved** (code follow-up requested, CRF-023) |
+| **#62** Unit tests (Sydel) | 4 findings, CRF-011..CRF-014; reviewer ran `mvn test` (18/18) | No response yet | None (R-019) | **Request changes** (no-merge decision stands) |
+
+**Status checks:** no pull request had a CI check during these reviews, because `ci.yml` was still the starter workflow (R-019). CI was merged to `main` in PR #72 (`fca18d9`, 2026-10-29 23:52), so pull requests opened or updated after that run it. The first pull request with a passing CI check will be added here, and #45 can close.
 
 ## Findings
 
@@ -93,7 +106,7 @@ Recorded so the review shows judgment, not only the comments that were posted.
 ## Process Observations
 
 - PRs #57 and #58 reached `main` through #61 before their own reviews finished (R-020). The #58 findings now apply to merged code.
-- PRs #61 and #68 were merged before the requested review by Hamza took place.
+- PR #68 was merged before Hamza's requested review took place (Joanelis had reviewed it). PR #67 was merged into #61's branch without a review.
 - No PR had a CI check during these reviews (R-019); build and test evidence came from local `mvn test` runs by the reviewer and author.
 
 ## AI Assistance
