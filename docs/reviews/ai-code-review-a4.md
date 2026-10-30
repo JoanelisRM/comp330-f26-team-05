@@ -1,0 +1,5 @@
+# AI-Generated Code Review Evidence (A4)
+
+## Specific Review Instances
+*   **CI/CD Workflow (ci.yml):** AI was used to draft the GitHub Actions workflow. Verified that it triggers on PRs and runs standard Maven tests without exposing secrets.
+*   **Data Context Updates:** AI assisted in drafting the updated boundary definitions. Human review verified it strictly aligns with the "synthetic data only" and "no runtime AI" constraints from the A3 instructor feedback.
