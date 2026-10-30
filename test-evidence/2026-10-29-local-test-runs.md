@@ -58,3 +58,20 @@ A throwaway local copy of `main` (`45f6ad2`) with the code PRs merged in stack o
 | — | `GET` and `PATCH` as `STUDENT` | `403`, `403` | Pass |
 
 The server log had one line per action (8 actions: 5 `INFO`, 3 `WARN`), each with the simulated role and, where there is one, the request ID.
+
+## RUN-009 — `main` after the code merged (#43)
+
+`main` at `136cc55` (code unchanged since the #61 merge `7ee567c`). `mvn -B test`: `Tests run: 13, Failures: 0, Errors: 0` (repository 5, HTTP 8), `BUILD SUCCESS`. Then one server process (`--serve`), no restart:
+
+| Step | Request | Response | Result |
+|---|---|---|---|
+| 1 | `POST` as `STUDENT` | `201`, `REQ-1001`, `OPEN`, with `description` and `submittedAt` | Pass |
+| 2 | `PATCH` `{"newStatus":"RESOLVED"}` as `STAFF` (from Open) | `409 INVALID_TRANSITION` | Pass |
+| 3 | `PATCH` `{"newStatus":"IN_PROGRESS"}` as `STUDENT` | `403 ROLE_DENIED` | Pass |
+| 4 | `PATCH` → `IN_PROGRESS`, then → `RESOLVED` as `STAFF` | `200`, `200`; responses show the new status | Pass |
+| 5 | `PATCH` → `OPEN` as `STAFF` (from Resolved) | `409 INVALID_TRANSITION` | Pass |
+| 6 | `GET` as `STUDENT` | `403 ROLE_DENIED` | Pass |
+| 7 | `GET` as `STAFF` | `200 {"status":"SUCCESS","count":1}` | **Fail**: no request data (RF-02) |
+| 8 | `GET ?x=1&role=STAFF` | `403 ROLE_DENIED` (role read as missing) | RF-06 still present |
+
+Re-run after #71 and #70 merged: `main` at `63438d8`, `mvn -B test`: `Tests run: 22, Failures: 0, Errors: 0` (role check 9, repository 5, HTTP 8), `BUILD SUCCESS`. The application code is the same as in the HTTP check above.
