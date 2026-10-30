@@ -1,345 +1,109 @@
 # CI Evidence
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file records evidence produced by Continuous Integration (CI).
-
-CI is useful because it provides repeatable, repository-connected evidence that
-important automated checks executed against a specific code baseline.
-
-CI evidence may include:
-
-- build result;
-- automated test result;
-- static analysis;
-- formatting or linting checks;
-- security scanning where actually used;
-- packaging;
-- deployment validation.
-
-A green CI result does NOT automatically mean:
-
-- all requirements are satisfied;
-- all acceptance criteria are verified;
-- the release is ready;
-- the system has no defects.
-
-CI proves only what its configured checks actually evaluate.
-
-This file should make that boundary clear.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove ALL instructional comments before the applicable phase-gate submission.
-- Examples are guidance only.
-- Do not fabricate CI runs or claim checks exist when they do not.
--->
+**Owner:** Hamza Bashar (Quality & Review Lead) · **Backup / Reviewer:** Khaja Shabbir Ahmed
+**Gate:** A4 — Cycle 1 Construction and Integration · **Tracking issue:** #48 (CI/CD Results Evidence)
+**Last updated:** 2026-10-30 · **Status as of:** `main` at `2540879`
 
 ## CI System
 
-<!--
-TEAM CONTENT REQUIRED
+**CI Platform:** GitHub Actions
+**Workflow / Pipeline:** `Java CI with Maven` (job: `build`)
+**Configuration Location:** [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml), added in PR #72 (#47, TASK-107), merged `fca18d9` on 2026-10-29
 
-Describe the actual CI system used.
-
-Examples might include:
-
-- GitHub Actions;
-- GitLab CI;
-- Azure Pipelines;
-- another configured system.
-
-Identify:
-
-- workflow or pipeline name;
-- trigger conditions;
-- repository location;
-- what checks it performs.
-
-Replace this comment with the team's actual CI setup.
--->
-
-**CI Platform:**  
-**Workflow / Pipeline:**  
-**Configuration Location:**  
+Before PR #72, `ci.yml` was the starter workflow, which could only be run manually and failed on purpose (R-019). No pull request had a CI check before 2026-10-29 23:04.
 
 ## CI Checks
 
-<!--
-TEAM CONTENT REQUIRED
-
-Document important checks actually performed by CI.
-
-Do not list hypothetical checks.
-
-EXAMPLE ONLY:
-
 | Check | Purpose | Command / Mechanism | Required to Pass? |
 |---|---|---|---|
-| Unit tests | Verify isolated application logic | pytest | Yes |
-| Integration tests | Verify service and persistence interaction | pytest integration suite | Yes |
+| Set up JDK 17 | Build with the Java version in `pom.xml` | `actions/setup-java@v3` (Temurin 17, Maven cache) | Yes (job fails if setup fails) |
+| Build | Compile the code and package the application | `mvn -B package --file pom.xml` (also runs the unit tests) | Yes |
+| Run Tests | Run the automated test suite | `mvn test` | Yes |
 
-DELETE the example and populate actual CI checks below.
--->
-
-| Check | Purpose | Command / Mechanism | Required to Pass? |
-|---|---|---|---|
-|  |  |  |  |
+A failing build or test fails the job, and GitHub shows the check as failed on the pull request.
 
 ## Trigger Conditions
 
-<!--
-TEAM CONTENT REQUIRED
+- **Pull request** to `main`: runs on the PR's code each time the PR is opened or updated.
+- **Push** to `main`: runs after each merge.
 
-Explain when CI runs.
-
-Examples:
-
-- every pull request;
-- push to main;
-- manual workflow;
-- release tag.
-
-Explain why important checks run before or after merge.
-
-Replace this comment with the team's actual trigger behavior.
--->
+Manual runs are no longer configured.
 
 ## CI Run Evidence
 
-<!--
-TEAM CONTENT REQUIRED
+Runs are listed on the repository's **Actions** tab under "Java CI with Maven". Run #1 is not listed under this workflow (the starter workflow was replaced by PR #72).
 
-Record significant CI executions.
-
-You do not need to record every development run.
-
-Preserve runs meaningful to:
-
-- phase-gate evidence;
-- pull-request approval;
-- release candidate;
-- regression verification;
-- deployment.
-
-Use stable evidence IDs when useful:
-
-CI-###
-
-EXAMPLE ONLY:
-
-| Evidence ID | Date | Commit / PR | Workflow | Result | Evidence Link / Reference | Purpose |
-|---|---|---|---|---|---|---|
-| CI-001 | YYYY-MM-DD | PR #21 | Build and Test | Passed | GitHub Actions run | Release candidate verification |
-
-DELETE the example and populate actual CI runs below.
--->
-
-| Evidence ID | Date | Commit / PR | Workflow | Result | Evidence Link / Reference | Purpose |
-|---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |
+| Evidence ID | Date (CDT) | Commit / PR | Workflow Run | Result | Purpose |
+|---|---|---|---|---|---|
+| CI-001 | 2026-10-29 23:04 | PR #72 (`evidence-updates-kurul`) | Java CI with Maven #2 (27s) | Passed | First CI run on a pull request |
+| CI-002 | 2026-10-29 ~23:43 | PR #72, updated | Java CI with Maven #3 (25s) | Passed | Re-run after PR #72 was updated |
+| CI-003 | 2026-10-29 ~23:52 | Push to `main`, `fca18d9` (PR #72 merged) | Java CI with Maven #4 (28s) | Passed | First CI run on `main` |
+| CI-004 | 2026-10-30 ~00:10 | PR #75 (`docs/code-review-evidence-50`) | Java CI with Maven #5 (25s) | Passed | Status check shown on a reviewed pull request ("All checks have passed") |
+| CI-005 | 2026-10-30 ~00:11 | Push to `main`, `2540879` (PR #75 merged) | Java CI with Maven #6 (24s) | Passed | `main` after the merge |
 
 ## Test Results
 
-<!--
-TEAM CONTENT REQUIRED WHEN CI EXECUTES TESTS
-
-Summarize what tests actually ran.
-
-Do not write only:
-
-"CI passed."
-
-Identify meaningful test categories and result counts where available.
-
-EXAMPLE ONLY:
+The test suite on `main` at `2540879` has 31 automated tests, the same four test files that ran 31/31 locally on PR #73 (see Local Verification).
 
 | CI Evidence ID | Test Type | Executed | Passed | Failed | Skipped | Notes |
 |---|---|---:|---:|---:|---:|---|
-| CI-001 | Unit | 42 | 42 | 0 | 0 | All unit tests passed |
-| CI-001 | Integration | 12 | 12 | 0 | 0 | Test database used |
+| CI-005 | Unit and HTTP tests | 31 | 31 | 0 | 0 | `RoleCheckServiceTest` 9, `RequestStatusTest` 9, `InMemorySupportRequestRepositoryTest` 5, `CampusConnectAppSubmitTest` 8 |
 
-DELETE the example and populate actual evidence below.
--->
+### Local Verification Before CI Existed
 
-| CI Evidence ID | Test Type | Executed | Passed | Failed | Skipped | Notes |
-|---|---|---:|---:|---:|---:|---|
-|  |  |  |  |  |  |  |
+Before CI was set up, the reviewer ran the suite locally with `mvn test` (JDK and Maven on macOS):
+
+| Date (CDT) | Code | Result | Purpose |
+|---|---|---|---|
+| 2026-10-29 20:42 | PR #62 at `496fe55` | 18 run, 0 failures, BUILD SUCCESS | Reviewer check for the #62 review |
+| 2026-10-29 21:15 | PR #71 (`RoleCheckServiceTest` added) | 22 run, 0 failures, BUILD SUCCESS | Author check before opening #71 |
+| 2026-10-29 21:38 | PR #73 (`RequestStatusTest` added) | 31 run, 0 failures, BUILD SUCCESS | Author check before opening #73 |
+
+Further local runs by Khaja are recorded as RUN-001 to RUN-009 in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md).
 
 ## Failed CI Runs
 
-<!--
-TEAM CONTENT REQUIRED WHEN A SIGNIFICANT CI RUN FAILS
+No CI run has failed since CI was set up. The build failures below were found by **local** runs before CI existed, which is the gap CI now covers.
 
-A failed CI run is useful engineering evidence.
-
-Do not hide it.
-
-Record:
-
-- what failed;
-- why;
-- whether the failure identified a defect or environment problem;
-- what action was taken;
-- whether a later run confirmed resolution.
-
-EXAMPLE ONLY:
-
-| CI Evidence ID | Failure | Cause | Action | Resolution Evidence |
+| Evidence ID | Failure | Cause | Action | Resolution Evidence |
 |---|---|---|---|---|
-| CI-004 | Integration test failure | Persistence schema mismatch | Migration corrected | CI-005 |
+| RUN-003 (local) | PR #61 at `49adb8e`: 74 compile errors, BUILD FAILURE | Unescaped quotes in JSON strings in `CampusConnectApp.java` (RF-01) | Fixed in PR #67, merged into #61 | `mvn test` passes on `main` (CI-003, CI-005) |
+| RUN-004a (local) | PR #62 at `bdff8e0`: same 74 errors | Same file, inherited from #61 | PR #62 updated with the #67 fix (`496fe55`) | 18 run, 0 failures (local, 2026-10-29 20:42) |
 
-DELETE the example and populate actual significant failures below.
-
-A blank table is correct when no meaningful recorded failure exists.
--->
-
-| CI Evidence ID | Failure | Cause | Action | Resolution Evidence |
-|---|---|---|---|---|
-|  |  |  |  |  |
+With CI in place, a build like this now fails as a visible check on the pull request instead of being found by hand.
 
 ## CI-to-Requirement Traceability
 
-<!--
-TEAM CONTENT REQUIRED WHEN CI PROVIDES REQUIREMENT OR ACCEPTANCE EVIDENCE
-
-CI may execute tests that support acceptance criteria.
-
-Reference:
-
-/docs/testing/test-cases.md
-/docs/planning/traceability.md
-
-Do not claim that the entire CI pipeline verifies a requirement unless the
-relationship is real.
-
-EXAMPLE ONLY:
-
-| CI Evidence ID | Test / Test Case | Related Requirement / Criterion | Result |
+| CI Evidence ID | Test / Test Class | Related Requirement / Criterion | Result |
 |---|---|---|---|
-| CI-001 | TC-001 | REQ-001 / AC-REQ-001-01 | Passed |
+| CI-005 | `CampusConnectAppSubmitTest` | REQ-001, AC-REQ-001-01, AC-REQ-001-02; storage failure `500` (API-001, REQ-005) | Passed |
+| CI-005 | `RoleCheckServiceTest` | REQ-006, API-005, AC-REQ-002-03, AC-REQ-003-04 | Passed |
+| CI-005 | `RequestStatusTest` | REQ-003, API-003, AC-REQ-003-01, AC-REQ-003-02, AC-REQ-003-03 | Passed |
+| CI-005 | `InMemorySupportRequestRepositoryTest` | REQ-005, API-004 | Passed |
 
-DELETE the example and populate actual relationships below.
--->
-
-| CI Evidence ID | Test / Test Case | Related Requirement / Criterion | Result |
-|---|---|---|---|
-|  |  |  |  |
+Not covered by any test in CI yet: AC-REQ-002-01 (staff list content, RF-02), AC-REQ-002-02, AC-REQ-002-04, AC-REQ-003-05 and AC-REQ-005-01 (see `traceability.md`). Logic Layer tests in PR #62 are not on `main`.
 
 ## Branch / Merge Protection
 
-<!--
-TEAM CONTENT REQUIRED WHEN CI IS USED AS A MERGE CONTROL
-
-Document whether CI is required before merge.
-
-Possible controls include:
-
-- required status checks;
-- pull-request review;
-- protected main branch;
-- no direct pushes;
-- test workflow required.
-
-Do not claim repository protections that are not configured.
-
-Replace this comment with actual repository behavior.
--->
+No branch protection was observed: PR #75 could be merged while a review still requested changes, so neither an approving review nor a passing check is enforced by GitHub. Review and CI are team practice, not enforced rules.
 
 ## CI Limitations
 
-<!--
-TEAM CONTENT REQUIRED
-
-CI has boundaries.
-
-Examples ONLY:
-
-- does not test external identity provider;
-- does not test production configuration;
-- does not exercise browser behavior;
-- does not perform sustained-load testing;
-- security scanning not configured;
-- integration uses mock external dependency.
-
-Do not imply CI provides broader assurance than it actually does.
-
-Populate actual limitations below.
--->
-
 | Limitation | Impact | Additional Verification |
 |---|---|---|
-|  |  |  |
+| Tests run twice per job (`mvn package` runs them, then `mvn test` again) | Slower runs; no loss of checking | None needed |
+| No `permissions:` block in `ci.yml` | The job gets GitHub's default token permissions rather than least privilege | Code review of `ci.yml` |
+| `actions/checkout@v3` and `actions/setup-java@v3` are older major versions (current is v4) | Possible deprecation warnings | Dependency review |
+| No branch protection | A PR can merge without a passing check or approval | Reviewer checks the PR's status before approving |
+| CI runs unit and HTTP tests only; no end-to-end run | TC-013 (TASK-109) still needs a manual run on `main` | Manual end-to-end check before the tag |
 
 ## Release CI Evidence
 
-<!--
-TEAM CONTENT REQUIRED FOR RELEASE OR PHASE-GATE BASELINES
-
-Identify the CI run supporting the actual release candidate.
-
-Reference the same commit/tag used by:
-
-/docs/release/release-notes.md
-/docs/release/traceability-summary.md
-
-Do not use a CI run from a different commit and present it as evidence for the
-release baseline.
--->
-
-**Release / Gate:**  
-**Commit / Tag:**  
-**CI Evidence ID:**  
-**Result:**  
+**Release / Gate:** A4 (`a4-construction-integration`)
+**Commit / Tag:** To be confirmed when the A4 tag is placed on the final `main` commit
+**CI Evidence ID:** The CI run on that commit (CI-005 or later)
+**Result:** To be recorded
 
 ## CI Evidence Integrity
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-CI evidence is strongest when it is tied to the exact repository state being
-reviewed.
-
-A useful chain is:
-
-Git Commit / PR
-  ->
-CI Workflow
-  ->
-Executed Tests / Checks
-  ->
-Results
-  ->
-Requirement / Acceptance Evidence
-  ->
-Release Baseline
-
-Do not:
-
-- claim a green run belongs to a different commit;
-- omit skipped tests that matter;
-- describe a failed check as passed;
-- claim a CI check exists when it is not configured.
--->
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before submission:
-
-1. Identify the actual CI platform and configuration.
-2. List only checks CI really performs.
-3. Record meaningful CI runs tied to specific commits or PRs.
-4. Preserve significant failed-run evidence and resolution.
-5. Report test counts or categories when available.
-6. Link CI tests to requirements only where the relationship is real.
-7. Document branch or merge controls only if actually configured.
-8. Identify CI limitations honestly.
-9. Confirm release CI evidence matches the exact release baseline.
-10. Remove ALL instructional HTML comments.
-
-The completed artifact should show exactly what automated evidence CI produced
-and, equally importantly, what that evidence does not prove.
--->
+Run numbers, dates, durations and results above were taken from the repository's Actions tab on 2026-10-30. Test counts were taken from the test classes on `main` at `2540879`; they are the same four test files that ran 31/31 locally on PR #73. AI assistance in preparing this file is recorded in `docs/ai/ai-use-log.md`.
