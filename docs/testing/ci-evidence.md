@@ -106,4 +106,4 @@ No branch protection was observed: PR #75 could be merged while a review still r
 
 ## CI Evidence Integrity
 
-Run numbers, dates, durations and results above were taken from the repository's Actions tab on 2026-10-30. Test counts were taken from the test classes on `main` at `2540879`; they are the same four test files that ran 31/31 locally on PR #73. AI assistance in preparing this file is recorded in `docs/ai/ai-use-log.md`.
+Run numbers, dates, durations and results above were taken from the repository's Actions tab on 2026-10-30. Test counts were confirmed in the CI log of run #6 (`main` at `2540879`): `Tests run: 31, Failures: 0, Errors: 0, Skipped: 0`, `BUILD SUCCESS`, finished 2026-10-30T05:11:59Z. AI assistance in preparing this file is recorded in `docs/ai/ai-use-log.md`.
