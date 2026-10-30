@@ -4,7 +4,7 @@
 **Gate:** A4 — Cycle 1 Construction and Integration · **Last updated:** 2026-10-29 · **Tracking issue:** #43
 **Status:** Proposed — pending review by the backup owner
 
-**Basis.** Checked on 2026-10-29 against `main` at `63438d8`: `requirements.md`, `acceptance-criteria.md`, `task-plan.md`, GitHub issues #29–#54, PRs #55–#73, `git log`, `mvn -B test` (22 run, 0 failures) and a manual HTTP check (RUN-009 in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md)). Statuses describe what is on `main`; work in open PRs is named but not counted as done. Reviews, CI checks and merge decisions are traced under #46 (Workflow Review Traceability).
+**Basis.** Checked on 2026-10-29 against `main` at `63438d8`: `requirements.md`, `acceptance-criteria.md`, `task-plan.md`, GitHub issues #29–#54, PRs #55–#74, `git log`, `mvn -B test` (22 run, 0 failures) and a manual HTTP check (RUN-009 in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md)). Statuses describe what is on `main`; work in open PRs is named but not counted as done. Reviews, CI checks and merge decisions are traced under #46 (Workflow Review Traceability).
 
 **Status key**
 
@@ -27,7 +27,7 @@ Test case (TC) IDs are defined in [`test-cases.md`](../testing/test-cases.md); L
 
 ## Task and Issue Traceability
 
-Owners and backups are from [`task-plan.md`](task-plan.md). "Commits on `main`" lists the commits that brought the task's code to `main`.
+Owners and backups are from [`task-plan.md`](task-plan.md) and match the issue descriptions. "Commits on `main`" lists the commits that brought the task's code to `main`.
 
 | Task | Issue | Owner / Backup | Branch | PR | Commits on `main` | Status on `main` |
 |---|---|---|---|---|---|---|
@@ -36,7 +36,7 @@ Owners and backups are from [`task-plan.md`](task-plan.md). "Commits on `main`" 
 | TASK-102 Data Layer | #31 (closed) | Sydel Ugwu / Hamza Bashar | `sydel/issue-31-task-102-data-layer` | #58 (merged through #61) | `a897b31` | Done; #58 review findings still to fix in a new PR |
 | TASK-110 Role check in one place | #32 (closed) | Hamza Bashar / Khaja Shabbir Ahmed | `test/role-check-tests-32` | #71 (merge `3f83413`) | `663fbd0` (code), `0627263` (tests) | Done |
 | TASK-103 Submit request | #33 (closed) | Khaja Shabbir Ahmed / Sydel Ugwu | `sydel/issue-33-task-103-submit-request`; `fix/submit-request-33` | #61 (merge `7ee567c`); #67 into #61 | `49adb8e`; `a06910c`, `ae190fe`, `553f205`, `8eb2296` | Done |
-| TASK-104 Staff list | #34 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | — | — | `49adb8e` (partial code) | Partial: RF-02 |
+| TASK-104 Staff list | #34 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | `JoanelisRM/task104` (`0fae726`, no PR yet) | — | `49adb8e` (partial code) | Partial: RF-02; fix in progress |
 | TASK-105 Status change | #35 (open) | Hamza Bashar / Joanelis Rivera Matos | `docs/q007-status-change-record-35`; `test/request-status-tests-35` | #70 (merge `63438d8`, Q-007 answer); #73 (open, tests) | `a897b31`, `49adb8e` | Code on `main`; transition tests in PR #73 |
 | TASK-106 Unit tests | #36 (open) | Hamza Bashar / Sydel Ugwu | `sydel/issue-36-task-106-unit-tests` | #62 (open, changes requested) | — | 18/18 pass on PR `496fe55`; not merged |
 | TASK-107 CI | #37 (open) | Nova Kurul / Hamza Bashar | `evidence-updates-kurul` | #72 (open, changes requested) | — | No CI on `main` (R-019) |
@@ -50,7 +50,7 @@ Owners and backups are from [`task-plan.md`](task-plan.md). "Commits on `main`" 
 | #40 | A4 evidence README | #63 | Open |
 | #41 | Changed-file index | #64 | Merged |
 | #42 | Architecture review action items | #59 | Merged |
-| #43 | Issue and task traceability (this file) | This PR | Open |
+| #43 | Issue and task traceability (this file) | #74 | Open |
 | #44 | Pull request template | #55 | Merged |
 | #45, #48, #50 | Reviewed PR, CI results and code review evidence | — | No PR yet |
 | #46 | Workflow review traceability | #65 | Open |
