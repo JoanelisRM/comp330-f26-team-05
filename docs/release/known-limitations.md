@@ -17,7 +17,7 @@
 | LIM-005 | Duplicate submissions are not detected; both are created. | Staff may see the same request twice. | REQ-001 | None | Deferred | Q-004 (open), API-001 failure table |
 | LIM-006 | Students cannot view the status of requests they submitted. | Students must ask staff for status. | REQ-001, REQ-002 | None | Deferred | Q-005 (open) |
 | LIM-007 | Students cannot edit or cancel a request, although the Q-006 answer says they may (edit while Open, cancel while Open or In Progress). No requirement, contract, task or estimate exists for it. | The answer and the system disagree. | Scope; REQ-001, REQ-003 | None | Under Investigation — defer to Cycle 2 or add a requirement and re-estimate | Q-006 (PR #28), R-003 |
-| LIM-008 | Only the current status and the time of the last change are kept. The system does not record who changed a status, and there is no status history. | A status change cannot be traced to a person afterwards. | REQ-003; audit | Console log shows the simulated role and time of each change. | Under Investigation — moves to Accepted (Cycle 1) when PR #70 merges | Q-007 (answered in PR #70: role and time are logged; individual users are not, because roles are simulated), R-017, `SupportRequest.updatedAt`, `AuditLogger` |
+| LIM-008 | Only the current status and the time of the last change are kept. The system does not record who changed a status, and there is no status history. | A status change cannot be traced to a person afterwards. | REQ-003; audit | Console log shows the simulated role and time of each change. | Accepted (Cycle 1) | Q-007 (answered in PR #70: role and time are logged; individual users are not, because roles are simulated), R-017, `SupportRequest.updatedAt`, `AuditLogger` |
 | LIM-009 | Category is free text; any non-blank value is accepted. | Categories can be inconsistent. | REQ-001 | None | Deferred | C-Q1 in `api-contracts.md` |
 
 ## Deferred Capabilities
@@ -68,3 +68,4 @@ These findings come from building and running the code PRs locally on 2026-10-29
 |---|---|---|---|---|
 | 2026-10-29 / A4 | LIM-001..LIM-009, RF-01..RF-06 | First list created | A4 known-limitations review | Issue #54 |
 | 2026-10-29 / A4 | RF-01, RF-03, RF-04, RF-05; LIM-008; review basis | RF-01/03/04/05 → Resolved; LIM-008 to move to Accepted when PR #70 merges; file re-checked against `main` | PR #61 and #67 merged; Hamza's review CRF-015..CRF-018 | PR #66 review; `main` `7ee567c` |
+| 2026-10-29 / A4 | LIM-008 | Under Investigation → Accepted (Cycle 1) | Q-007 answered and merged | PR #70 |
