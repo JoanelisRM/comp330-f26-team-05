@@ -15,7 +15,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Presentation Layer entry point for CampusConnect Cycle 1 (Issue #30 / TASK-101, ADR-0003).
@@ -104,6 +107,17 @@ public class CampusConnectApp {
     }
 
     private void handleRequestsEndpoint(HttpExchange exchange) throws IOException {
+        try {
+            routeRequest(exchange);
+        } catch (RuntimeException e) {
+            // API-001: a request that could not be stored must never be reported as a success.
+            auditLogger.log("ERROR", "REQUEST_FAILED", null, "N/A", "FAILED",
+                    e.getClass().getSimpleName() + ": " + e.getMessage());
+            sendResult(exchange, 500, "{\"status\":\"ERROR\",\"message\":\"Request could not be completed\"}");
+        }
+    }
+
+    private void routeRequest(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod().toUpperCase();
         String path = exchange.getRequestURI().getPath();
         String role = exchange.getRequestHeaders().getFirst("X-Simulated-Role");
@@ -121,11 +135,10 @@ public class CampusConnectApp {
         }
 
         if ("/api/requests".equals(path) && "POST".equals(method)) {
-            String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
-            String category = extractJsonField(body, "category");
-            String title = extractJsonField(body, "title");
-            String description = extractJsonField(body, "description");
-            ServiceResult<SupportRequest> res = service.submitRequest(role, category, title, description);
+            Map<String, String> fields = parseJsonObject(
+                    new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
+            ServiceResult<SupportRequest> res = service.submitRequest(
+                    role, fields.get("category"), fields.get("title"), fields.get("description"));
             sendResult(exchange, mapHttpCode(res.statusCode(), 201), toJsonSingleResponse(res));
             return;
         }
@@ -133,8 +146,8 @@ public class CampusConnectApp {
         if (path.startsWith("/api/requests/") && path.endsWith("/status")
                 && ("PATCH".equals(method) || "POST".equals(method))) {
             String idPart = path.substring("/api/requests/".length(), path.length() - "/status".length());
-            String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
-            String rawStatus = extractJsonField(body, "newStatus");
+            String rawStatus = parseJsonObject(
+                    new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8)).get("newStatus");
             RequestStatus target = null;
             if (rawStatus != null && !rawStatus.isBlank()) {
                 try {
@@ -148,7 +161,7 @@ public class CampusConnectApp {
             return;
         }
 
-        sendResult(exchange, 404, "{"status":"NOT_FOUND","message":"Endpoint not found"}");
+        sendResult(exchange, 404, "{\"status\":\"NOT_FOUND\",\"message\":\"Endpoint not found\"}");
     }
 
     private static int mapHttpCode(SupportRequestService.StatusCode code, int successCode) {
@@ -161,64 +174,185 @@ public class CampusConnectApp {
         };
     }
 
-    private static String extractJsonField(String json, String key) {
-        if (json == null) {
+    /**
+     * Parses a flat JSON object and keeps its string values (no JSON library, per ADR-0003).
+     * A malformed body yields an empty map, so every required field is reported missing.
+     */
+    static Map<String, String> parseJsonObject(String json) {
+        return json == null ? Map.of() : new FlatJsonReader(json).readObject();
+    }
+
+    private static final class FlatJsonReader {
+        private final String json;
+        private int pos;
+
+        FlatJsonReader(String json) {
+            this.json = json;
+        }
+
+        Map<String, String> readObject() {
+            Map<String, String> fields = new HashMap<>();
+            skipWhitespace();
+            if (!consume('{')) {
+                return Map.of();
+            }
+            skipWhitespace();
+            if (consume('}')) {
+                return fields;
+            }
+            while (true) {
+                skipWhitespace();
+                String key = readString();
+                skipWhitespace();
+                if (key == null || !consume(':')) {
+                    return Map.of();
+                }
+                skipWhitespace();
+                if (pos < json.length() && json.charAt(pos) == '"') {
+                    String value = readString();
+                    if (value == null) {
+                        return Map.of();
+                    }
+                    fields.put(key, value);
+                } else {
+                    skipNonStringValue();
+                }
+                skipWhitespace();
+                if (consume(',')) {
+                    continue;
+                }
+                return consume('}') ? fields : Map.of();
+            }
+        }
+
+        private String readString() {
+            if (!consume('"')) {
+                return null;
+            }
+            StringBuilder value = new StringBuilder();
+            while (pos < json.length()) {
+                char c = json.charAt(pos++);
+                if (c == '"') {
+                    return value.toString();
+                }
+                if (c != '\\') {
+                    value.append(c);
+                    continue;
+                }
+                if (pos >= json.length()) {
+                    return null;
+                }
+                char escaped = json.charAt(pos++);
+                switch (escaped) {
+                    case '"', '\\', '/' -> value.append(escaped);
+                    case 'n' -> value.append('\n');
+                    case 'r' -> value.append('\r');
+                    case 't' -> value.append('\t');
+                    case 'b' -> value.append('\b');
+                    case 'f' -> value.append('\f');
+                    case 'u' -> {
+                        if (pos + 4 > json.length()) {
+                            return null;
+                        }
+                        try {
+                            value.append((char) Integer.parseInt(json.substring(pos, pos + 4), 16));
+                        } catch (NumberFormatException e) {
+                            return null;
+                        }
+                        pos += 4;
+                    }
+                    default -> {
+                        return null;
+                    }
+                }
+            }
             return null;
         }
-        String pattern = """ + key + """;
-        int idx = json.indexOf(pattern);
-        if (idx < 0) {
-            return null;
+
+        // Numbers, true/false/null are skipped; nested objects and arrays are not supported.
+        private void skipNonStringValue() {
+            while (pos < json.length() && json.charAt(pos) != ',' && json.charAt(pos) != '}') {
+                pos++;
+            }
         }
-        int colon = json.indexOf(':', idx + pattern.length());
-        if (colon < 0) {
-            return null;
+
+        private void skipWhitespace() {
+            while (pos < json.length() && Character.isWhitespace(json.charAt(pos))) {
+                pos++;
+            }
         }
-        int firstQuote = json.indexOf('"', colon + 1);
-        if (firstQuote < 0) {
-            return null;
+
+        private boolean consume(char expected) {
+            if (pos < json.length() && json.charAt(pos) == expected) {
+                pos++;
+                return true;
+            }
+            return false;
         }
-        int secondQuote = json.indexOf('"', firstQuote + 1);
-        if (secondQuote < 0) {
-            return null;
-        }
-        return json.substring(firstQuote + 1, secondQuote);
     }
 
     private static String toJsonSingleResponse(ServiceResult<SupportRequest> res) {
         if (res.data() == null) {
             return String.format(
-                    "{"status":"%s","missingFields":%s,"message":"%s"}",
+                    "{\"status\":\"%s\",\"missingFields\":%s,\"message\":\"%s\"}",
                     res.statusCode(),
-                    res.missingFields(),
+                    toJsonArray(res.missingFields()),
                     escape(res.message()));
         }
         SupportRequest r = res.data();
         return String.format(
-                "{"status":"%s","request":{"requestId":"%s","category":"%s","title":"%s","requestStatus":"%s","synthetic":%b}}",
+                "{\"status\":\"%s\",\"request\":{\"requestId\":\"%s\",\"category\":\"%s\",\"title\":\"%s\",\"description\":\"%s\",\"requestStatus\":\"%s\",\"submittedAt\":\"%s\",\"synthetic\":%b}}",
                 res.statusCode(),
                 escape(r.getRequestId()),
                 escape(r.getCategory()),
                 escape(r.getTitle()),
+                escape(r.getDescription()),
                 r.getStatus(),
+                r.getSubmittedAt(),
                 r.isSynthetic());
     }
 
     private static String toJsonListResponse(ServiceResult<List<SupportRequest>> res) {
         if (res.data() == null) {
             return String.format(
-                    "{"status":"%s","message":"%s"}",
+                    "{\"status\":\"%s\",\"message\":\"%s\"}",
                     res.statusCode(),
                     escape(res.message()));
         }
         return String.format(
-                "{"status":"%s","count":%d}",
+                "{\"status\":\"%s\",\"count\":%d}",
                 res.statusCode(),
                 res.data().size());
     }
 
+    private static String toJsonArray(List<String> values) {
+        return values.stream()
+                .map(v -> "\"" + escape(v) + "\"")
+                .collect(Collectors.joining(",", "[", "]"));
+    }
+
     private static String escape(String s) {
-        return s == null ? "" : s.replace(""", "\"");
+        if (s == null) {
+            return "";
+        }
+        StringBuilder out = new StringBuilder(s.length());
+        for (char c : s.toCharArray()) {
+            switch (c) {
+                case '"' -> out.append("\\\"");
+                case '\\' -> out.append("\\\\");
+                case '\n' -> out.append("\\n");
+                case '\r' -> out.append("\\r");
+                case '\t' -> out.append("\\t");
+                default -> {
+                    if (c < 0x20) {
+                        out.append(String.format("\\u%04x", (int) c));
+                    } else {
+                        out.append(c);
+                    }
+                }
+            }
+        }
+        return out.toString();
     }
 
     private static void sendResult(HttpExchange exchange, int statusCode, String json) throws IOException {
