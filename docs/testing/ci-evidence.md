@@ -81,7 +81,7 @@ With CI in place, a build like this now fails as a visible check on the pull req
 | CI-005 | `RequestStatusTest` | REQ-003, API-003, AC-REQ-003-01, AC-REQ-003-02, AC-REQ-003-03 | Passed |
 | CI-005 | `InMemorySupportRequestRepositoryTest` | REQ-005, API-004 | Passed |
 
-Not covered by any test in CI yet: AC-REQ-002-01 (staff list content, RF-02), AC-REQ-002-02, AC-REQ-002-04, AC-REQ-003-05 and AC-REQ-005-01 (see `traceability.md`). Logic Layer tests in PR #62 are not on `main`.
+Not covered by any test in CI yet: AC-REQ-002-01 (staff list; fixed in #76, no test yet), AC-REQ-002-02, AC-REQ-002-04, AC-REQ-003-05 and AC-REQ-005-01 (see `traceability.md`). Logic Layer tests in PR #62 are not on `main`.
 
 ## Branch / Merge Protection
 
