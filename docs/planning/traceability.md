@@ -4,7 +4,7 @@
 **Gate:** A4 — Cycle 1 Construction and Integration · **Last updated:** 2026-10-29 · **Tracking issue:** #43
 **Status:** Proposed — pending review by the backup owner
 
-**Basis.** Checked on 2026-10-29 against `main` at `63438d8`: `requirements.md`, `acceptance-criteria.md`, `task-plan.md`, GitHub issues #29–#54, PRs #55–#74, `git log`, `mvn -B test` (22 run, 0 failures) and a manual HTTP check (RUN-009 in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md)). Statuses describe what is on `main`; work in open PRs is named but not counted as done. Reviews, CI checks and merge decisions are traced under #46 (Workflow Review Traceability).
+**Basis.** Checked on 2026-10-29 against `main` at `0c5f605`: `requirements.md`, `acceptance-criteria.md`, `task-plan.md`, GitHub issues #29–#54, PRs #55–#74, `git log`, `mvn -B test` (31 run, 0 failures) and a manual HTTP check (RUN-009 in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md)). Statuses describe what is on `main`; work in open PRs is named but not counted as done. Reviews, CI checks and merge decisions are traced under #46 (Workflow Review Traceability).
 
 **Status key**
 
@@ -20,7 +20,7 @@ Test case (TC) IDs are defined in [`test-cases.md`](../testing/test-cases.md); L
 |---|---|---|---|---|---|---|
 | REQ-001 Student submits a request (category, title, description) | AC-REQ-001-01, AC-REQ-001-02 | TASK-103 (#33), TASK-102 (#31) | `SupportRequestService.submitRequest`; `POST /api/requests` in `CampusConnectApp` | `CampusConnectAppSubmitTest`, 8 tests on `main` (TC-001..TC-005) | Verified on `main` | LIM-005, LIM-009; RF-01, RF-03..RF-05 resolved |
 | REQ-002 Staff view the list of requests | AC-REQ-002-01..AC-REQ-002-04 | TASK-104 (#34), TASK-102 (#31) | `SupportRequestService.listRequests`; `GET /api/requests` | AC-REQ-002-01: TC-006 **Fail** (only a count is returned, RUN-009). AC-REQ-002-03: student denied (RUN-009; `RoleCheckServiceTest` on `main`). AC-REQ-002-02 and AC-REQ-002-04: TC-007, TC-008 not run | Partial | RF-02 (open), LIM-004 |
-| REQ-003 Staff change status: Open → In Progress → Resolved only | AC-REQ-003-01..AC-REQ-003-05 | TASK-105 (#35) | `RequestStatus.canTransitionTo`; `SupportRequestService.updateStatus`; `PATCH /api/requests/{id}/status` | Manual on `main` (RUN-009): both allowed steps `200`, Open → Resolved and Resolved → Open `409`, student `403`. Automated: `SupportRequestServiceTest` in PR #62, `RequestStatusTest` in PR #73. AC-REQ-003-05: TC-008 not run | Implemented, check pending | LIM-007, LIM-008 (accepted, Q-007) |
+| REQ-003 Staff change status: Open → In Progress → Resolved only | AC-REQ-003-01..AC-REQ-003-05 | TASK-105 (#35) | `RequestStatus.canTransitionTo`; `SupportRequestService.updateStatus`; `PATCH /api/requests/{id}/status` | Manual on `main` (RUN-009): both allowed steps `200`, Open → Resolved and Resolved → Open `409`, student `403`. Automated on `main`: `RequestStatusTest`, 9 tests (AC-REQ-003-01..AC-REQ-003-03, PR #73); `RoleCheckServiceTest` (AC-REQ-003-04). `SupportRequestServiceTest` in PR #62. AC-REQ-003-05: TC-008 not run | Implemented, check pending | LIM-007, LIM-008 (accepted, Q-007) |
 | REQ-004 Synthetic data only | AC-REQ-004-01 | TASK-102 (#31), TASK-103 (#33) | `SupportRequest` (`synthetic = true`) | `InMemorySupportRequestRepositoryTest#saveAndFindByIdPreservesSyntheticRequestFields` on `main`; repository inspection TC-011 not run | Implemented, check pending | — |
 | REQ-005 No request or status lost while running | AC-REQ-005-01 | TASK-102 (#31), TASK-109 (#39) | `SupportRequestRepository`, `InMemorySupportRequestRepository` | `InMemorySupportRequestRepositoryTest`, 5 tests on `main`; storage failure returns `500` (TC-005); end-to-end TC-008 and TC-013 not run on `main` | Implemented, check pending | LIM-001 (accepted, Q-003) |
 | REQ-006 Role logic kept in one identified place | AC-REQ-006-01 | TASK-110 (#32), TASK-111 (#29) | `Role`, `RoleCheckService`, called only from `SupportRequestService` | TC-010 code review: Pass (2026-10-29). `RoleCheckServiceTest`, 9 tests on `main` (PR #71) | Verified on `main` | LIM-002, RF-06 (open); ADR-0003 not merged (PR #56) |
@@ -37,8 +37,8 @@ Owners and backups are from [`task-plan.md`](task-plan.md) and match the issue d
 | TASK-110 Role check in one place | #32 (closed) | Hamza Bashar / Khaja Shabbir Ahmed | `test/role-check-tests-32` | #71 (merge `3f83413`) | `663fbd0` (code), `0627263` (tests) | Done |
 | TASK-103 Submit request | #33 (closed) | Khaja Shabbir Ahmed / Sydel Ugwu | `sydel/issue-33-task-103-submit-request`; `fix/submit-request-33` | #61 (merge `7ee567c`); #67 into #61 | `49adb8e`; `a06910c`, `ae190fe`, `553f205`, `8eb2296` | Done |
 | TASK-104 Staff list | #34 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | `JoanelisRM/task104` (`0fae726`, no PR yet) | — | `49adb8e` (partial code) | Partial: RF-02; fix in progress |
-| TASK-105 Status change | #35 (open) | Hamza Bashar / Joanelis Rivera Matos | `docs/q007-status-change-record-35`; `test/request-status-tests-35` | #70 (merge `63438d8`, Q-007 answer); #73 (open, tests) | `a897b31`, `49adb8e` | Code on `main`; transition tests in PR #73 |
-| TASK-106 Unit tests | #36 (open) | Hamza Bashar / Sydel Ugwu | `sydel/issue-36-task-106-unit-tests`; `test/role-check-tests-32`; `test/request-status-tests-35` | #62 (open, changes requested); #71 (merge `3f83413`); #73 (open) | `0627263` (role-check tests) | Role-check tests on `main` (#71); #62 (18/18 on `496fe55`) and #73 open |
+| TASK-105 Status change | #35 (open) | Hamza Bashar / Joanelis Rivera Matos | `docs/q007-status-change-record-35`; `test/request-status-tests-35` | #70 (merge `63438d8`, Q-007 answer); #73 (merge `0c5f605`, tests) | `a897b31`, `49adb8e`; `0dfec52` (tests) | Code and transition tests on `main` |
+| TASK-106 Unit tests | #36 (open) | Hamza Bashar / Sydel Ugwu | `sydel/issue-36-task-106-unit-tests`; `test/role-check-tests-32`; `test/request-status-tests-35` | #62 (open, changes requested); #71 (merge `3f83413`); #73 (merge `0c5f605`) | `0627263` (role-check tests), `0dfec52` (status tests) | Role-check and status tests on `main` (#71, #73); #62 open (18/18 on `496fe55`) |
 | TASK-107 CI | #37 (open) | Nova Kurul / Hamza Bashar | `evidence-updates-kurul` | #72 (open, changes requested) | — | No CI on `main` (R-019) |
 | TASK-108 Logging | #38 (open) | Nova Kurul / Joanelis Rivera Matos | `sydel/issue-49-runtime-logging` | #60 (open, for #49) | `49adb8e` (`AuditLogger`) | Logger on `main`; diagnostics PR open |
 | TASK-109 End-to-end run on `main` | #39 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | — | — | — | Rehearsal RUN-008; blocked by RF-02 |
@@ -77,7 +77,7 @@ Owners and backups are from [`task-plan.md`](task-plan.md) and match the issue d
 | The staff list returns only a count (RF-02), so AC-REQ-002-01 fails and TC-013 cannot pass | Joanelis Rivera Matos (TASK-104, #34) | Return the request fields, add an HTTP test, re-run TC-006 |
 | The code for TASK-104, TASK-105 and TASK-108 reached `main` inside the TASK-103 commit `49adb8e`, not through PRs of their own | Task owners | Link each task's follow-up PR to its own issue |
 | #57 and #67 merged without a review; the #58 review came after the merge (R-020) | Sydel Ugwu, Hamza Bashar | Fix the #58 findings in a new PR; record the merge decisions under #46 |
-| Automated tests for REQ-003 are not on `main` | Sydel Ugwu (#62), Hamza Bashar (#73) | Merge after review (Joanelis has reviewed #73) |
+| Service-level tests (`SupportRequestServiceTest`) are not on `main` | Sydel Ugwu (#62) | Fix the review findings and merge |
 | AC-REQ-002-02, AC-REQ-002-04, AC-REQ-003-05 and AC-REQ-005-01 have no test | Hamza Bashar / Sydel Ugwu (#62, CRF-014) | Add TC-007 and TC-008 as automated tests |
 | Repository inspection TC-011 (REQ-004) and end-to-end TC-013 have not run on `main` | Khaja Shabbir Ahmed (TC-011), Joanelis Rivera Matos (TC-013, #39) | Run both before the A4 tag |
 | PRs #60 and #72 both close #49 | Nova Kurul, Sydel Ugwu | Agree which PR closes it |
@@ -90,7 +90,7 @@ Owners and backups are from [`task-plan.md`](task-plan.md) and match the issue d
 |---|---|---|
 | 2026-09-24 | A1 | Initial planning traceability baseline created |
 | 2026-09-29 | A2 | Corrected REQ-002 alignment; connected requirements to build and verification tasks, proposed owners, reserved estimate IDs, and planned evidence; updated ownership and recorded unresolved dependencies |
-| 2026-10-29 | A4 | Rewritten against `main` `63438d8`: requirements to acceptance criteria, tasks, code, tests and limitations; tasks to issues, branches, PRs and commits; decisions and open gaps. A2 planning-only sections removed (kept in the `a2-planning-estimate` tag). Issue #43 |
+| 2026-10-29 | A4 | Rewritten against `main` `0c5f605`: requirements to acceptance criteria, tasks, code, tests and limitations; tasks to issues, branches, PRs and commits; decisions and open gaps. A2 planning-only sections removed (kept in the `a2-planning-estimate` tag). Issue #43 |
 
 ## Maintenance
 

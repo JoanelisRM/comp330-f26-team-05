@@ -74,4 +74,4 @@ The server log had one line per action (8 actions: 5 `INFO`, 3 `WARN`), each wit
 | 7 | `GET` as `STAFF` | `200 {"status":"SUCCESS","count":1}` | **Fail**: no request data (RF-02) |
 | 8 | `GET ?x=1&role=STAFF` | `403 ROLE_DENIED` (role read as missing) | RF-06 still present |
 
-Re-run after #71 and #70 merged: `main` at `63438d8`, `mvn -B test`: `Tests run: 22, Failures: 0, Errors: 0` (role check 9, repository 5, HTTP 8), `BUILD SUCCESS`. The application code is the same as in the HTTP check above.
+Re-run after #71, #70 and #73 merged: `main` at `0c5f605`, `mvn -B test`: `Tests run: 31, Failures: 0, Errors: 0` (role check 9, status rule 9, repository 5, HTTP 8), `BUILD SUCCESS`. The application code is the same as in the HTTP check above.
