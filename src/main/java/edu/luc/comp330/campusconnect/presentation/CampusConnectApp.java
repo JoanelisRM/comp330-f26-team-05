@@ -319,10 +319,25 @@ public class CampusConnectApp {
                     res.statusCode(),
                     escape(res.message()));
         }
+
+        String requests = res.data().stream()
+                .map(r -> String.format(
+                        "{\"id\":\"%s\",\"title\":\"%s\",\"summary\":\"%s\","
+                                + "\"submittedAt\":\"%s\",\"status\":\"%s\"}",
+                        escape(r.getRequestId()),
+                        escape(r.getTitle()),
+                        escape(r.getDescription()),
+                        r.getSubmittedAt(),
+                        r.getStatus()))
+                .collect(Collectors.joining(",", "[", "]"));
+        String message = res.data().isEmpty() ? ",\"message\":\"No requests have been submitted\"" : "";
+        
         return String.format(
-                "{\"status\":\"%s\",\"count\":%d}",
+                "{\"status\":\"%s\",\"count\":%d,\"requests\":%s%s}",
                 res.statusCode(),
-                res.data().size());
+                res.data().size(),
+                requests,
+                message);
     }
 
     private static String toJsonArray(List<String> values) {
