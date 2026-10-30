@@ -1,238 +1,67 @@
-# Pull Request
-
-<!--
-Use this template to explain the engineering change being proposed.
-
-A pull request should make it possible for another engineer to understand:
-
-- what changed;
-- why the change is needed;
-- what engineering evidence it relates to;
-- how the change was verified;
-- what risks or limitations remain.
-
-Keep the PR concise, but provide enough evidence for meaningful review.
-
-HTML comments like this are guidance only and will not appear in the submitted
-pull request.
--->
-
 ## Summary
 
-<!--
-Briefly describe what this pull request changes.
+<!-- Briefly describe what this pull request changes and what engineering artifact or vertical-slice component it introduces or updates. -->
 
-Focus on meaningful behavior or engineering outcomes rather than listing every
-modified file.
+## Related Issue(s) and Traceability
 
-Prefer:
-"Adds server-side validation for required workflow fields and regression
-coverage for DEF-004."
-
-Avoid:
-"Updated validation.py and tests.py."
--->
-
-## Why
-
-<!--
-Explain what motivated this change.
-
-Where applicable, reference:
-
-- requirement;
-- acceptance criterion;
-- defect;
-- issue;
-- architecture decision;
-- task;
-- risk;
-- review finding;
-- operational need.
-
-The reviewer should understand WHY this change exists before reviewing HOW it
-was implemented.
--->
-
-## Related Engineering Evidence
-
-<!--
-Link the evidence that defines or motivates the change.
-
-Examples:
-- REQ-###
-- AC-REQ-###-##
-- DEF-###
-- ADR-###
-- API-###
-- R-###
-- TASK-###
-- review finding
-- related issue
-- relevant documentation path
-
-Include only evidence that actually relates to this change.
--->
-
-- 
+<!-- Link the authoritative GitHub Issue(s) and requirement/task/ADR IDs from /docs/planning/traceability.md. -->
+- Closes #
+- **Task / Deliverable ID:** <!-- e.g., TASK-111, TASK-101, TASK-102, A4 Deliverable -->
+- **Requirement / Contract / ADR IDs:** <!-- e.g., REQ-001..006, AC-REQ-001-01, API-001..005, ADR-001, ADR-003 -->
 
 ## What Changed
 
-<!--
-Summarize the important implementation or evidence changes.
-
-Include significant areas such as:
-
-- application behavior;
-- architecture or interface;
-- test coverage;
-- configuration;
-- documentation;
-- operational behavior.
-
-Do not reproduce the Git diff.
--->
-
+- 
 - 
 
-## Verification
+## Why This Change Is Needed
 
-<!--
-Describe how the change was verified.
+<!-- Explain the engineering reason for this change (e.g., Cycle 1 vertical slice implementation, closing an Assignment 3 architecture review action item, adding verification evidence). -->
 
-Do not write only:
-"Tests pass."
+## Architecture & Boundary Check
 
-Identify the meaningful verification performed.
+- [ ] Respects Cycle 1 layered architecture (`Presentation` -> `Logic` -> `Data`, plus `Observability/Logging`) per `docs/architecture/component-responsibilities.md` and `ADR-001` / `ADR-003`
+- [ ] Presentation layer does not access the Data layer directly (`API-004` is called only by the Logic layer)
+- [ ] Central role check (`API-005` / `REQ-006`) and forward-only status transitions (`Open -> In Progress -> Resolved`, `REQ-003`) are preserved
+- [ ] Uses synthetic data only (`REQ-004`); no real Loyola student data, PII, or credentials are included
+- [ ] Any architecture change or deviation from Assignment 3 is documented in `docs/architecture/` or `docs/decisions/` before merge
 
-Examples:
-- unit tests;
-- integration tests;
-- acceptance criteria;
-- regression tests;
-- manual verification;
-- CI run;
-- runtime evidence.
+## Tests Run & CI/CD Evidence
 
-If important verification could not be completed, state that under
-Risks / Limitations rather than implying complete verification.
--->
+<!-- State how this change was verified locally and in GitHub Actions CI (.github/workflows/ci.yml). -->
+- [ ] Local build and unit tests ran (`mvn clean test`) — attach or summarize output below
+- [ ] GitHub Actions CI workflow (`ci.yml`) triggered and passed on this pull request
+- [ ] Positive, negative, boundary, and role/transition failure paths covered (if code/test change)
+- **Verification Evidence Location:** <!-- e.g., PR checks tab, /docs/testing/, /docs/observability/runtime-logging-evidence.md -->
 
-- [ ] Relevant automated tests were run
-- [ ] New or changed behavior was verified
-- [ ] Negative or failure behavior was reviewed where relevant
-- [ ] Regression coverage was added or updated where appropriate
-- [ ] CI checks pass where CI is configured
-- [ ] Documentation and traceability were updated where needed
+## Dependency & Supply-Chain Review
 
-### Verification Evidence
+- [ ] No new external dependencies introduced
+- [ ] *If a new dependency, library, API, or version change was introduced:* documented below and in `/docs/decisions/` (package name, version, license, maintenance status, security considerations, and owner)
 
-<!--
-Reference reviewable evidence.
+## Risks, Known Limitations & Follow-Up
 
-Examples:
-- test case IDs;
-- CI run;
-- test-evidence path;
-- runtime evidence;
-- screenshots where appropriate;
-- acceptance criterion result.
+- **Risk Category:** <!-- e.g., None / Correctness / Security / Architecture / Maintainability / Dependencies / Testing -->
+- **Known Limitations or Deferred Work:** <!-- Reference /docs/planning/risk-register.md or /docs/release/known-limitations.md if applicable -->
 
-Remove this subsection only if the verification description above already
-contains sufficient evidence.
--->
+## AI Assistance Disclosure & Human Verification
 
-- 
+<!-- Required by COMP 330 Assignment 4 Section 8 and /docs/ai/ai-policy.md. -->
+- [ ] **No AI was used** for this pull request
+- [ ] **AI assistance was used** and is recorded in `/docs/ai/ai-use-log.md`:
+  - **Tool / Model:** 
+  - **Task / Prompt Purpose:** 
+  - **Accepted Output:** 
+  - **Rejected Output / Human Edits:** 
+  - **Human Verification Performed:** 
 
-## Architecture / Interface Impact
+## Reviewer Checklist (COMP 330 Quality Gate Lenses)
 
-<!--
-Complete this section when the change materially affects architecture,
-component responsibilities, interfaces, or contracts.
-
-Consider whether updates are required to:
-
-- /docs/architecture/architecture.md
-- /docs/architecture/component-responsibilities.md
-- /docs/architecture/api-contracts.md
-- /docs/decisions/
-
-If there is no meaningful architecture or interface impact, state:
-
-None identified.
--->
-
-## Security / Data Impact
-
-<!--
-Complete this section when the change affects:
-
-- authentication;
-- authorization;
-- permission boundaries;
-- sensitive data;
-- secrets;
-- logging of sensitive information;
-- external data flows.
-
-Reference /docs/security/ where appropriate.
-
-If there is no meaningful security or data impact, state:
-
-None identified.
--->
-
-## Risks / Limitations / Follow-Up
-
-<!--
-Identify known concerns that remain after this change.
-
-Examples:
-- known limitation;
-- deferred work;
-- unresolved risk;
-- test gap;
-- operational limitation;
-- follow-up task.
-
-Do not hide known issues simply to make the PR appear complete.
-
-If none are known, state:
-
-None identified.
--->
-
-## Reviewer Focus
-
-<!--
-Optional but useful for significant changes.
-
-Tell reviewers where engineering judgment is especially needed.
-
-Examples:
-- authorization boundary;
-- state transition behavior;
-- API compatibility;
-- failure handling;
-- migration logic;
-- concurrency behavior;
-- test adequacy.
-
-Remove this section if no specific review focus is needed.
--->
-
-## Issue / Work Item
-
-<!--
-Use GitHub closing syntax when this PR should close an issue.
-
-Examples:
-
-Closes #42
-Fixes #27
-
-If the PR should not automatically close an issue, replace or remove the line
-below.
--->
-
-Closes #
+<!-- To be completed by the assigned Backup Owner / Reviewer before approving or blocking merge. Reviewers must identify risk category, risk explanation, fix direction, and required evidence in PR comments. -->
+- [ ] **Correctness:** Satisfies accepted requirement, business rule, state transition, and edge cases
+- [ ] **Security:** Inputs validated, simulated role check enforced before action, synthetic-data rule respected
+- [ ] **Architecture:** Respects service/API boundaries (`API-001..005`), data ownership, persistence rules, and audit logging
+- [ ] **Maintainability:** Clear package structure, naming, and documentation so teammates can test and modify safely
+- [ ] **Dependencies:** No unreviewed packages, licenses, or external system calls introduced
+- [ ] **Tests:** Challenges workflow, failure paths, boundaries, and authorization cases (not only happy paths)
+- [ ] **Evidence & Stewardship:** PR notes, review comments, `ai-use-log.md`, tests, and CI checks explain why this merge is trustworthy

@@ -1,57 +1,39 @@
-# Architecture Review
+# Architecture Review Action Items and Closure Evidence
 
-**Tracking issues:** #15 (Architecture Review Evidence), #16 (Review Workflow Evidence)
+- **Deliverable:** Architecture Review Action Items (COMP 330 — Assignment 4)
+- **Authoritative GitHub Location:** `/docs/reviews/architecture-review.md`
+- **Primary Owner:** Sydel Ugwu (`@Sugwu123`, Architecture & Development Lead)
+- **Backup Owner / Reviewer:** Joanelis Rivera Matos (`@JoanelisRM`, Team Lead)
+- **Related Issue:** [Issue #42 — A4: Architecture Review Action Items](https://github.com/JoanelisRM/comp330-f26-team-05/issues/42)
+- **Last Updated:** 2026-10-28
 
-**Document status:** In progress. This file records the review activity completed so far; remaining sections will be added as the review continues.
+## 1. Purpose
 
-## Review Identification
+This document tracks all architectural findings, open questions (`Q-002`, `Q-003`, `Q-007`), and consistency gaps raised during the Assignment 3 architecture phase gate and Class 14–17 design reviews (including [PR #27](https://github.com/JoanelisRM/comp330-f26-team-05/pull/27)). It records what changed during Cycle 1 construction, what was intentionally deferred, and what repository evidence supports closure at the Assignment 4 phase gate.
 
-**Review Date:** 2026-10-15
-**Applicable Gate / Milestone:** A3 — Cycle 1 Architecture and Review Package
-**Architecture Baseline / Commit:** `docs/architecture/architecture.md` as proposed in PR #21 (branch `JoanelisRMBranch`, commit `e1e4370`)
-**Reviewer(s):** Hamza Bashar (reviewer); Joanelis Rivera Matos (author of PR #21)
+## 2. Design Review Action Items Summary
 
-The review was carried out as a GitHub pull-request review on PR #21. Each finding and author response below can be traced to that PR's conversation.
+| Action ID | Design Review Finding / Open Question | Source / Raised In | Decision & What Changed in Assignment 4 | Status | Owner(s) | Closure / Verification Evidence |
+|---|---|---|---|---|---|---|
+| **ARA-001** | **Web framework, localhost transport, and simulated role passing (`ADR-001` open item):** `API-001..003` listed `HTTP / JSON (proposed)` without specifying the web framework, endpoint schema, or how simulated roles (`STUDENT` / `STAFF`) cross the Presentation boundary into `API-005`. | A3 Architecture Diagram, `ADR-001`, [Issue #29 (`TASK-111`)](https://github.com/JoanelisRM/comp330-f26-team-05/issues/29) | Recorded `ADR-0003` selecting JDK 17 built-in `HttpServer` on `127.0.0.1:8080`, JSON payloads for `API-001..003`, and `X-Simulated-Role` (`STUDENT` / `STAFF`) validated centrally by `RoleCheckService` (`API-005`). | **Closed** | Sydel Ugwu / Hamza Bashar | `/docs/decisions/adr-0003-web-framework-localhost-transport-and-simulated-role.md`; `src/main/java/edu/luc/comp330/campusconnect/presentation/`; [Issue #29](https://github.com/JoanelisRM/comp330-f26-team-05/issues/29) |
+| **ARA-002** | **Data Layer storage choice (`Q-003`) inconsistency:** `architecture-diagram.png` listed `Q-003` as open regarding storage implementation and restart persistence, whereas `assumptions-open-questions.md` and `component-responsibilities.md` marked `Q-003` resolved as in-memory storage for Cycle 1. | [PR #27](https://github.com/JoanelisRM/comp330-f26-team-05/pull/27) consistency notes, [Issue #31 (`TASK-102`)](https://github.com/JoanelisRM/comp330-f26-team-05/issues/31) | Implemented `SupportRequestRepository` (`API-004`) and `InMemorySupportRequestRepository` in Java (`TASK-102`). Confirmed that Cycle 1 stores authoritative synthetic requests in memory while the app runs and resets on process restart (`REQ-005`). | **Closed** | Sydel Ugwu / Hamza Bashar | `src/main/java/edu/luc/comp330/campusconnect/data/SupportRequestRepository.java`; `InMemorySupportRequestRepository.java`; `InMemorySupportRequestRepositoryTest.java`; [Issue #31](https://github.com/JoanelisRM/comp330-f26-team-05/issues/31) |
+| **ARA-003** | **Starter-kit component names in `architecture.md`:** `docs/architecture/architecture.md` retained starter-kit template component names (including an external `Identity Provider` that Cycle 1 does not use), conflicting with the five components in `component-responsibilities.md`. | [PR #27](https://github.com/JoanelisRM/comp330-f26-team-05/pull/27) review by `@JoanelisRM` | Aligned architecture documentation and code packages with the five approved Cycle 1 components: `Presentation Layer`, `Logic Layer (Request Workflow)`, `Logic Layer (Role Check)`, `Data Layer (In-Memory)`, and `Logging / Observability`. Removed `Identity Provider` references. | **Closed** | Joanelis Rivera Matos / Sydel Ugwu | `docs/architecture/component-responsibilities.md`; `src/main/java/edu/luc/comp330/campusconnect/`; [Issue #30 (`TASK-101`)](https://github.com/JoanelisRM/comp330-f26-team-05/issues/30) |
+| **ARA-004** | **`data-context.md` conflict with synthetic-data and no-AI-runtime rules:** Draft `data-context.md` referenced an external Application Database, IAM, real student IDs/emails, and runtime AI prompt context, conflicting with `REQ-004`, `ASM-001`, `Q-003`, and `ADR-002`. | [PR #27](https://github.com/JoanelisRM/comp330-f26-team-05/pull/27) consistency notes (`@selkianova`) | Enforced in code (`SupportRequest.java` and `InMemorySupportRequestRepository.java`) that records contain only `requestId`, `category`, `title`, `description`, `status`, `submittedAt`, `updatedAt`, and `synthetic=true`. No student IDs, emails, IAM tokens, or runtime AI prompts exist in the codebase. | **Closed in Code / Tracked in Docs** | Nova Kurul / Sydel Ugwu | `src/main/java/edu/luc/comp330/campusconnect/model/SupportRequest.java`; `/docs/observability/runtime-logging-evidence.md` |
+| **ARA-005** | **Reopening resolved requests (`Q-002`):** Design review asked whether staff can transition a `Resolved` request back to `Open` or `In Progress`, or skip `In Progress` (`Open -> Resolved`). | A3 Architecture Diagram (`Q-002`), `REQ-003` | Confirmed strict forward-only linear transitions for Cycle 1: `OPEN -> IN_PROGRESS -> RESOLVED`. Reopening (`RESOLVED -> OPEN` or `IN_PROGRESS`) and skipping (`OPEN -> RESOLVED`) are rejected by `RequestStatus.canTransitionTo(...)` and deferred to post-Cycle 1. | **Deferred (By Design)** | Hamza Bashar / Sydel Ugwu | `src/main/java/edu/luc/comp330/campusconnect/model/RequestStatus.java`; `/docs/release/known-limitations.md`; [Issue #36 (`TASK-106`)](https://github.com/JoanelisRM/comp330-f26-team-05/issues/36) |
+| **ARA-006** | **Audit log destination and event schema (`Q-007`):** A3 diagram marked log destination as `TBD` and `Q-007` (actor/time audit details) as open for failed submissions and status changes (`TASK-108` / Issue #49). | A3 Architecture Diagram (`Q-007`), [PR #27](https://github.com/JoanelisRM/comp330-f26-team-05/pull/27), [Issue #49](https://github.com/JoanelisRM/comp330-f26-team-05/issues/49) | Implemented `AuditLogger` in `edu.luc.comp330.campusconnect.observability` emitting structured, timestamped log entries (`timestamp`, `level`, `eventType`, `simulatedRole`, `requestId`, `outcome`, `details`) to standard output and an in-memory/file diagnostic buffer, with zero PII or credentials. | **Closed** | Sydel Ugwu / Nova Kurul | `src/main/java/edu/luc/comp330/campusconnect/observability/AuditLogger.java`; `/docs/observability/runtime-logging-evidence.md`; [Issue #49](https://github.com/JoanelisRM/comp330-f26-team-05/issues/49) |
 
-## Review Scope
+## 3. Architecture Deviations and Updates Since Assignment 3
 
-**Included:** `docs/architecture/architecture.md` (PR #21), checked for consistency with `requirements.md`, `assumptions-open-questions.md`, and ADR-002.
+| Area | Assignment 3 Baseline | Assignment 4 Construction State | Why Changed / Justified | Updated Artifact(s) |
+|---|---|---|---|---|
+| **Presentation-to-Logic Transport (`API-001..003`)** | Marked `"HTTP / JSON (proposed)"` | Implemented with both direct Java controller/service invocation and JDK `HttpServer` localhost JSON endpoints (`127.0.0.1:8080`) | Eliminates external framework dependencies while honoring the proposed localhost HTTP/JSON contract | `/docs/decisions/adr-0003-web-framework-localhost-transport-and-simulated-role.md` |
+| **Simulated Role Boundary (`API-005`)** | Conceptual central role check in Logic Layer | Concrete `RoleCheckService` invoked at the entry of every `SupportRequestService` method using `X-Simulated-Role` (`STUDENT` / `STAFF`) | Ensures unauthorized calls are blocked and logged before any workflow or storage operation runs | `RoleCheckService.java`; `SupportRequestService.java` |
+| **Data Layer (`API-004`)** | Proposed internal Java interface; `Q-003` open on diagram | Concrete `SupportRequestRepository` interface + `InMemorySupportRequestRepository` returning defensive copies | Prevents Presentation or Logic callers from mutating stored objects outside `API-004` | `SupportRequestRepository.java`; `InMemorySupportRequestRepository.java` |
+| **Logging & Diagnostics (`TASK-108` / Issue #49)** | Destination `TBD` (`Q-007`) | Structured `AuditLogger` capturing `SUBMISSION_CREATED`, `SUBMISSION_REJECTED`, `STATUS_UPDATED`, `TRANSITION_REJECTED`, and `ROLE_DENIED` events | Provides immediate runtime observability and troubleshooting evidence for reviewers | `/docs/observability/runtime-logging-evidence.md`; `/docs/testing/runtime-diagnostics-log.txt` |
 
-**Not yet reviewed:** `component-responsibilities.md`, `data-context.md` (PR #22), and the architecture diagram. `api-contracts.md` is authored by the reviewer and is reviewed by another team member in its own pull request.
+## 4. Deferred Items Entering Assignment 5 (Release Readiness)
 
-## Findings
-
-| ID | Type | Finding | Importance | Evidence | Required Action |
-|---|---|---|---|---|---|
-| ARF-001 | Concern | "Handle large amounts of data" (Scalability) does not fit the size of the project: Cycle 1 is a small slice with synthetic data running locally, so scalability is not driving any design choice. Suggested replacing the qualities with ones based on established requirements: correctness of the status rules Open → In Progress → Resolved (REQ-003); reliability, meaning submitted requests and status changes are not lost while the app is running (REQ-005); and maintainability, meaning role checks are in one place so simulated roles can later be swapped for real login (REQ-006). | Medium | PR #21 review comment on `architecture.md` line 170 | ARA-001 |
-| ARF-002 | Gap | "Database" is listed as the persistence for request and user data, but how data will be stored is still undecided (Q-003 in `assumptions-open-questions.md`). Suggested something like "undecided" so the document does not imply a decision that has not been made. Also raised for consideration: since roles are simulated (ASM-001), is user data actually stored in Cycle 1? | Medium | PR #21 review comment on lines 113–114 | ARA-002 |
-| ARF-003 | Concern | The Architectural Structure section names the parts Presentation, Logic, and Data Layer, but the "Major Components and Responsibilities" and "Interfaces and Dependencies" tables, and the owner column in "Data and State Ownership", still use the template names Web Client, Application Service, and Persistence Layer. Asked for those tables to use Presentation, Logic, and Data Layer, because the names also have to match in `component-responsibilities.md` and `api-contracts.md`. | High | PR #21 review comment on line 26 | ARA-003 |
-
-### Author Responses and Dispositions
-
-| ID | Author Response (summary) | Disposition | Date |
-|---|---|---|---|
-| ARF-001 | Agreed and will update the qualities. | **Accepted** | 2026-10-15 |
-| ARF-002 | Agreed that no permanent storage is needed; proposed that the system store data only temporarily, in memory, during a run, and offered to update Q-003. | **Accepted**; in-memory storage proposed, pending team confirmation | 2026-10-15 |
-| ARF-003 | The Data and State Ownership owner column was an oversight. The other tables were left as template until `component-responsibilities.md` and `api-contracts.md` are settled. | **Accepted** (data ownership); **Accepted / Deferred** (component and interface tables) | 2026-10-15 |
-
-No findings were rejected.
-
-## Required Actions
-
-| Action ID | Required Action | Driver | Owner | Target | Status |
-|---|---|---|---|---|---|
-| ARA-001 | Replace the quality attributes with ones based on REQ-003, REQ-005, and REQ-006 | ARF-001 | Joanelis Rivera Matos |  | Open |
-| ARA-002 | Replace "Database" on lines 113–114 with "undecided" or, once the team confirms it, the in-memory approach; update Q-003 in `assumptions-open-questions.md` to match | ARF-002 | Joanelis Rivera Matos |  | Open |
-| ARA-003 | Use Presentation / Logic / Data Layer names in the Data and State Ownership, Major Components, and Interfaces and Dependencies tables | ARF-003 | Joanelis Rivera Matos |  | Open (tables deferred by author) |
-
-## Review Conclusion
-
-**Review Outcome:** Not yet concluded
-
-
-
-## Follow-Up
-
-- Re-check `architecture.md` after the author pushes updates to PR #21; resolve each review thread only after the fix is confirmed.
-- Review the remaining artifacts listed under Review Scope and add their findings to this file.
+1. **Persistent Database Storage (Post-Cycle 1):** In-memory storage (`InMemorySupportRequestRepository`) satisfies `REQ-005` while the application runs, but data resets on process restart (`Q-003`). Documented in `/docs/release/known-limitations.md`.
+2. **Request Reopening (`Q-002`):** `RESOLVED` requests are terminal in Cycle 1 (`OPEN -> IN_PROGRESS -> RESOLVED`). Reopening or backward transitions remain deferred.
+3. **Real Authentication / University SSO (`ADR-002`, `ASM-001`):** `X-Simulated-Role` is a demonstration mechanism for Cycle 1 role-check verification (`REQ-006`) and must not be treated as production authentication.
+4. **Search, Filtering, and Notifications (`ADR-002`):** Staff view returns all submitted requests in chronological order (`REQ-002`); filtering and notifications remain out of scope for Cycle 1.
