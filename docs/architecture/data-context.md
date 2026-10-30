@@ -1,7 +1,7 @@
 # Data and Context Boundaries (Cycle 1)
 
 ## Data Ownership
-*   **Role:** Simulated local roles only (e.g., test-admin, test-student). No external IAM integration.
+*   **Role:** Simulated local roles only (STUDENT and STAFF). No admin roles and no external IAM integration.
 *   **Data Type:** 100% Synthetic data. No real student IDs, names, or emails are processed or stored.
 *   **Storage:** Local in-memory lifetime during runtime only.
 
