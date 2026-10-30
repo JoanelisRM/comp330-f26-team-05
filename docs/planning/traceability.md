@@ -1,112 +1,88 @@
 # Traceability
 
-**Owner:** Sydel Ugwu (Architecture & Development Lead)
+**Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup / Reviewer:** Hamza Bashar
+**Gate:** A4 — Cycle 1 Construction and Integration · **Last updated:** 2026-10-29 · **Tracking issue:** #43
+**Status:** Proposed — pending review by the backup owner
 
-**Backup / Reviewer:** Hamza Bashar
+**Basis.** Checked on 2026-10-29 against `main` at `0c5f605`: `requirements.md`, `acceptance-criteria.md`, `task-plan.md`, GitHub issues #29–#54, PRs #55–#74, `git log`, `mvn -B test` (31 run, 0 failures) and a manual HTTP check (RUN-009 in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md)). Statuses describe what is on `main`; work in open PRs is named but not counted as done. Reviews, CI checks and merge decisions are traced under #46 (Workflow Review Traceability).
 
-**Gate:** A2 - Cycle 1 Planning and Estimation
+**Status key**
 
-**Last updated:** 2026-09-29
+- **Verified on `main`:** the code is on `main` and the check named in the acceptance criteria passed on it.
+- **Implemented, check pending:** the code is on `main`, but its automated test is in an open PR or the required check has not been run.
+- **Partial:** the code is on `main`, but at least one acceptance criterion fails.
 
-## Planning Status
+## Requirement Traceability
 
-This draft connects the proposed Cycle 1 requirements to scope items, tasks, owners, estimate IDs, risks, and planned evidence locations.
+Test case (TC) IDs are defined in [`test-cases.md`](../testing/test-cases.md); LIM and RF IDs in [`known-limitations.md`](../release/known-limitations.md).
 
-Requirements and acceptance criteria remain pending confirmation with Hamza Bashar through TASK-025. Team scope confirmation is also pending.
+| Requirement | Acceptance Criteria | Task / Issue | Code on `main` | Tests and Checks | Status | Limitations / Findings |
+|---|---|---|---|---|---|---|
+| REQ-001 Student submits a request (category, title, description) | AC-REQ-001-01, AC-REQ-001-02 | TASK-103 (#33), TASK-102 (#31) | `SupportRequestService.submitRequest`; `POST /api/requests` in `CampusConnectApp` | `CampusConnectAppSubmitTest`, 8 tests on `main` (TC-001..TC-005) | Verified on `main` | LIM-005, LIM-009; RF-01, RF-03..RF-05 resolved |
+| REQ-002 Staff view the list of requests | AC-REQ-002-01..AC-REQ-002-04 | TASK-104 (#34), TASK-102 (#31) | `SupportRequestService.listRequests`; `GET /api/requests` | AC-REQ-002-01: TC-006 **Fail** (only a count is returned, RUN-009). AC-REQ-002-03: student denied (RUN-009; `RoleCheckServiceTest` on `main`). AC-REQ-002-02 and AC-REQ-002-04: TC-007, TC-008 not run | Partial | RF-02 (open), LIM-004 |
+| REQ-003 Staff change status: Open → In Progress → Resolved only | AC-REQ-003-01..AC-REQ-003-05 | TASK-105 (#35) | `RequestStatus.canTransitionTo`; `SupportRequestService.updateStatus`; `PATCH /api/requests/{id}/status` | Manual on `main` (RUN-009): both allowed steps `200`, Open → Resolved and Resolved → Open `409`, student `403`. Automated on `main`: `RequestStatusTest`, 9 tests (AC-REQ-003-01..AC-REQ-003-03, PR #73); `RoleCheckServiceTest` (AC-REQ-003-04). `SupportRequestServiceTest` in PR #62. AC-REQ-003-05: TC-008 not run | Implemented, check pending | LIM-007, LIM-008 (accepted, Q-007) |
+| REQ-004 Synthetic data only | AC-REQ-004-01 | TASK-102 (#31), TASK-103 (#33) | `SupportRequest` (`synthetic = true`) | `InMemorySupportRequestRepositoryTest#saveAndFindByIdPreservesSyntheticRequestFields` on `main`; repository inspection TC-011 not run | Implemented, check pending | — |
+| REQ-005 No request or status lost while running | AC-REQ-005-01 | TASK-102 (#31), TASK-109 (#39) | `SupportRequestRepository`, `InMemorySupportRequestRepository` | `InMemorySupportRequestRepositoryTest`, 5 tests on `main`; storage failure returns `500` (TC-005); end-to-end TC-008 and TC-013 not run on `main` | Implemented, check pending | LIM-001 (accepted, Q-003) |
+| REQ-006 Role logic kept in one identified place | AC-REQ-006-01 | TASK-110 (#32), TASK-111 (#29) | `Role`, `RoleCheckService`, called only from `SupportRequestService` | TC-010 code review: Pass (2026-10-29). `RoleCheckServiceTest`, 9 tests on `main` (PR #71) | Verified on `main` | LIM-002, RF-06 (open); ADR-0003 not merged (PR #56) |
 
-Build tasks are planned for A4, with proposed owners. References below describe planned work, not completed implementation or successful tests.
+## Task and Issue Traceability
 
-## Requirement-to-Task Traceability
+Owners and backups are from [`task-plan.md`](task-plan.md) and match the issue descriptions. "Commits on `main`" lists the commits that brought the task's code to `main`.
 
-| Requirement | Scope Item | Planned Build Tasks | Planned Verification Tasks | Acceptance Criteria Status |
-|---|---|---|---|---|
-| REQ-001 Student submits a support request with category, title, and description | SCP-001 | TASK-102 request model and synthetic store; TASK-103 submission and required-field validation; TASK-108 failed-submission logging | TASK-106 validation unit tests; TASK-109 end-to-end demonstration | AC-REQ-001-01 and AC-REQ-001-02 in [acceptance-criteria.md](../requirements/acceptance-criteria.md); both Proposed, pending team review |
-| REQ-002 Staff view submitted requests | SCP-002 | TASK-102 request model and synthetic store; TASK-104 staff request list | TASK-109 end-to-end demonstration, including staff list behavior | Confirm final criteria and IDs through TASK-025 |
-| REQ-003 Staff update request status | SCP-003 | TASK-102 request model and synthetic store; TASK-105 allowed status transitions; TASK-108 status-change logging | TASK-106 status-transition unit tests; TASK-109 end-to-end demonstration | Confirm final criteria and IDs through TASK-025 |
+| Task | Issue | Owner / Backup | Branch | PR | Commits on `main` | Status on `main` |
+|---|---|---|---|---|---|---|
+| TASK-111 Framework, transport and role ADR | #29 (open) | Sydel Ugwu / Hamza Bashar | `sydel/issue-29-task-111-adr` | #56 (open, changes requested) | — | ADR-0003 not merged, but the code already follows it (R-014) |
+| TASK-101 Maven skeleton | #30 (closed) | Sydel Ugwu / Nova Kurul | `sydel/issue-30-task-101-maven-skeleton` | #57 (merged through #61) | `663fbd0` | Done; also added `Role` and `RoleCheckService` |
+| TASK-102 Data Layer | #31 (closed) | Sydel Ugwu / Hamza Bashar | `sydel/issue-31-task-102-data-layer` | #58 (merged through #61) | `a897b31` | Done; #58 review findings still to fix in a new PR |
+| TASK-110 Role check in one place | #32 (closed) | Hamza Bashar / Khaja Shabbir Ahmed | `test/role-check-tests-32` | #71 (merge `3f83413`) | `663fbd0` (code), `0627263` (tests) | Done |
+| TASK-103 Submit request | #33 (closed) | Khaja Shabbir Ahmed / Sydel Ugwu | `sydel/issue-33-task-103-submit-request`; `fix/submit-request-33` | #61 (merge `7ee567c`); #67 into #61 | `49adb8e`; `a06910c`, `ae190fe`, `553f205`, `8eb2296` | Done |
+| TASK-104 Staff list | #34 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | `JoanelisRM/task104` (`0fae726`, no PR yet) | — | `49adb8e` (partial code) | Partial: RF-02; fix in progress |
+| TASK-105 Status change | #35 (open) | Hamza Bashar / Joanelis Rivera Matos | `docs/q007-status-change-record-35`; `test/request-status-tests-35` | #70 (merge `63438d8`, Q-007 answer); #73 (merge `0c5f605`, tests) | `a897b31`, `49adb8e`; `0dfec52` (tests) | Code and transition tests on `main` |
+| TASK-106 Unit tests | #36 (open) | Hamza Bashar / Sydel Ugwu | `sydel/issue-36-task-106-unit-tests`; `test/role-check-tests-32`; `test/request-status-tests-35` | #62 (open, changes requested); #71 (merge `3f83413`); #73 (merge `0c5f605`) | `0627263` (role-check tests), `0dfec52` (status tests) | Role-check and status tests on `main` (#71, #73); #62 open (18/18 on `496fe55`) |
+| TASK-107 CI | #37 (open) | Nova Kurul / Hamza Bashar | `evidence-updates-kurul` | #72 (open, changes requested) | — | No CI on `main` (R-019) |
+| TASK-108 Logging | #38 (open) | Nova Kurul / Joanelis Rivera Matos | `sydel/issue-49-runtime-logging` | #60 (open, for #49) | `49adb8e` (`AuditLogger`) | Logger on `main`; diagnostics PR open |
+| TASK-109 End-to-end run on `main` | #39 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | — | — | — | Rehearsal RUN-008; blocked by RF-02 |
 
-Task definitions, dependencies, proposed owners, and reserved estimate IDs are recorded in [task-plan.md](task-plan.md).
+### Evidence Deliverables
 
-TASK-101 provides the Maven setup shared by all three requirements. TASK-107 provides the planned CI build and test checks.
-
-No implementation or test-result evidence is claimed in this matrix.
-
-## Task Owners, Estimates, and Planned Evidence
-
-The assignments and estimate IDs below come from the A2 task plan. Build owners are proposed, and EST-101 through EST-109 are reserved IDs.
-
-Numerical estimates must be confirmed in [estimates.md](estimates.md). These IDs do not establish that estimates are complete. Each estimate must include the required range, assumptions, confidence, dependencies, and risk triggers.
-
-Evidence locations describe planned outputs, not existing implementation or passing tests.
-
-| Task | Requirement Coverage | Proposed Owner | Estimate ID | Planned Completion Evidence |
-|---|---|---|---|---|
-| TASK-101 | Shared setup for REQ-001 through REQ-003 | Sydel Ugwu | EST-101 | README build/run instructions and reviewed Maven setup PR |
-| TASK-102 | REQ-001 through REQ-003 | Sydel Ugwu | EST-102 | Request model and synthetic store in /src/, with reviewed PR |
-| TASK-103 | REQ-001 | Khaja Shabbir Ahmed | EST-103 | Submission and validation implementation in /src/, with reviewed PR |
-| TASK-104 | REQ-002 | Joanelis Rivera Matos | EST-104 | Staff-list implementation in /src/, with reviewed PR |
-| TASK-105 | REQ-003 | Hamza Bashar | EST-105 | Status-transition implementation in /src/, with reviewed PR |
-| TASK-106 | REQ-001 and REQ-003 | Hamza Bashar | EST-106 | Automated tests in /tests/ and results referenced from /docs/testing/ |
-| TASK-107 | Shared verification infrastructure | Nova Kurul | EST-107 | .github/workflows/ci.yml and linked CI run results |
-| TASK-108 | REQ-001 and REQ-003 | Nova Kurul | EST-108 | Logging implementation and evidence in /docs/observability/ |
-| TASK-109 | REQ-001 through REQ-003 | Joanelis Rivera Matos | EST-109 | End-to-end demonstration evidence referenced from /docs/testing/ |
-
-Before final A2 review, confirm the estimate entries and add available GitHub Issue links. During implementation, replace planned evidence descriptions with exact file, PR, and test-result links.
-
-## A2 Planning Dependencies
-
-| Task | Deliverable | Owner | Dependency / Follow-Up |
+| Issue | Deliverable | PR | Status |
 |---|---|---|---|
-| TASK-015 | Scope statement | Sydel Ugwu | Confirm the proposed slice with the team; backup/reviewer is Khaja Shabbir Ahmed |
-| TASK-016 | Requirement-to-task traceability | Sydel Ugwu | Align TASK-015 with TASK-025; backup/reviewer is Hamza Bashar |
-| TASK-025 | Requirements package | Hamza Bashar | Confirm requirements, acceptance criteria, assumptions, and open questions |
-| TASK-018 | GitHub Issues | Nova Kurul | Add issue links for the tasks in the task plan |
-| TASK-022 | Projects board and milestone | Joanelis Rivera Matos | Connect issues to the board and Cycle 1 milestone |
-| TASK-019 / TASK-024 | Estimates and re-estimation | Hamza Bashar | Review impacts when requirements or scope change |
-| TASK-027 | AI-use log updates | Nova Kurul | Record and review AI assistance used for this planning work |
-| TASK-028 | Final review, tag, and submission | Joanelis Rivera Matos | Review and merge the A2 deliverables before tagging the submitted version |
-
-See [task-plan.md](task-plan.md) for the complete A2 assignments, backups, deadlines, and dependencies.
-
-## Baseline Reconciliation
-
-The starter requirements template used REQ-002 for requesters viewing their own request status. The proposed scope and A2 task plan use REQ-002 for staff viewing submitted requests.
-
-This draft follows SCP-002 and TASK-104. Hamza Bashar and the team must confirm the REQ-002 meaning and acceptance criteria before the baseline is accepted.
-
-Earlier requirement edits on this branch must be reconciled with TASK-025 during PR review. Do not treat the conflicting definitions as approved requirements.
+| #40 | A4 evidence README | #63 | Open |
+| #41 | Changed-file index | #64 | Merged |
+| #42 | Architecture review action items | #59 | Merged |
+| #43 | Issue and task traceability (this file) | #74 | Open |
+| #44 | Pull request template | #55 | Merged |
+| #45, #48, #50 | Reviewed PR, CI results and code review evidence | — | No PR yet |
+| #46 | Workflow review traceability | #65 | Open |
+| #47, #49, #51, #52 | CI workflow, runtime logging, AI code review, AI-use log | #72 (also #60 for #49, #69 for #52) | #69 merged; #60 open; #72 changes requested |
+| #53 | Test evidence | #68 | Merged |
+| #54 | Known risks and deferred work | #66 | Merged |
 
 ## Decision Traceability
 
-| Decision | Affected Work | Follow-Up |
+| Decision | Affects | Status |
 |---|---|---|
-| ADR-001: technology and architecture decision, planned | TASK-101 and dependent build tasks | Sydel Ugwu; A1 carry-over TASK-008, reviewed at A3 |
-| Synthetic data only; no real Loyola integration | REQ-001 through REQ-003; TASK-102 | Maintain the boundary in [scope.md](scope.md) |
-| Cycle 1 scope tradeoffs, TASK-026 | Included and deferred capabilities | Align scope with [ADR-002](../decisions/ADR-002-cycle-1-scope-tradeoffs.md) before final review |
-
-## Risk and Assumption Traceability
-
-| Risk / Assumption | Affected Work | Required Follow-Up |
-|---|---|---|
-| R-005 / PA-001 | REQ-001 through REQ-003; TASK-015, TASK-016, TASK-025 | Confirm requirements and update scope, traceability, and estimates together |
-| R-007 | ADR-001; TASK-101 and dependent tasks | Confirm setup and architecture assumptions |
-| PA-003 / R-008 | Schedule, estimates, proposed task assignments | Confirm each member's capacity through team commitments |
-| R-006, A1 tag carry-over | TASK-010 | Team Lead verifies the A1 tag status and determines any required correction |
-
-Risk IDs are carried forward from the planning baseline. Current descriptions and status must agree with [risk-register.md](risk-register.md).
-
-Changes to requirements, status-transition rules, technology assumptions, or available capacity must be reviewed for their effects on task effort, dependencies, scope, and schedule. Record resulting estimate changes in [re-estimation.md](re-estimation.md).
+| ADR-001 Local Java layered architecture | All code | Proposed (R-018) |
+| ADR-002 Cycle 1 scope tradeoffs | Deferred capabilities in `scope.md` | Proposed (R-018) |
+| ADR-0003 Localhost transport and simulated role | REQ-006, `CampusConnectApp`, `RoleCheckService` | PR #56 open (R-014) |
+| Q-002 No reopening | REQ-003 | Answered (PR #28); enforced on `main` (RUN-009) |
+| Q-003 In-memory storage | REQ-005 | Answered; LIM-001 |
+| Q-006 Students may edit or cancel | REQ-001, REQ-003 | Answered (PR #28) but not built (LIM-007, R-003) |
+| Q-007 Who changed status | REQ-003, TASK-105, TASK-108 | Answered (PR #70): role and time are logged, individual users are not (LIM-008) |
 
 ## Open Traceability Gaps
 
-| Gap | Responsible Person | Resolution |
+| Gap | Owner | Next Action |
 |---|---|---|
-| Requirements and acceptance criteria are not yet reconciled with this draft | Hamza Bashar and Sydel Ugwu | Complete TASK-025 alignment and add exact acceptance-criteria references before accepting the baseline |
-| Estimate IDs are reserved, but numerical entries have not been verified for this draft | Hamza Bashar and Sydel Ugwu | Check EST-101 through EST-109 against estimates.md |
-| GitHub issue links are not supplied in the reviewed task plan | Nova Kurul | Populate issue links through TASK-018 and connect them to the task plan |
-| Staff-list verification has no separate unit-test task | Hamza Bashar and Khaja Shabbir Ahmed | Confirm TASK-109 covers the agreed REQ-002 criteria; add a test task if needed |
-| Architecture, implementation, and test-result evidence are not linked | Sydel Ugwu with task owners | Add actual evidence during A3/A4 |
-| Team approval and merge evidence are not recorded here | Sydel Ugwu and Hamza Bashar | Review this draft against the final requirements and task plan in the PR |
-| AI assistance for these edits needs a matching log entry | Sydel Ugwu and Nova Kurul | Record the assistance, affected files, and human review in docs/ai/ai-use-log.md |
+| The staff list returns only a count (RF-02), so AC-REQ-002-01 fails and TC-013 cannot pass | Joanelis Rivera Matos (TASK-104, #34) | Return the request fields, add an HTTP test, re-run TC-006 |
+| The code for TASK-104, TASK-105 and TASK-108 reached `main` inside the TASK-103 commit `49adb8e`, not through PRs of their own | Task owners | Link each task's follow-up PR to its own issue |
+| #57 and #67 merged without a review; the #58 review came after the merge (R-020) | Sydel Ugwu, Hamza Bashar | Fix the #58 findings in a new PR; record the merge decisions under #46 |
+| Service-level tests (`SupportRequestServiceTest`) are not on `main` | Sydel Ugwu (#62) | Fix the review findings and merge |
+| AC-REQ-002-02, AC-REQ-002-04, AC-REQ-003-05 and AC-REQ-005-01 have no test | Hamza Bashar / Sydel Ugwu (#62, CRF-014) | Add TC-007 and TC-008 as automated tests |
+| Repository inspection TC-011 (REQ-004) and end-to-end TC-013 have not run on `main` | Khaja Shabbir Ahmed (TC-011), Joanelis Rivera Matos (TC-013, #39) | Run both before the A4 tag |
+| PRs #60 and #72 both close #49 | Nova Kurul, Sydel Ugwu | Agree which PR closes it |
+| No PR has a CI check | Nova Kurul (#47, PR #72) | Merge a working `ci.yml`, then re-run the suite in CI |
+| PR #65 (#46) also rewrites this file | Joanelis Rivera Matos, Sydel Ugwu, Khaja Shabbir Ahmed | Combine the two versions into one before the tag |
 
 ## Change History
 
@@ -114,12 +90,12 @@ Changes to requirements, status-transition rules, technology assumptions, or ava
 |---|---|---|
 | 2026-09-24 | A1 | Initial planning traceability baseline created |
 | 2026-09-29 | A2 | Corrected REQ-002 alignment; connected requirements to build and verification tasks, proposed owners, reserved estimate IDs, and planned evidence; updated ownership and recorded unresolved dependencies |
+| 2026-10-29 | A4 | Rewritten against `main` `0c5f605`: requirements to acceptance criteria, tasks, code, tests and limitations; tasks to issues, branches, PRs and commits; decisions and open gaps. A2 planning-only sections removed (kept in the `a2-planning-estimate` tag). Issue #43 |
 
 ## Maintenance
 
-- Update this file in the same PR as changes to requirements, scope, tasks, decisions, or risks.
-- Add actual issue, PR, implementation, and test-evidence links as they become available.
-- Keep proposed work separate from completed and verified work.
-- Review changes against the task plan, estimates, schedule, and risk register.
-- Disclose AI-assisted changes and record human review.
+- Update this file in the same PR as changes to requirements, tasks, decisions or tests.
+- Change a status only after the check has run on `main`, and name the evidence.
+- Keep work in open PRs separate from work on `main`.
+- Disclose AI-assisted changes in `docs/ai/ai-use-log.md` and record the human review.
 - The Planning & Process Lead reviews traceability at each phase gate.

@@ -36,7 +36,7 @@ Status values: **Unvalidated** (treated as true, not confirmed), **Validated** (
 | Q-004 | Should the system prevent or flag duplicate submissions of the same request? | REQ-001; acceptance-criteria.md (Positive and Negative Conditions) | Hamza | A3 | Open |
 | Q-005 | Should students be able to view the status of requests they submitted? | REQ-001, REQ-002 | Hamza | A3 | Open |
 | Q-006 | Can a student edit or cancel a request after submitting it? | REQ-001, REQ-003 | Joanelis | A3 | Resolved:  A student can edit a request as long as its status is 'Open' and not 'In Progress' or 'Resolved.' A student can also cancel a request as long as the request is 'Open' or 'In Progress' but not when it is 'Resolved.' |
-| Q-007 | Should the system record who changed a request's status and when? | REQ-003 | Hamza | Before implementation | Open |
+| Q-007 | Should the system record who changed a request's status and when? | REQ-003 | Hamza | Before implementation | Resolved: Partly. Each status change is logged with the simulated role and time (AuditLogger, TASK-108, PR #61), and the request stores its last-updated time. Individual users are not recorded, because roles are simulated and unverified (ASM-001). Revisit if real authentication is added. |
 | Q-008 | What technology stack will the system use? | ADR-001 (pending) | Hamza | Before implementation | Open (to be answered by ADR-001) |
  
 ### Open-Question Guidance
