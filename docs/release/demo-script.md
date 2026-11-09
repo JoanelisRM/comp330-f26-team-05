@@ -1,7 +1,6 @@
 # Release Demonstration Script
 
 <!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
 
 This file defines how the team will demonstrate the release.
 
@@ -36,10 +35,10 @@ IMPORTANT:
 
 ## Demonstration Identification
 
-**Release / Version:**  
-**Git Tag / Commit:**  
+**Release / Version:** 
+**Git Tag / Commit:**  A5-cycle1-release 
 **Demo Environment:**  
-**Demo Date:**  
+**Demo Date:**  11/08/2026
 **Presenter(s):**  
 
 <!--
