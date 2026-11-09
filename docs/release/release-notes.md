@@ -1,21 +1,5 @@
 # Release Notes
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file describes the release being presented or delivered.
-
-Release notes should tell a reviewer:
-
-- what release this is;
-- what capabilities are included;
-- what meaningful changes were made;
-- what was verified;
-- what defects were resolved;
-- what remains limited or incomplete; and
-- where supporting engineering evidence can be found.
--->
-
 ## Release Identification
 
 **Release Date:**  11/09/2026 
@@ -39,33 +23,6 @@ The purpose of this first release is to present a simple demo of the CampusConne
 | Simulated staff can update a request's status along OPEN -> IN_PROGRESS -> RESOLVED | REQ-003, REQ-005, REQ-006 | Included |
 
 ## Significant Changes
-
-<!--
-TEAM CONTENT REQUIRED
-
-Summarize meaningful changes since the previous release or baseline.
-
-Possible categories include:
-
-- new capability;
-- changed behavior;
-- architectural change;
-- interface change;
-- security improvement;
-- reliability improvement;
-- operational improvement;
-- documentation or evidence improvement.
-
-Do not reproduce the Git commit log.
-
-EXAMPLE ONLY:
-
-| Area | Change | Why It Matters | Related Evidence |
-|---|---|---|---|
-| Workflow validation | Added server-side required-field validation | Prevents invalid workflow records from being created | REQ-004, AC-REQ-004-02, PR #21 |
-
-Populate actual changes below.
--->
 
 | Area | Change | Why It Matters | Related Evidence |
 |---|---|---|---|
