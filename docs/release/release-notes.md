@@ -18,10 +18,13 @@ Release notes should tell a reviewer:
 
 ## Release Identification
 
-**Release Date:**  11/09/2026
-**Release Gate / Milestone:** Cycle 1
-**Git Tag / Commit:**  A5-cycle1-release
-**Deployment / Environment:** Localhost
+**Release Date:**  11/09/2026 
+
+**Release Gate / Milestone:** Cycle 1 
+
+**Git Tag / Commit:**  A5-cycle1-release 
+
+**Deployment / Environment:** Localhost 
 
 ## Release Summary
 
@@ -66,7 +69,7 @@ Populate actual changes below.
 
 | Area | Change | Why It Matters | Related Evidence |
 |---|---|---|---|
-|  |  |  |  |
+| AI Evidence | Added new AI-Use logs | Records AI-assisted work with human verification | PR #77 |
 
 ## Verification Summary
 
@@ -127,29 +130,8 @@ Remove this section if there is no release-specific operational information.
 
 ## Evidence References
 
-<!--
-TEAM CONTENT REQUIRED
-
-Provide concise references to the most important release evidence.
-
-Possible references include:
-
-- requirements;
-- acceptance criteria;
-- traceability-summary.md;
-- test evidence;
-- runtime evidence;
-- defect log;
-- ADRs;
-- pull requests;
-- release tag;
-- deployment evidence.
-
-Do not create a giant index of the repository.
-
-Reference evidence most useful for reviewing this release.
--->
-
 | Evidence | Location / Reference | Purpose |
 |---|---|---|
-|  |  |  |
+| Capabilities of the system | Requirements, Acceptance Criteria | Reviewers are aware of how the program functions |
+| System behavior | ADR | Reviewers can view how the three main layers of the system are meant to work together |
+| Requirement verification | Test Evidence, Traceability | Reviewers can check records of the tests and checks conducted for requirement verification |
