@@ -35,23 +35,17 @@ IMPORTANT:
 
 ## Demonstration Identification
 
-**Release / Version:** 
+**Release / Version:** Cycle 1
+
 **Git Tag / Commit:**  A5-cycle1-release 
-**Demo Environment:**  
-**Demo Date:**  11/08/2026
-**Presenter(s):**  
 
-<!--
-TEAM CONTENT REQUIRED
+**Demo Environment:**  Localhost
 
-Use the same release identification as:
+**Demo Date:**  11/10/2026
 
-/docs/release/release-notes.md
+**Presenter(s):**  Joanelis Rivera Matos, Khaja Shabbir Ahmed, Hamza Bashar, Nova Kurul, Sydel Ugwu
 
-Identify the actual environment being demonstrated.
 
-Do not leave placeholder metadata in the completed artifact.
--->
 
 ## Demonstration Objective
 
