@@ -4,7 +4,7 @@
 **Gate:** A5 — Cycle 1 Release · **Tracking issue:** #83 (Final Testing Evidence)
 **Last updated:** 2026-11-10 · **Code tested:** `main` at `321aef6`
 
-This file records the testing done after Assignment 4 on the final Cycle 1 code. Every result below was produced on `main` at `321aef6` unless a row says otherwise. Earlier A4 runs (RUN-001..RUN-009) are in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md).
+This file records the testing done after Assignment 4 on the final Cycle 1 code. Every result below was produced on `main` at `321aef6` unless a row says otherwise. PR #100 merged afterwards (`3c579b4`); it changed documents only, so the code is the same as the code tested here. Earlier A4 runs (RUN-001..RUN-009) and the inspection RUN-010 are in [`test-evidence/2026-10-29-local-test-runs.md`](../../test-evidence/2026-10-29-local-test-runs.md).
 
 ## Summary
 
@@ -141,7 +141,7 @@ Run #26 and FT-001 are the same code (`321aef6`), so the local result of 36 test
 | AC-REQ-003-03 invalid transitions rejected | `RequestStatusTest` | Step 9 | Verified |
 | AC-REQ-003-04 student cannot change status | `RoleCheckServiceTest` | Step 6 | Verified |
 | AC-REQ-003-05 status change visible in list | None on `main` (in PR #95) | Step 12 | Verified manually only |
-| AC-REQ-004-01 synthetic data only | Not testable by a unit test (CRF-009) | Only synthetic data used in this run | Inspection TC-011 still not run |
+| AC-REQ-004-01 synthetic data only | Not testable by a unit test (CRF-009) | Only synthetic data used in this run | Verified by inspection: TC-011 on `e9f93e6`, Pass (RUN-010, Khaja Shabbir Ahmed, PR #100) |
 | AC-REQ-005-01 state kept during the run | `InMemorySupportRequestRepositoryTest` | Steps 4, 12 (no restart) | Verified |
 | AC-REQ-006-01 role checks in one place | Code review (TC-010, A4) | — | Verified by review |
 
@@ -154,7 +154,7 @@ Status of the cases in [`test-cases.md`](test-cases.md) that were failing or not
 | TC-006 staff list over HTTP | Fail (RF-02) | Pass | FT-002 step 4; FT-001 |
 | TC-007 empty list | Not run | Pass (manual) | FT-002 step 1 |
 | TC-008 submit → list → change → list | Not run | Pass (manual) | FT-002 steps 2, 4, 7, 8, 12 |
-| TC-011 synthetic-data inspection | Not run | Not run | Owner: Khaja Shabbir Ahmed |
+| TC-011 synthetic-data inspection | Not run | Pass | RUN-010 (Khaja Shabbir Ahmed, PR #100), on `e9f93e6` |
 | TC-012 build and full suite | Fail on some PRs | Pass | FT-001 |
 | TC-013 end to end on `main` | Not run on `main` | Pass | FT-002 |
 
@@ -164,7 +164,6 @@ Status of the cases in [`test-cases.md`](test-cases.md) that were failing or not
 |---|---|---|---|
 | No automated test on `main` for AC-REQ-002-02, AC-REQ-002-04, AC-REQ-003-05 | The tests are in PR #95, not merged | A later change could break them unnoticed; they pass manually today | Merge PR #95 |
 | No automated end-to-end test over HTTP | `Cycle1AcceptanceTest` (PR #95) calls the services directly (CRF-025) | The HTTP path is checked end to end only by hand | Cycle 2 |
-| TC-011 inspection | Not yet done | Low; all test and demo data seen is synthetic | Khaja Shabbir Ahmed, before the final baseline |
 | Wrong method on the status route returns `404`, not `405` (CRF-024) | Deferred | Low | Cycle 2 |
 | Two requests at the same time, restart behaviour, load | Out of Cycle 1 scope (LIM-001) | Accepted | Cycle 2 |
 | AI validation tests | The system has no AI feature | None | Not applicable |
