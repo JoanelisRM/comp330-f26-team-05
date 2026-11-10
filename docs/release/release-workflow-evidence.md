@@ -33,10 +33,10 @@ All merges below are on `main` after the A4 tag (`a4-construction-integration`, 
 | #96 | RF-06 fix (code) | `fix/role-header-only-rf06` | #97 (Khaja) | `a8a2872` | #19 / #23 passed | Approved by Hamza (finding CRF-024) | `e9f93e6`, 11-10 00:28 | Closed |
 | #86 | Known limitations, residual risks | `release/known-limitations-86` | #98 (Khaja) | `766e4e9`, `b199663` | #20, #24 / #26 passed | Approved by Hamza; last update merged before a re-review | `321aef6`, 11-10 00:36 | Closed |
 | #88 | Traceability update | `planning/traceability-88` | #100 (Khaja) | `f10464e`, `c3555ff` | #25, #27 passed | Approved by Hamza (CRF-026, CRF-027) | `3c579b4`, 11-10 00:55 | Closed |
-| #83 | Final testing evidence | `docs/final-test-evidence-83` | #102 (Hamza) | `db6e86c`, `14d3fab` | Passed | Approved by Khaja (1 fix, applied) | `961d10f`, 11-10 01:07 | Closed |
-| #85 | Defect review summary | `docs/defect-review-85` | #101 (Hamza) | `ad78bfe`, `41b38ed`, `7a6efe2` | #28 passed | Approved by Khaja (4 fixes, applied) | `aaf77c8`, 11-10 01:10 | Closed |
+| #83 | Final testing evidence | `docs/final-test-evidence-83` | #102 (Hamza) | `db6e86c`, `4149af2`, `14d3fab` | Passed | Approved by Khaja; fix applied after approval and merged without a re-check; checked after merge by Khaja | `961d10f`, 11-10 01:07 | Closed |
+| #85 | Defect review summary | `docs/defect-review-85` | #101 (Hamza) | `ad78bfe`, `41b38ed`, `7a6efe2` | #28 passed | Approved by Khaja; fixes applied after approval and merged without a re-check; checked after merge by Khaja | `aaf77c8`, 11-10 01:10 | Closed |
 
-Eight A5 pull requests merged. Seven were approved before merge; one (#99) had no review. Every one had a passing CI check.
+Eight A5 pull requests merged. Seven were approved before merge; one (#99) had no review. On three (#98, #101, #102), fixes were pushed after the approval and merged without a re-check. Every one had a passing CI check.
 
 ### A5 Work Not Yet on `main`
 
@@ -82,9 +82,9 @@ The RF-06 fix is the only A5 code change on `main`, so it is the clearest exampl
 | #98 | Hamza Bashar | Approved | — |
 | #95 | Hamza Bashar | Approved (ran `mvn test` on `00879c7`) | CRF-025 |
 | #100 | Hamza Bashar | Approved | CRF-026, CRF-027 (non-blocking) |
-| #101 | Khaja Shabbir Ahmed | Approved | 4 fixes requested and applied (`41b38ed`, `7a6efe2`) |
-| #102 | Khaja Shabbir Ahmed | Approved | 1 fix requested and applied (`4149af2`) |
-| #93, #94 | See the PR | Approved | — |
+| #101 | Khaja Shabbir Ahmed | Approved | 4 fixes requested and applied after approval (`41b38ed`, `7a6efe2`); checked after merge by Khaja |
+| #102 | Khaja Shabbir Ahmed | Approved | 1 fix requested and applied after approval (`4149af2`); checked after merge by Khaja |
+| #93, #94 | Nova Kurul (backup on #79 and #82) | Approved at 22:26 and 22:33 CST; merged by Nova right after | — |
 | #99 | — | No review | Merged by its author |
 
 A4 review decisions are in [`code-review-a4.md`](../reviews/code-review-a4.md).
@@ -115,6 +115,7 @@ A4 review decisions are in [`code-review-a4.md`](../reviews/code-review-a4.md).
 | Deviation | Evidence | Effect | Follow-Up |
 |---|---|---|---|
 | PR #99 merged without a review | Pull request list: no review decision on #99 | Its `ci-evidence.md` claims were not checked by a second person | Review after the fact (gap listed in `traceability.md`) |
+| Fixes pushed after approval and merged without a re-check | #98, #101, #102 | The merged version was not the version that was approved | Khaja checked the #101 and #102 fixes on `main` after merge; in Cycle 2, re-request review after any push (QA-002 would enforce this) |
 | Tag created before the last merges | Tags page: `b3613ae`; five merges after it | The baseline does not match the released code | Recreate the tag (#81) |
 | Approved work not merged | #95 (A5), #56 (A4) | 9 open defects wait on them (`defect-review.md`) | QA-001 |
 | Old pull requests still open | #22, #60, #62 (changes requested), #63, #65 | Unclear which work is abandoned | Authors to merge or close |
@@ -136,5 +137,5 @@ A4 review decisions are in [`code-review-a4.md`](../reviews/code-review-a4.md).
 
 - Merge commits, branches, commit hashes and tags were read from the repository (`git log`, `git tag`).
 - Review decisions, issue states and counts were read from the GitHub Pull requests, Issues, Actions and Tags pages on 2026-11-10 between 00:49 and 01:12 CST. They change as work continues.
-- The reviewer names for #93 and #94 were not checked; see those pull requests.
+- The reviewer for #93 and #94 (Nova Kurul) was confirmed by Khaja in his review of this file.
 - AI assistance: Claude collected the history and drafted this file. Disclosed in `docs/ai/ai-use-log.md`.
