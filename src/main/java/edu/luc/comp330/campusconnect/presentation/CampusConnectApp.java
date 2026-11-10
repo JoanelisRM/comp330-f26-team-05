@@ -120,13 +120,8 @@ public class CampusConnectApp {
     private void routeRequest(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod().toUpperCase();
         String path = exchange.getRequestURI().getPath();
+        // ADR-0003 / CRF-003: the simulated role is read from the header only, never from the URL.
         String role = exchange.getRequestHeaders().getFirst("X-Simulated-Role");
-        if (role == null || role.isBlank()) {
-            String query = exchange.getRequestURI().getQuery();
-            if (query != null && query.startsWith("role=")) {
-                role = query.substring("role=".length());
-            }
-        }
 
         if ("/api/requests".equals(path) && "GET".equals(method)) {
             ServiceResult<List<SupportRequest>> res = service.listRequests(role);
@@ -143,8 +138,8 @@ public class CampusConnectApp {
             return;
         }
 
-        if (path.startsWith("/api/requests/") && path.endsWith("/status")
-                && ("PATCH".equals(method) || "POST".equals(method))) {
+        // API-003 / CRF-001: status changes use PATCH only.
+        if (path.startsWith("/api/requests/") && path.endsWith("/status") && "PATCH".equals(method)) {
             String idPart = path.substring("/api/requests/".length(), path.length() - "/status".length());
             String rawStatus = parseJsonObject(
                     new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8)).get("newStatus");
