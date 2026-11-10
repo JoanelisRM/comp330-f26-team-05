@@ -1,10 +1,10 @@
 # Known Limitations
 
 **Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Hamza Bashar
-**Gate:** A5 — Cycle 1 Release · **Last updated:** 2026-11-09 · **Tracking issues:** #86 (A5), #54 (A4)
+**Gate:** A5 — Cycle 1 Release · **Last updated:** 2026-11-10 · **Tracking issues:** #86 (A5), #54 (A4)
 **Status:** Proposed — pending review by the backup owner
 
-**Review basis.** Checked against `main` at `706f9bf` on 2026-11-09 (CI run #18 passed, 31 tests), `scope.md`, ADR-001, ADR-002, `assumptions-open-questions.md`, the API contracts and the risk register. Open PRs that change a limitation are named but not counted as done: #95 (Data Layer fixes and end-to-end acceptance test) and #97 (RF-06 fix). Re-check this file on the release commit before the `a5-cycle1-release` tag.
+**Review basis.** Checked against `main` at `e9f93e6` on 2026-11-10 (CI run #23 passed, 36 tests), `scope.md`, ADR-001, ADR-002, `assumptions-open-questions.md`, the API contracts and the risk register. Open PRs that change a limitation are named but not counted as done: #95 (Data Layer fixes and end-to-end acceptance test). Re-check this file on the release commit before the `a5-cycle1-release` tag.
 
 **Severity** is the effect on a Cycle 1 user or demo: **High** blocks a required workflow, **Medium** limits or confuses a workflow, **Low** is cosmetic or only matters beyond Cycle 1.
 
@@ -41,11 +41,11 @@ Runtime findings (RF) come from local builds and HTTP checks in A4 (`test-eviden
 | ID | Finding | Severity | Disposition | Evidence |
 |---|---|---|---|---|
 | RF-01 | Build failed: 74 compile errors in `CampusConnectApp.java` (unescaped quotes in JSON strings). | High | Resolved | PR #67; CI passes on `main` |
-| RF-02 | `GET /api/requests` returned only a count, not the requests (AC-REQ-002-01). | High | Resolved | PR #76 (TASK-104); reviewer HTTP check of AC-REQ-002-01..04 on 2026-10-30; automated checks in PRs #95 and #97 (open) |
+| RF-02 | `GET /api/requests` returned only a count, not the requests (AC-REQ-002-01). | High | Resolved | PR #76 (TASK-104); reviewer HTTP check of AC-REQ-002-01..04 on 2026-10-30; HTTP list check in `CampusConnectAppRoleTransportTest` (PR #97); service-level check in PR #95 (open) |
 | RF-03 | A value with an escaped quote was cut off, and the response was invalid JSON. | Medium | Resolved | PR #67; test `quotesAndBackslashesInFieldsArePreserved` |
 | RF-04 | The validation-error response was not valid JSON. | Medium | Resolved | PR #67; test `missingFieldsReturn400ListingEveryMissingField` |
 | RF-05 | The submit response left out `submittedAt` and `description`. | Medium | Resolved | PR #67; test `validSubmissionReturns201WithSystemAssignedIdStatusAndTime` |
-| RF-06 | `?role=` was read only as the first query parameter (`?x=1&role=STAFF` denied), and the role could be put in the URL at all (CRF-003). `POST` was also accepted for status changes (CRF-023). | Low | Fix in PR #97 (under review): header only, `PATCH` only | Issue #96; `CampusConnectAppRoleTransportTest` (3 of 5 tests fail on the old code) |
+| RF-06 | `?role=` was read only as the first query parameter (`?x=1&role=STAFF` denied), and the role could be put in the URL at all (CRF-003). `POST` was also accepted for status changes (CRF-023). | Low | Resolved | Issue #96; PR #97 (approved by Hamza before merge, CI passed); `CampusConnectAppRoleTransportTest` (3 of 5 tests fail on the old code) |
 
 ## Operational Limitations
 
@@ -60,9 +60,9 @@ Runtime findings (RF) come from local builds and HTTP checks in A4 (`test-eviden
 
 | Area | What Has Been Verified | What Has Not Been Verified | Related Evidence |
 |---|---|---|---|
-| Automated tests | `main` `706f9bf`: 31/31 in CI (run #18). With open PRs #95 and #97 merged locally: 41/41. | Tests in #95 and #97 are not on `main` until they merge. | `docs/testing/ci-evidence.md` |
+| Automated tests | `main` `e9f93e6`: 36/36 in CI (run #23). With open PR #95 merged locally: 41/41. | Tests in #95 are not on `main` until it merges. | `docs/testing/ci-evidence.md` |
 | End-to-end flow | `Cycle1AcceptanceTest` (PR #95) runs submit → list → update → list again through the Logic Layer. | The same flow over HTTP on the release commit (TC-013, #39) before the tag. | PR #95, #39 |
-| Staff list over HTTP | Reviewer HTTP check on PR #76 (2026-10-30): fields, empty list, new requests, status changes, student denied. | No HTTP test of the list's fields yet; #97 checks only that a listed request appears. | PR #76 review, PR #97 |
+| Staff list over HTTP | Reviewer HTTP check on PR #76 (2026-10-30): fields, empty list, new requests, status changes, student denied. An HTTP test on `main` checks that a listed request appears (PR #97). | No HTTP test of each field in the list yet. | PR #76 review, PR #97 |
 | Failure paths | Storage failure returns `500` (test `storageFailureReturns500AndNeverSuccess`). | Simultaneous requests, very large inputs. | API-001, REQ-005 |
 
 ## Limitation Changes
@@ -73,4 +73,5 @@ Runtime findings (RF) come from local builds and HTTP checks in A4 (`test-eviden
 | 2026-10-29 / A4 | RF-01, RF-03, RF-04, RF-05; LIM-008; review basis | RF-01/03/04/05 → Resolved; LIM-008 to move to Accepted when PR #70 merges; file re-checked against `main` | PR #61 and #67 merged; Hamza's review CRF-015..CRF-018 | PR #66 review; `main` `7ee567c` |
 | 2026-10-29 / A4 | LIM-008 | Under Investigation → Accepted (Cycle 1) | Q-007 answered and merged | PR #70 |
 | 2026-11-09 / A5 | All | Added severity, owner and Cycle 2 action to every limitation | A5 release requirements | Issue #86 |
-| 2026-11-09 / A5 | RF-02, RF-06, LIM-004, LIM-007, LIM-010 | RF-02 → Resolved; RF-06 → fix in PR #97; LIM-004 and LIM-007 → Deferred to Cycle 2 (not in the release); LIM-010 added (forward-only status rule) | TASK-104 merged (#76); RF-06 fix opened (#96); Cycle 1 release scope fixed | PR #76, PR #97, Q-002 |
+| 2026-11-09 / A5 | RF-02, RF-06, LIM-004, LIM-007, LIM-010 | RF-02 → Resolved; LIM-004 and LIM-007 → Deferred to Cycle 2 (not in the release); LIM-010 added (forward-only status rule) | TASK-104 merged (#76); Cycle 1 release scope fixed | PR #76, Q-002 |
+| 2026-11-10 / A5 | RF-06 | → Resolved | Fix reviewed and merged | Issue #96, PR #97 |
