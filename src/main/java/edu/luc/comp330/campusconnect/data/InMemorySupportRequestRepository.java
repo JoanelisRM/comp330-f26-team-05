@@ -15,7 +15,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * In-memory implementation of API-004 (SupportRequestRepository) for Cycle 1 (Issue #31 / TASK-102, Q-003, REQ-005).
- * Preserves insertion order, returns defensive copies, and fails explicitly on unknown IDs.
+ * Remediated for A5:
+ * - CRF-006: save() rejects duplicate requestIds with IllegalArgumentException so existing records are never overwritten.
+ * - CRF-007: removed clear() from production interface.
  */
 public class InMemorySupportRequestRepository implements SupportRequestRepository {
 
@@ -31,7 +33,13 @@ public class InMemorySupportRequestRepository implements SupportRequestRepositor
     public SupportRequest save(SupportRequest request) {
         Objects.requireNonNull(request, "SupportRequest to save must not be null");
         SupportRequest copy = request.copy();
-        store.put(copy.getRequestId(), copy);
+        synchronized (store) {
+            if (store.containsKey(copy.getRequestId())) {
+                throw new IllegalArgumentException(
+                        "Duplicate support request ID cannot overwrite existing record: " + copy.getRequestId());
+            }
+            store.put(copy.getRequestId(), copy);
+        }
         return copy.copy();
     }
 
@@ -70,11 +78,5 @@ public class InMemorySupportRequestRepository implements SupportRequestRepositor
             store.put(updated.getRequestId(), updated);
             return updated.copy();
         }
-    }
-
-    @Override
-    public void clear() {
-        store.clear();
-        sequence.set(1000);
     }
 }

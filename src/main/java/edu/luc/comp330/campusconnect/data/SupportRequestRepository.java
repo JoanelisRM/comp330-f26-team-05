@@ -9,7 +9,8 @@ import java.util.Optional;
 
 /**
  * API-004: Internal Java storage interface for the Data Layer (Issue #31 / TASK-102).
- * Owned exclusively by the Data Layer and called only by the Logic Layer (never directly by Presentation).
+ * Remediated for A5 (CRF-007): removed clear() from the production interface so callers
+ * cannot wipe stored requests; each test creates a fresh repository instance in @BeforeEach.
  */
 public interface SupportRequestRepository {
 
@@ -19,7 +20,9 @@ public interface SupportRequestRepository {
     String nextRequestId();
 
     /**
-     * Persists a validated support request in the authoritative store (REQ-005).
+     * Persists a new validated support request in the authoritative store (REQ-005).
+     *
+     * @throws IllegalArgumentException if a request with the same requestId already exists (CRF-006)
      */
     SupportRequest save(SupportRequest request);
 
@@ -39,9 +42,4 @@ public interface SupportRequestRepository {
      * @throws IllegalArgumentException if the requestId does not exist
      */
     SupportRequest updateStatus(String requestId, RequestStatus newStatus, Instant updatedAt);
-
-    /**
-     * Clears all stored requests (used for deterministic test isolation).
-     */
-    void clear();
 }
