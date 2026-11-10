@@ -84,7 +84,7 @@ Of the 10 open defects, 9 have a fix waiting in an unmerged pull request (#56 or
 | Hand-written JSON | RF-01, RF-03, RF-04, RF-05; risk R-022 | Four defects from one design choice in one file |
 | Code and contract drift apart | CRF-001, CRF-003, CRF-008, CRF-023 | The contract was written first and not re-checked when code changed |
 | Fixes approved but not merged | 9 of the 10 open defects wait on PR #56 or PR #95 | The defect is solved on a branch, but the release does not contain the fix |
-| Code reached `main` before its review finished | PRs #57 and #58 through #61 (R-020); PR #68 (R-021) | CRF-006..CRF-010 applied to merged code and needed a second PR |
+| Code reached `main` before its review finished | A4: PRs #57 and #58 through #61 (R-020); PR #67 merged into #61 without its own review; PR #68 (R-021). A5: PR #99 merged without a review; the last update to PR #98 merged before the re-review | CRF-006..CRF-010 applied to merged code and needed a second PR. The pattern continued into A5 |
 
 ## Contributing Factors
 
@@ -101,7 +101,7 @@ Of the 10 open defects, 9 have a fix waiting in an unmerged pull request (#56 or
 | Defect ID | Detected At | Earlier Detection Opportunity | Improvement |
 |---|---|---|---|
 | RF-01 | Reviewer's local `mvn test` on PR #61 | Author's own build before opening the PR; CI | CI on every PR (in place since PR #72) |
-| RF-02 | Reviewer's HTTP check after merge | A test for AC-REQ-002-01 before merge | Each acceptance criterion gets a test in the same PR as the code |
+| RF-02 | Local HTTP check on PR #61 (RUN-005), before merge. #61 merged with the defect still in it; fixed later in PR #76 | A test for AC-REQ-002-01 in the PR; holding the merge until the finding was fixed | Each acceptance criterion gets a test in the same PR as the code |
 | CRF-006, CRF-007 | Review of PR #58, after the code was already on `main` | Review before merge | Do not stack PRs; merge only after approval (QA-002) |
 | CRF-023 | Re-review of PR #56 | When the ADR changed, check the code in the same PR | A contract or ADR change lists the code it affects |
 | RF-06 | HTTP check in A4, fixed in A5 | A test with more than one query parameter | Closed by removing the feature (#97) |
@@ -112,7 +112,7 @@ Of the 10 open defects, 9 have a fix waiting in an unmerged pull request (#56 or
 |---|---|---|
 | No defect was found by a user or in the demo | All 31 were found by review, local runs or tests | Defects were caught before release |
 | Reviewers ran the code | Local `mvn test` on PRs #62 and #95; RUN-001..RUN-009 | Findings were based on results, not on reading alone |
-| Fixes came with tests | PR #67 (3 tests), PR #97 (5 tests), PR #95 (5 tests) | A fixed defect stays fixed |
+| Fixes came with tests | PR #67 (8 tests, `CampusConnectAppSubmitTest`), PR #97 (5 tests), PR #95 (5 tests, not merged) | A fixed defect stays fixed |
 | Findings have IDs and an outcome | `code-review-a4.md`, `known-limitations.md` | Each defect can be followed from finding to fix |
 | CI now runs on every PR and on `main` | `.github/workflows/ci.yml`; 36 tests on `main` | A broken build is now a visible failed check |
 
