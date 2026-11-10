@@ -1,8 +1,19 @@
 # AI Use Log
 
 **Owner:** Nova (AI/Governance Lead) | **Backup:** Hamza
+**Status:** Final - Cycle 1 Release
+**Target Baseline Commit:** a5-cycle1-release
 
-## AI Use
+## Cycle 1 Final AI Verification (Addressing A4 Remediation)
+*To strengthen verification traceability and directly address A4 Professional Gate conditions, all AI-use records are now tied to a single final release commit. Below is the explicit record of how human verification challenged an important failure path before our final merge:*
+
+*   **AI Contribution:** AI was used to generate initial structural logic for role-based status transition checks.
+*   **Human Verification & Challenge:** The AI-generated code was treated as an untrusted draft. We explicitly challenged this code by writing failure-path tests (e.g., forcing a `STUDENT` role to attempt a `STAFF` transition in `Cycle1AcceptanceTest.java`). 
+*   **Outcome:** Human verification discovered the initial AI draft lacked strict validation. We manually refactored the boundaries in `RoleCheckService` to explicitly reject unauthorized role state changes and whitespace-only fields. *The final baseline is operationally defensible and wholly owned by human engineers.*
+
+---
+
+## AI Use (Historical Log)
 
 | Date | Tool | Purpose | Artifact / Activity | Human Verification | Result / Action |
 |---|---|---|---|---|---|
@@ -30,6 +41,12 @@
 | 2026-10-29 | Claude | Drafted `RequestStatusTest.java` (9 unit tests for the REQ-003 status rule: both allowed moves, skip, backward, reopen, same-status and null targets rejected, exactly 2 of 9 moves allowed, guard against new statuses) at Hamza's request | `src/test/java/edu/luc/comp330/campusconnect/model/RequestStatusTest.java` | Hamza read each test against REQ-003, API-003 and AC-REQ-003-01..03, and ran `mvn test` locally (2026-10-29 21:38: 31 run, 0 failures) | Accepted after review. |
 | 2026-10-29 | Claude | Drafted `code-review-a4.md` for issue #50, indexing review findings CRF-001 to CRF-023 with outcomes checked against `main` and each PR; also helped prepare findings CRF-020 to CRF-023 on PRs #74 and #56 | `docs/reviews/code-review-a4.md`, PR reviews #56/#74 | Hamza checked each finding's outcome against the PR threads and `main`, and confirmed the "considered and not raised" list matches the findings he chose not to post | Accepted after review. |
 | 2026-10-29 | ChatGPT | Drafting CI/CD workflow, AI review docs, and revising data-context.md | `docs/testing/evidence.md`, `docs/reviews/ai-code-review-a4.md`, `ci.yml` | Nova reviewed to explicitly enforce synthetic data limits and no-runtime-AI constraints based on instructor A3 feedback. | Accepted with edits |
+| 2026-10-29 | Gemini | Issue #30 (TASK-101): Created Maven pom.xml and Presentation/Logic/Data package skeleton | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
+| 2026-10-29 | Gemini | Issue #31 (TASK-102): Implemented API-004 SupportRequestRepository, InMemorySupportRequestRepository, and unit tests | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
+| 2026-10-29 | Gemini | Issue #33 (TASK-103): Implemented support request submission, required-field validation, ID/timestamp assignment, and localhost HTTP handler | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
+| 2026-10-29 | Gemini | Issue #44: Drafted reusable Pull Request template (.github/pull_request_template.md) | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
+| 2026-10-29 | Gemini | Issue #41: Created Assignment 4 Changed-File Index (docs/reviews/assignment4-changed-files.md) | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
+| 2026-10-29 | Gemini | Issue #42: Documented Architecture Review Action Items (ARA-001..006) and closure evidence | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
 | 2026-10-30 | Claude | Drafted `ci-evidence.md` for issue #48 from the Actions tab run list, local `mvn test` runs and the test classes on `main`; also helped with the #74 review (CRF-020 to CRF-022), the #56 re-review (CRF-023) and the #45 evidence section | `docs/testing/ci-evidence.md`, PR reviews #74/#56, `docs/reviews/code-review-a4.md` | Hamza checked each CI run against the Actions tab and the test count against the CI log | Accepted after review. |
 
 ## What Should Be Logged?
@@ -58,12 +75,3 @@ For significant AI-assisted work requiring more detailed verification evidence, 
 - Record what was actually done with the AI output.
 - Link detailed verification evidence when appropriate.
 - Keep entries concise but specific enough to be reviewable.
-
-| 2026-10-29 | Gemini | Issue #30 (TASK-101): Created Maven pom.xml and Presentation/Logic/Data package skeleton | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
-
-| 2026-10-29 | Gemini | Issue #31 (TASK-102): Implemented API-004 SupportRequestRepository, InMemorySupportRequestRepository, and unit tests | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
-
-| 2026-10-29 | Gemini | Issue #33 (TASK-103): Implemented support request submission, required-field validation, ID/timestamp assignment, and localhost HTTP handler | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
-| 2026-10-29 | Gemini | Issue #44: Drafted reusable Pull Request template (.github/pull_request_template.md) | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
-| 2026-10-29 | Gemini | Issue #41: Created Assignment 4 Changed-File Index (docs/reviews/assignment4-changed-files.md) | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
-| 2026-10-29 | Gemini | Issue #42: Documented Architecture Review Action Items (ARA-001..006) and closure evidence | Sydel reviewed and verified against Cycle 1 requirements, architecture boundaries, and tests before committing. | Accepted after human verification. |
