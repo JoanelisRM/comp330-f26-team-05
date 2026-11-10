@@ -4,7 +4,7 @@
 **Gate:** A5 — Cycle 1 Release · **Last updated:** 2026-11-10 · **Tracking issues:** #88 (A5), #43 (A4)
 **Status:** Proposed — pending review by the backup owner
 
-**Basis.** Checked on 2026-11-10 against `main` at `e9f93e6`: requirements, acceptance criteria, GitHub issues #29–#96, PRs #55–#99, `git log`, and CI run #23 on `e9f93e6` (36 tests, 0 failures). Every test named below as "on `main`" runs in CI on every PR and every push to `main`. Open PRs are named but not counted as done: #92 (release notes and demo script), #95 (Data Layer fixes and end-to-end acceptance test) and #98 (known limitations). Re-check this file on the release commit before the `a5-cycle1-release` tag.
+**Basis.** Checked on 2026-11-10 against `main` at `e9f93e6`: requirements, acceptance criteria, GitHub issues #29–#96, PRs #55–#99, `git log`, and CI run #23 on `e9f93e6` (36 tests, 0 failures). Every test named below as "on `main`" runs in CI on every PR and every push to `main`. Open PRs are named but not counted as done: #92 (release notes and demo script) and #95 (Data Layer fixes and end-to-end acceptance test). Known limitations (#98) merged after this check, with no code change. Re-check this file on the release commit before the `a5-cycle1-release` tag.
 
 **Status key**
 
@@ -85,7 +85,7 @@ Owners and backups are from `task-plan.md` and the issue descriptions.
 | #83 | Final testing evidence | Hamza Bashar / Khaja Shabbir Ahmed | — | No PR yet |
 | #84, #87 | CI/CD final evidence; AI-use log final update | Nova Kurul / Joanelis Rivera Matos | #99 | Merged (without a review) |
 | #85 | Defect review summary | Hamza Bashar / Khaja Shabbir Ahmed | — | No PR yet |
-| #86 | Known limitations and residual risks | Khaja Shabbir Ahmed / Hamza Bashar | #98 | Open |
+| #86 | Known limitations and residual risks | Khaja Shabbir Ahmed / Hamza Bashar | #98 | Merged |
 | #88 | Traceability update (this file) | Khaja Shabbir Ahmed / Hamza Bashar | This PR | Open |
 | #89 | Release workflow evidence | Hamza Bashar / Khaja Shabbir Ahmed | — | No PR yet |
 | #91 | Cycle 2 evidence handoff | Joanelis Rivera Matos / Sydel Ugwu | #93 | Merged (issue still open) |
