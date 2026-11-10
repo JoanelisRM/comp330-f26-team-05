@@ -75,3 +75,17 @@ The server log had one line per action (8 actions: 5 `INFO`, 3 `WARN`), each wit
 | 8 | `GET ?x=1&role=STAFF` | `403 ROLE_DENIED` (role read as missing) | RF-06 still present |
 
 Re-run after #71, #70 and #73 merged: `main` at `0c5f605`, `mvn -B test`: `Tests run: 31, Failures: 0, Errors: 0` (role check 9, status rule 9, repository 5, HTTP 8), `BUILD SUCCESS`. The application code is the same as in the HTTP check above.
+
+## RUN-010 — Repository inspection TC-011 (#88)
+
+`main` at `e9f93e6` on 2026-11-10 (REQ-004, AC-REQ-004-01). Searched every tracked file with `git grep`:
+
+| Check | Pattern | Result |
+|---|---|---|
+| Email addresses | any `name@domain` (excluding `noreply` and example addresses) | None found |
+| Passwords, secrets, API keys, tokens | `password`, `secret`, `api_key`, `token` followed by a value | None found |
+| Private keys and access keys | `BEGIN … PRIVATE`, `ghp_…`, `AKIA…` | None found |
+| Student IDs and phone numbers | 9-digit numbers and phone formats in `src`, `test-evidence`, `docs/testing` | None found |
+| Data files | `.csv`, `.json`, `.db`, `.sqlite`, `.xlsx`, `.sql` | None in the repository |
+
+**Result: Pass.** Requests in the code and tests are synthetic (`SupportRequest` sets `synthetic = true`). Team members' names appear only in ownership fields of the documents.

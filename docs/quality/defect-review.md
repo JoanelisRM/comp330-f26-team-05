@@ -2,7 +2,7 @@
 
 **Owner:** Hamza Bashar (Quality & Review Lead) · **Backup / Reviewer:** Khaja Shabbir Ahmed
 **Gate:** A5 — Cycle 1 Release · **Tracking issue:** #85 (Defect Review Summary)
-**Last updated:** 2026-11-10 · **Status as of:** `main` at `321aef6`
+**Last updated:** 2026-11-10 · **Status as of:** `main` at `3c579b4`
 
 ## Review Scope
 
@@ -27,14 +27,14 @@ A finding is **Closed** only when the fix is on `main`. A fix that sits in an ap
 | Measure | Count |
 |---|---:|
 | Total defects reviewed | 31 |
-| Open | 11 |
-| Closed | 18 |
+| Open | 10 |
+| Closed | 19 |
 | Deferred | 2 |
 | Critical / High | 0 Critical, 4 High (RF-01, RF-02, CRF-006, CRF-007) |
 
 Of the 4 High defects, RF-01 and RF-02 are closed on `main`. CRF-006 and CRF-007 are fixed in PR #95, which is approved but not merged.
 
-Of the 11 open defects, 9 have a fix waiting in an unmerged pull request (#56 or #95). Only CRF-009 and CRF-025 have no fix yet.
+Of the 10 open defects, 9 have a fix waiting in an unmerged pull request (#56 or #95). Only CRF-025 has no fix yet.
 
 ### Disposition of Each Defect
 
@@ -54,7 +54,7 @@ Of the 11 open defects, 9 have a fix waiting in an unmerged pull request (#56 or
 | CRF-006 | `save` silently replaced a request with the same ID | High | Open | Sydel Ugwu | Fixed in PR #95 (`00879c7`, approved, not merged). On `main`, IDs come only from `nextRequestId()`, so no caller can trigger it today |
 | CRF-007 | `clear()` on the production interface could wipe all requests | High | Open | Sydel Ugwu | Removed in PR #95 (not merged). On `main`, no production code calls `clear()` |
 | CRF-008 | Data Layer generates IDs; API-001 says the Logic Layer does | Low | Deferred | Sydel Ugwu | Behaviour is correct; code and document disagree. Cycle 2: move the code or update API-001 |
-| CRF-009 | `synthetic` is always `true`, so the REQ-004 test cannot fail | Low | Open | Khaja Shabbir Ahmed | REQ-004 is verified by inspection (TC-011). TC-011 is still "Not run" in `test-cases.md` |
+| CRF-009 | `synthetic` is always `true`, so the REQ-004 test cannot fail | Low | Closed | Khaja Shabbir Ahmed | REQ-004 is now verified by inspection: TC-011 run on `e9f93e6`, Pass (RUN-010, PR #100) |
 | CRF-010 | Missing Data Layer tests: unknown / `null` / blank ID, empty list, duplicate save | Medium | Open | Sydel Ugwu | 3 tests added in PR #95 (not merged) |
 | CRF-011 | Rejected-transition test labelled with a success criterion | Low | Closed | Sydel Ugwu | The mislabelled `test-strategy.md` was in PR #62, which never merged. `main` has the correct labels |
 | CRF-012 | Student-denied test mapped to a code-review criterion | Low | Closed | Sydel Ugwu | Same as CRF-011 |
@@ -83,7 +83,7 @@ Of the 11 open defects, 9 have a fix waiting in an unmerged pull request (#56 or
 | Documents state something that is not true on `main` | CRF-005, CRF-013, CRF-015..CRF-017; risk R-023 | Readers cannot trust a status without checking the code. This is 12 of 31 findings |
 | Hand-written JSON | RF-01, RF-03, RF-04, RF-05; risk R-022 | Four defects from one design choice in one file |
 | Code and contract drift apart | CRF-001, CRF-003, CRF-008, CRF-023 | The contract was written first and not re-checked when code changed |
-| Fixes approved but not merged | 9 of the 11 open defects wait on PR #56 or PR #95 | The defect is solved on a branch, but the release does not contain the fix |
+| Fixes approved but not merged | 9 of the 10 open defects wait on PR #56 or PR #95 | The defect is solved on a branch, but the release does not contain the fix |
 | Code reached `main` before its review finished | PRs #57 and #58 through #61 (R-020); PR #68 (R-021) | CRF-006..CRF-010 applied to merged code and needed a second PR |
 
 ## Contributing Factors
@@ -123,7 +123,7 @@ Of the 11 open defects, 9 have a fix waiting in an unmerged pull request (#56 or
 | QA-001 | Merge PR #95 (after its `ai-use-log.md` conflict is fixed) and PR #56, or record them as deferred | 9 open defects wait on them | Sydel Ugwu | Before the final A5 baseline | Open |
 | QA-002 | Turn on branch protection for `main`: one approval and a passing CI check | R-020, R-021; no branch protection | Joanelis Rivera Matos | Start of Cycle 2 | Open |
 | QA-003 | Replace hand-written JSON with a library, or keep it in one tested helper | RF-01, RF-03..RF-05; R-022 | Sydel Ugwu | Cycle 2 | Open |
-| QA-004 | Run TC-011 (synthetic-data inspection) and record the result | CRF-009 | Khaja Shabbir Ahmed | Before the final A5 baseline | Open |
+| QA-004 | Run TC-011 (synthetic-data inspection) and record the result | CRF-009 | Khaja Shabbir Ahmed | Before the final A5 baseline | Done (RUN-010, PR #100) |
 | QA-005 | Status claims in documents name a `main` commit or a PR | CRF-005, CRF-013, CRF-015..CRF-017; R-023 | Hamza Bashar | Cycle 2, checked in review | Open |
 | QA-006 | Decide CRF-008 (ID generation) and CRF-024 (`405` vs `404`) and update code or contract | Deferred defects | Sydel Ugwu, Khaja Shabbir Ahmed | Cycle 2 | Open |
 
@@ -132,7 +132,7 @@ Of the 11 open defects, 9 have a fix waiting in an unmerged pull request (#56 or
 | Finding / Defect | Artifact / Evidence | Required Update | Owner | Status |
 |---|---|---|---|---|
 | CRF-006, CRF-007, CRF-010, CRF-014 | `docs/release/assignment5-release-package.md`, `cycle2-handoff.md` | These files describe the fixes and `Cycle1AcceptanceTest` as part of the release; true only after PR #95 merges | Sydel Ugwu | Open |
-| CRF-009 | `docs/testing/test-cases.md` (TC-011) | Record the inspection result | Khaja Shabbir Ahmed | Open |
+| CRF-009 | `test-evidence/2026-10-29-local-test-runs.md` (RUN-010) | Inspection result recorded | Khaja Shabbir Ahmed | Done (PR #100) |
 | CRF-001..CRF-005 | ADR-0003 | Not on `main` until PR #56 merges | Sydel Ugwu | Open |
 | CRF-024, CRF-025 | [`code-review-a4.md`](../reviews/code-review-a4.md) | Index covers CRF-001..CRF-023 only; this file is the record for the A5 findings | Hamza Bashar | Done (recorded here) |
 | All | `docs/quality/defect-log.md` | Still the starter template; Cycle 1 defects are recorded under RF and CRF IDs (see Review Scope) | Hamza Bashar | Open (Cycle 2) |
@@ -149,7 +149,7 @@ This is the first defect review. The closest earlier actions are from the A3 arc
 
 **Trend:** The findings changed in kind between A4 and A5. A4 found build and behaviour defects (RF-01..RF-05, CRF-006, CRF-007). A5 found only two new defects, both Low (CRF-024, CRF-025). No High defect has been found since 2026-10-29.
 
-**State of the release:** 18 of 31 defects are closed on `main`, including every runtime finding. No Critical defect was found. The two open High defects (CRF-006, CRF-007) are fixed in PR #95 and cannot be triggered by the code on `main` today, but the fix is not in the release until that PR merges.
+**State of the release:** 19 of 31 defects are closed on `main`, including every runtime finding. No Critical defect was found. The two open High defects (CRF-006, CRF-007) are fixed in PR #95 and cannot be triggered by the code on `main` today, but the fix is not in the release until that PR merges.
 
 **Main weakness:** not the code, but finishing: fixes left on unmerged branches, and documents that describe those fixes as done. QA-001 and QA-005 address this.
 
