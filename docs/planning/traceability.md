@@ -4,7 +4,7 @@
 **Gate:** A5 — Cycle 1 Release · **Last updated:** 2026-11-10 · **Tracking issues:** #88 (A5), #43 (A4)
 **Status:** Proposed — pending review by the backup owner
 
-**Basis.** Checked on 2026-11-10 against `main` at `e9f93e6`: requirements, acceptance criteria, GitHub issues #29–#96, PRs #55–#99, `git log`, and CI run #23 on `e9f93e6` (36 tests, 0 failures). Every test named below as "on `main`" runs in CI on every PR and every push to `main`. Open PRs are named but not counted as done: #92 (release notes and demo script) and #95 (Data Layer fixes and end-to-end acceptance test). Known limitations (#98) merged after this check, with no code change. Re-check this file on the release commit before the `a5-cycle1-release` tag.
+**Basis.** Checked on 2026-11-10 against `main` at `aaf77c8`: requirements, acceptance criteria, GitHub issues #29–#96, PRs #55–#103, `git log`, CI run #36 on `aaf77c8` (passed), and the final test evidence on `321aef6`, which has the same code (`final-test-evidence.md`: FT-001 36/36, FT-002 12/12 over HTTP). Every test named below as "on `main`" runs in CI on every PR and every push to `main`. Open PRs are named but not counted as done: #92 (release notes and demo script) and #95 (Data Layer fixes and end-to-end acceptance test). If code changes before the tag (for example #95), FT-001 and FT-002 have to be repeated on the final commit. Re-check this file on the release commit before the `a5-cycle1-release` tag.
 
 **Status key**
 
@@ -19,10 +19,10 @@ Test case (TC) and run (RUN) IDs are in [`test-cases.md`](../testing/test-cases.
 | Requirement | Acceptance Criteria | Issue / Task | PR → Commit on `main` | Tests and Checks | Status | Limitations / Findings |
 |---|---|---|---|---|---|---|
 | REQ-001 Student submits a request | AC-REQ-001-01, AC-REQ-001-02 | #33 (TASK-103), #31 (TASK-102) | #61 → `49adb8e`; #67 → `a06910c`, `ae190fe`, `553f205`, `8eb2296` | `CampusConnectAppSubmitTest` (8 HTTP tests) | Verified on `main` | LIM-005, LIM-009; RF-01, RF-03..RF-05 resolved |
-| REQ-002 Staff view the list of requests | AC-REQ-002-01..AC-REQ-002-04 | #34 (TASK-104), #31 (TASK-102) | #76 → `8ba1ca0` | AC-REQ-002-01..04: reviewer HTTP check on PR #76 (2026-10-30). AC-REQ-002-03: `RoleCheckServiceTest`. A listed request appears over HTTP: `CampusConnectAppRoleTransportTest`. AC-REQ-002-02 and -04 automated in `Cycle1AcceptanceTest` (PR #95, open) | Verified, partly manual | LIM-004; RF-02 resolved |
-| REQ-003 Staff change status: Open → In Progress → Resolved only | AC-REQ-003-01..AC-REQ-003-05 | #35 (TASK-105), #96 | #58 → `a897b31`; #61 → `49adb8e`; #70 (Q-007); #73 → `0dfec52`; #97 → `a8a2872` | AC-REQ-003-01..03: `RequestStatusTest` (9). AC-REQ-003-04: `RoleCheckServiceTest`. `PATCH` only: `CampusConnectAppRoleTransportTest`. AC-REQ-003-05: reviewer HTTP check on PR #76; automated in PR #95 (open) | Verified, partly manual | LIM-007, LIM-008, LIM-010 |
+| REQ-002 Staff view the list of requests | AC-REQ-002-01..AC-REQ-002-04 | #34 (TASK-104), #31 (TASK-102) | #76 → `8ba1ca0` | AC-REQ-002-01..04: HTTP run FT-002 on `main` (steps 1, 2, 4, 5, 11) and reviewer check on PR #76. AC-REQ-002-03: `RoleCheckServiceTest`. A listed request appears over HTTP: `CampusConnectAppRoleTransportTest`. AC-REQ-002-02 and -04 automated in `Cycle1AcceptanceTest` (PR #95, open) | Verified, partly manual | LIM-004; RF-02 resolved |
+| REQ-003 Staff change status: Open → In Progress → Resolved only | AC-REQ-003-01..AC-REQ-003-05 | #35 (TASK-105), #96 | #58 → `a897b31`; #61 → `49adb8e`; #70 (Q-007); #73 → `0dfec52`; #97 → `a8a2872` | AC-REQ-003-01..03: `RequestStatusTest` (9). AC-REQ-003-04: `RoleCheckServiceTest`. `PATCH` only: `CampusConnectAppRoleTransportTest`. AC-REQ-003-05: HTTP run FT-002 (steps 7, 8, 12); automated in PR #95 (open) | Verified, partly manual | LIM-007, LIM-008, LIM-010 |
 | REQ-004 Synthetic data only | AC-REQ-004-01 | #31 (TASK-102), #33 (TASK-103) | #58 → `a897b31` (`synthetic = true`) | Repository inspection TC-011 on `e9f93e6`: no real data, credentials or data files (RUN-010). `InMemorySupportRequestRepositoryTest` checks the synthetic flag | Verified on `main` | — |
-| REQ-005 No request or status lost while running | AC-REQ-005-01 | #31 (TASK-102), #39 (TASK-109) | #58 → `a897b31`; #67 → `553f205` (`500` on storage failure) | `InMemorySupportRequestRepositoryTest` (5); `storageFailureReturns500AndNeverSuccess`. AC-REQ-005-01 (list again after a change, no restart): `Cycle1AcceptanceTest` (PR #95, open); HTTP run TC-013 (#39) not yet on the release commit | Implemented, check pending | LIM-001 |
+| REQ-005 No request or status lost while running | AC-REQ-005-01 | #31 (TASK-102), #39 (TASK-109) | #58 → `a897b31`; #67 → `553f205` (`500` on storage failure) | `InMemorySupportRequestRepositoryTest` (5); `storageFailureReturns500AndNeverSuccess`. AC-REQ-005-01 (list again after a change, no restart): HTTP run FT-002 on `main` (steps 4 and 12, no restart; TC-013); automated in `Cycle1AcceptanceTest` (PR #95, open) | Verified, partly manual | LIM-001 |
 | REQ-006 Role logic in one identified place | AC-REQ-006-01 | #32 (TASK-110), #29 (TASK-111), #96 | #57 → `663fbd0`; #71 → `0627263`; #97 → `a8a2872` | TC-010 code review: Pass. `RoleCheckServiceTest` (9). `CampusConnectAppRoleTransportTest` (5): role read from the header only | Verified on `main` | LIM-002; RF-06 resolved; ADR-0003 not merged (#56) |
 
 ## 2. Requirement to Demo Step, Release Note and Release Baseline
@@ -72,7 +72,7 @@ Owners and backups are from `task-plan.md` and the issue descriptions.
 | TASK-106 Unit tests | #36 (open) | Hamza Bashar / Sydel Ugwu | #71, #73 (merged); #62 (open, stale) | `0627263`, `0dfec52` | Role and status tests on `main` |
 | TASK-107 CI | #37 (closed) | Nova Kurul / Hamza Bashar | #72 | merge `fca18d9` | Done; CI runs on every PR |
 | TASK-108 Logging | #38 (open) | Nova Kurul / Joanelis Rivera Matos | #60 (open, stale) | `49adb8e` (`AuditLogger`) | Logger on `main` |
-| TASK-109 End-to-end run on `main` | #39 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | — | — | HTTP run on the release commit still to do |
+| TASK-109 End-to-end run on `main` | #39 (open) | Joanelis Rivera Matos / Khaja Shabbir Ahmed | #102 (evidence) | — | Done: FT-002 (TC-013) on `321aef6`, 12 of 12 steps as expected; issue #39 still open |
 
 ### A5 Deliverables
 
@@ -82,12 +82,12 @@ Owners and backups are from `task-plan.md` and the issue descriptions.
 | #80, #90 | Release notes; presentation index and demo script | Joanelis Rivera Matos / Sydel Ugwu | #92 | Open |
 | #81 | Release baseline | Khaja Shabbir Ahmed / Hamza Bashar | Tag and GitHub Release | Tag to be recreated (section 4) |
 | #82 | Changed-file summary since A4 | Sydel Ugwu / Nova Kurul | #94 | Merged |
-| #83 | Final testing evidence | Hamza Bashar / Khaja Shabbir Ahmed | — | No PR yet |
+| #83 | Final testing evidence | Hamza Bashar / Khaja Shabbir Ahmed | #102 | Merged |
 | #84, #87 | CI/CD final evidence; AI-use log final update | Nova Kurul / Joanelis Rivera Matos | #99 | Merged (without a review) |
-| #85 | Defect review summary | Hamza Bashar / Khaja Shabbir Ahmed | — | No PR yet |
+| #85 | Defect review summary | Hamza Bashar / Khaja Shabbir Ahmed | #101 | Merged |
 | #86 | Known limitations and residual risks | Khaja Shabbir Ahmed / Hamza Bashar | #98 | Merged |
-| #88 | Traceability update (this file) | Khaja Shabbir Ahmed / Hamza Bashar | This PR | Open |
-| #89 | Release workflow evidence | Hamza Bashar / Khaja Shabbir Ahmed | — | No PR yet |
+| #88 | Traceability update (this file) | Khaja Shabbir Ahmed / Hamza Bashar | #100; follow-up in this PR | Merged |
+| #89 | Release workflow evidence | Hamza Bashar / Khaja Shabbir Ahmed | #103 | Open (approved) |
 | #91 | Cycle 2 evidence handoff | Joanelis Rivera Matos / Sydel Ugwu | #93 | Merged (issue still open) |
 | #96 | RF-06 fix | Khaja Shabbir Ahmed / Hamza Bashar | #97 | Merged |
 
@@ -111,11 +111,11 @@ Owners and backups are from `task-plan.md` and the issue descriptions.
 | Release notes (PR #92) mark AC-REQ-002-02/04, AC-REQ-003-05 and AC-REQ-005-01 as passed by automated tests, but those tests are only in PR #95; its Known Limitations section is still the template | Joanelis Rivera Matos | Merge #95 first, or mark those criteria as manually checked; reference LIM IDs |
 | `cycle2-handoff.md` numbers limitations differently from `known-limitations.md` and lists CRF-006/007/010 as fixed before #95 has merged | Joanelis Rivera Matos, Sydel Ugwu | Use the LIM IDs from `known-limitations.md`; update after #95 merges |
 | Demo scenarios are not numbered | Joanelis Rivera Matos | Number them (D-1..D-7) so section 2 can link to them exactly |
-| HTTP end-to-end run TC-013 has not been done on the release commit | Joanelis Rivera Matos, Khaja Shabbir Ahmed (#39) | Run it on the final commit before presenting |
+| TC-013 passed on `321aef6` (FT-002); it must be repeated if code changes before the tag (for example #95) | Hamza Bashar, Joanelis Rivera Matos, Khaja Shabbir Ahmed (#39) | Repeat FT-002 on the final commit if code changes; close #39 |
 | ADR-0003 (#56) is approved but not merged; ADR-001 and ADR-002 are still "Proposed" | Sydel Ugwu | Merge #56; record acceptance on ADR-001 and ADR-002 |
-| No PR yet for final testing evidence, defect review or release workflow evidence | Hamza Bashar (#83, #85, #89) | Open the PRs before the tag |
+| Release workflow evidence (#89) is approved but not merged | Hamza Bashar (#103) | Merge before the tag |
 | PR #99 merged without a review (R-021) | Nova Kurul | Ask for a review after the fact and record it |
-| `test-cases.md` still describes the A4 state | Hamza Bashar, Khaja Shabbir Ahmed | Final testing evidence (#83) to supersede it |
+| `test-cases.md` still describes the A4 state | Hamza Bashar, Khaja Shabbir Ahmed | Superseded for A5 by `final-test-evidence.md` ("Test Cases Updated by This Evidence"); update `test-cases.md` in Cycle 2 |
 | Stale A4 PRs #22, #56, #60, #62, #63, #65 are still open | Their authors | Merge or close them |
 
 ## Change History
@@ -126,6 +126,7 @@ Owners and backups are from `task-plan.md` and the issue descriptions.
 | 2026-09-29 | A2 | Corrected REQ-002 alignment; connected requirements to build and verification tasks, proposed owners, reserved estimate IDs, and planned evidence; updated ownership and recorded unresolved dependencies |
 | 2026-10-29 | A4 | Rewritten against `main` `0c5f605`: requirements to acceptance criteria, tasks, code, tests and limitations; tasks to issues, branches, PRs and commits; decisions and open gaps. A2 planning-only sections removed (kept in the `a2-planning-estimate` tag). Issue #43 |
 | 2026-11-10 | A5 | Updated against `main` `e9f93e6`: added demo step, release-note entry and release baseline for each requirement; defect traceability for RF-06, RF-02 and RF-01..05; A5 deliverables; REQ-002, REQ-003 and REQ-004 statuses updated. Issue #88 |
+| 2026-11-10 | A5 | Follow-up after #101 and #102 merged (review CRF-026, CRF-027 on #100): REQ-005 → Verified, partly manual (FT-002); TC-013 done; #83, #85, #88 merged and #89 in review; basis moved to `aaf77c8`. Issue #88 |
 
 ## Maintenance
 
