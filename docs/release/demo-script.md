@@ -82,47 +82,26 @@ A list of seven different outputs with varying results based on the following ca
 - Staff tries to update a request's status from RESOLVED to OPEN
 
 ## Architecture / Engineering Evidence Callout
-<!--
-During or after the behavior demonstration, identify a small number of
-engineering artifacts that help explain WHY the system works the way it does.
-
-Choose only evidence that materially helps the reviewer understand the
-engineering behind the demonstrated behavior.
--->
 
 | Evidence | What It Demonstrates | When to Show |
 |---|---|---|
-| Automated tests |  |  |
-| ADR |
-| API Contract |
+| Automated tests | How the system functions with different user inputs | During the demo |
+| ADR/API Contract | How the system functions logically with each layer | During the demo |
 
 ## Known Limitations to Acknowledge
 
-<!--
-TEAM CONTENT REQUIRED
-
-Reference relevant limitations from:
-
-/docs/release/known-limitations.md
-
-Do not hide an important limitation simply because it makes the demonstration
-less polished.
-
-The goal is accurate engineering communication.
-
-EXAMPLE ONLY:
-
 | Limitation ID | What to State During Demo |
 |---|---|
-| LIM-002 | Automated recovery has not yet been implemented; recovery remains manual |
-
-Populate actual limitations below or remove this section if none materially
-affect the demonstration.
--->
-
-| Limitation ID | What to State During Demo |
-|---|---|
-|  |  |
+| LIM-01 | Requests are only kept in memory, which means everything is lost when the application stops or restarts. |
+| LIM-02 | There is no real login. The role is whatever the client sends in the X-Simulated-Role header, so anyone can act as staff. |
+| LIM-03 | The server only listens on 127.0.0.1. There is no hosted deployment. |
+| LIM-04 | There is no browser page. The Presentation Layer is a JSON HTTP API plus a console demo runner; there is no submission form or staff list page. |
+| LIM-05 | Duplicate submissions are not detected; the same request sent twice is stored twice. |
+| LIM-06 | Students cannot view the status of requests they submitted. |
+| LIM-07 | Students cannot edit or cancel a request, although the Q-006 answer says they may (edit while Open, cancel while Open or In Progress). No requirement, contract, task or estimate exists for it. |
+| LIM-08 | Only the current status and the time of the last change are kept. Who changed a status is not recorded, and there is no status history. |
+| LIM-09 | Category is free text; any non-blank value is accepted. |
+| LIM-10 | A resolved request cannot be reopened, and a status cannot move backwards (Open → In Progress → Resolved only). |
 
 ## Demo Evidence / Results
 
@@ -141,7 +120,15 @@ affect the demonstration.
 - Verified local environment
 - Test results
 
+## Presentation Index
 
-<!--
-8. Acknowledge known limitations honestly.
--->
+Related Evidence:
+- docs/release/known-limitations.md
+- docs/requirements/requirements.md
+- docs/requirements/acceptance-criteria.md
+- docs/architecture/api-contracts.md
+- docs/architecture/architecture.md
+- docs/architecture/component-responsibilities.md
+- docs/planning/scope.md
+- src/main/java/edu/luc/comp330/campusconnect
+- src/test/java/edu/luc/comp330/campusconnect
