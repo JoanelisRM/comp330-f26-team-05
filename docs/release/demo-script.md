@@ -1,363 +1,134 @@
 # Release Demonstration Script
 
-<!--
-STARTER KIT GUIDANCE — DELETE BEFORE PHASE-GATE SUBMISSION
-
-This file defines how the team will demonstrate the release.
-
-A good engineering demonstration is NOT simply a tour of screens.
-
-The demonstration should show meaningful system behavior and connect that
-behavior to engineering evidence.
-
-A reviewer should be able to see:
-
-- what capability is being demonstrated;
-- why it matters;
-- what requirement or acceptance criterion it supports;
-- what the expected result is;
-- what evidence demonstrates that the behavior is real;
-- relevant failure or negative-path behavior where appropriate;
-- known limitations that should not be hidden.
-
-The demo should be repeatable.
-
-Do NOT script behavior that does not actually work.
-
-Do NOT hide known failures by avoiding them without acknowledging the
-limitation.
-
-IMPORTANT:
-
-- Everything inside HTML comments is Starter Kit guidance.
-- Remove ALL instructional comments before the applicable phase-gate submission.
-- Examples are guidance only.
--->
-
 ## Demonstration Identification
 
-**Release / Version:**  
-**Git Tag / Commit:**  
-**Demo Environment:**  
-**Demo Date:**  
-**Presenter(s):**  
-
-<!--
-TEAM CONTENT REQUIRED
-
-Use the same release identification as:
-
-/docs/release/release-notes.md
-
-Identify the actual environment being demonstrated.
-
-Do not leave placeholder metadata in the completed artifact.
--->
+**Release / Version:** Cycle 1  
+**Git Tag / Commit:** A5-cycle1-release   
+**Demo Environment:** Localhost  
+**Demo Date:** 11/10/2026   
+**Presenter(s):** Joanelis Rivera Matos, Khaja Shabbir Ahmed, Hamza Bashar, Nova Kurul, Sydel Ugwu
 
 ## Demonstration Objective
 
-<!--
-TEAM CONTENT REQUIRED
-
-In a short paragraph, explain what this demonstration is intended to prove or
-show.
-
-Do not write only:
-
-"Demonstrate the application."
-
-Instead identify the meaningful release behavior being demonstrated.
-
-Replace this comment with the team's actual objective.
--->
+This demonstration is intended to show the test cases based on simulated user data. It's meant to show how the team's main engineering decisions have been implemented so far. The simulated data serves as evidence for successful implementation and opens up potential for future expansion in theoretical later cycles.
 
 ## Pre-Demo Checks
 
-<!--
-TEAM CONTENT REQUIRED
-
-Identify checks needed before the demonstration begins.
-
-Examples may include:
-
-- correct release deployed;
-- health check passes;
-- required dependencies available;
-- demo accounts available;
-- test data prepared;
-- browser/session reset;
-- relevant evidence accessible.
-
-Do not include unnecessary ceremony.
-
-EXAMPLE ONLY:
-
 | Check | Expected Result | Action if Not Ready |
 |---|---|---|
-| Release identity | Deployment matches expected Git tag | Stop and correct deployment before demo |
+| Relevant evidence accessible | Evidence for engineering decisions is visible and easy to find | Add related evidence before deployment |
+| Test data prepared | Demo runs with the correct simulated data | 
+| Correct release with appropriate tag deployed | Deployment matches the A5 tag | Correct the tag before deployment |
 
-Populate actual checks below.
--->
-
-| Check | Expected Result | Action if Not Ready |
-|---|---|---|
-|  |  |  |
-
-## Demo Scenario 1 — Title
-
-<!--
-TEAM CONTENT REQUIRED
-
-Rename this section for an actual release capability.
-
-Use additional Demo Scenario sections as needed.
-
-Each scenario should demonstrate a meaningful engineering behavior.
-
-Suggested content:
-
-**Purpose**
-Why is this scenario worth showing?
-
-**Related Requirements**
-Which requirement IDs apply?
-
-**Related Acceptance Criteria**
-Which acceptance criteria apply?
-
-**Starting State**
-What must be true before the scenario begins?
-
-**Steps**
-What will the presenter do?
-
-**Expected Result**
-What should the system visibly do?
-
-**Evidence**
-What repository, test, runtime, or traceability evidence supports the claim?
-
-**Known Limitations**
-What should the reviewer know about behavior that is intentionally limited?
-
-Delete this instructional comment and complete the scenario.
--->
+## Demo Scenario 1 — Student and Staff Simulation
 
 ### Purpose
 
+To demonstrate the implementation of the system's requirements, architecture decisions, and testing. 
+
 ### Related Requirements
+- REQ-001
+- REQ-002
+- REQ-003
+- REQ-004
+- REQ-005
+- REQ-006
 
 ### Related Acceptance Criteria
+- AC-REQ-001-01
+- AC-REQ-001-02
+- AC-REQ-002-01
+- AC-REQ-002-02
+- AC-REQ-002-03
+- AC-REQ-002-04
+- AC-REQ-003-01
+- AC-REQ-003-02
+- AC-REQ-003-03
+- AC-REQ-003-04
+- AC-REQ-003-05
+- AC-REQ-004-01
+- AC-REQ-005-01
+- AC-REQ-006-01
 
 ### Starting State
+- The demo can only run locally with the correct Java version and correct Maven version
 
 ### Steps
 
-1. 
-2. 
-3. 
+1. Run the program on the local environment or '.\apache-maven-3.10.0\bin\mvn.cmd compile exec:java' in the terminal 
 
 ### Expected Result
 
-### Evidence
-
-### Known Limitations
-
-## Demo Scenario 2 — Title
-
-<!--
-OPTIONAL TEAM CONTENT
-
-Copy the Scenario 1 structure for another meaningful capability.
-
-Do not create scenarios merely to make the demo longer.
-
-Delete this section if only one scenario is appropriate.
--->
-
-### Purpose
-
-### Related Requirements
-
-### Related Acceptance Criteria
-
-### Starting State
-
-### Steps
-
-1. 
-2. 
-3. 
-
-### Expected Result
+A list of seven different outputs with varying results based on the following categories:
+- Level: INFO for an input that was completed successfully. WARN for an input that was rejected or denied. 
+- Event: SUBMISSION_CREATED for a request that was successfully added to the request list. SUBMISSION_REJECTED for a request that was rejected. ROLE_DENIED for an action from an unauthorized role. REQUEST_LIST_VIEWED for an action performed by a staff role in regards to the request list. STATUS_UPDATED for a request's status that transitioned from OPEN -> IN_PROGRESS -> RESOLVED. TRANSITION_REJECTED for a request's status to transition in an order that isn't OPEN -> IN_PROGRESS -> RESOLVED.
+- Role: STUDENT or STAFF
+- Request ID: REQ-1001
+- Outcome: SUCCESS for creating requests, viewing the request list, and updating the request's status. REJECTED for requests that couldn't be added to the list and incorrectly updating a request's status. DENIED for an action from a user with an unauthorized role. 
+- Details: Gives reasoning for the outcomes of each test.
 
 ### Evidence
+- All seven automated tests that utilize synthetic data
 
 ### Known Limitations
+- Limited amount of simulated tests
+- All user data is synthetic 
+- Reviewers cannot input their own data for testing
 
 ## Negative / Failure Scenario
 
-<!--
-TEAM CONTENT REQUIRED WHEN A MEANINGFUL FAILURE PATH SHOULD BE DEMONSTRATED
-
-A strong engineering demo often includes at least one important negative or
-failure behavior.
-
-Examples ONLY:
-
-- invalid input rejected;
-- unauthorized operation denied;
-- missing resource handled correctly;
-- duplicate request prevented;
-- dependency failure surfaced safely.
-
-Do not manufacture a failure scenario that does not matter to the system.
-
-The purpose is to demonstrate that correctness includes handling invalid or
-unsafe conditions, not only the happy path.
-
-Remove this section if there is genuinely no meaningful negative scenario.
--->
-
-### Purpose
-
-### Related Requirement / Criterion
-
-### Starting State
-
-### Steps
-
-1. 
-2. 
-
-### Expected Result
-
-### Evidence
+- Student submits request with missing fields
+- Student attempts to update the status of a request
+- Staff tries to update a request's status from RESOLVED to OPEN
 
 ## Architecture / Engineering Evidence Callout
 
-<!--
-TEAM CONTENT REQUIRED
-
-During or after the behavior demonstration, identify a small number of
-engineering artifacts that help explain WHY the system works the way it does.
-
-Possible evidence:
-
-- architecture diagram;
-- API contract;
-- ADR;
-- traceability summary;
-- automated test;
-- observability evidence.
-
-Do not turn the demo into a documentation reading session.
-
-Choose only evidence that materially helps the reviewer understand the
-engineering behind the demonstrated behavior.
--->
-
 | Evidence | What It Demonstrates | When to Show |
 |---|---|---|
-|  |  |  |
+| Automated tests | How the system functions with different user inputs | During the demo |
+| ADR/API Contract | How the system functions logically with each layer | During the demo |
 
 ## Known Limitations to Acknowledge
 
-<!--
-TEAM CONTENT REQUIRED
-
-Reference relevant limitations from:
-
-/docs/release/known-limitations.md
-
-Do not hide an important limitation simply because it makes the demonstration
-less polished.
-
-The goal is accurate engineering communication.
-
-EXAMPLE ONLY:
-
 | Limitation ID | What to State During Demo |
 |---|---|
-| LIM-002 | Automated recovery has not yet been implemented; recovery remains manual |
-
-Populate actual limitations below or remove this section if none materially
-affect the demonstration.
--->
-
-| Limitation ID | What to State During Demo |
-|---|---|
-|  |  |
+| LIM-01 | Requests are only kept in memory, which means everything is lost when the application stops or restarts. |
+| LIM-02 | There is no real login. The role is whatever the client sends in the X-Simulated-Role header, so anyone can act as staff. |
+| LIM-03 | The server only listens on 127.0.0.1. There is no hosted deployment. |
+| LIM-04 | There is no browser page. The Presentation Layer is a JSON HTTP API plus a console demo runner; there is no submission form or staff list page. |
+| LIM-05 | Duplicate submissions are not detected; the same request sent twice is stored twice. |
+| LIM-06 | Students cannot view the status of requests they submitted. |
+| LIM-07 | Students cannot edit or cancel a request, although the Q-006 answer says they may (edit while Open, cancel while Open or In Progress). No requirement, contract, task or estimate exists for it. |
+| LIM-08 | Only the current status and the time of the last change are kept. Who changed a status is not recorded, and there is no status history. |
+| LIM-09 | Category is free text; any non-blank value is accepted. |
+| LIM-10 | A resolved request cannot be reopened, and a status cannot move backwards (Open → In Progress → Resolved only). |
 
 ## Demo Evidence / Results
 
-<!--
-TEAM CONTENT REQUIRED AFTER THE DEMONSTRATION WHEN USEFUL
-
-Record whether the planned demonstration actually worked.
-
-This can provide useful release evidence.
-
-Do not mark a scenario successful before the demonstration occurs.
-
-EXAMPLE ONLY:
-
 | Scenario | Result | Evidence / Observation | Follow-Up |
 |---|---|---|---|
-| Workflow submission | Passed | Expected status displayed; RUN-021 | None |
-
-Populate actual results after execution if your team uses this section.
--->
-
-| Scenario | Result | Evidence / Observation | Follow-Up |
-|---|---|---|---|
-|  |  |  |  |
+| Student creates new request | Passed | Expected result displayed when run | None |
+| Student fails to submit request due to missing fields | Passed | Expected result displayed when run | None |
+| Student fails to update a request's status | Passed | Expected result displayed when run | None |
+| Staff can view the request list | Passed | Expected result displayed when run | None |
+| Staff changes a request's status from OPEN to IN_PROGRESS | Passed | Expected result displayed when run | None |
+| Staff changes a request's status from IN_PROGRESS to RESOLVED | Passed | Expected result displayed when run | None |
+| Staff fails to change a request's status from RESOLVED to OPEN | Passed | Expected result displayed when run | None |
 
 ## Recovery / Backup Demo Plan
 
-<!--
-TEAM CONTENT REQUIRED
+- Verified local environment
+- Test results
 
-A live demonstration can fail for reasons unrelated to the software:
+## Presentation Index
 
-- network outage;
-- external service unavailable;
-- deployment unavailable;
-- presentation environment problem.
-
-Identify a reasonable fallback that still preserves engineering integrity.
-
-Examples might include:
-
-- verified local environment;
-- previously captured runtime evidence;
-- test result;
-- repository-visible evidence.
-
-A fallback should NOT pretend that live behavior occurred when it did not.
-
-If the live system fails, state that accurately and use preserved evidence only
-to show what had previously been verified.
-
-Replace this comment with the team's actual fallback approach.
--->
-
-<!--
-FINAL STARTER KIT CHECK — DELETE BEFORE PHASE-GATE SUBMISSION
-
-Before the demonstration:
-
-1. Confirm release identification matches release-notes.md.
-2. Confirm the demo environment contains the intended release.
-3. Replace generic scenario titles with actual capabilities.
-4. Remove unused scenario sections.
-5. Confirm requirements and acceptance criteria exist.
-6. Confirm every expected result has actually been verified.
-7. Include meaningful negative-path behavior where appropriate.
-8. Acknowledge known limitations honestly.
-9. Confirm the fallback plan does not misrepresent prerecorded evidence as live behavior.
-10. Remove ALL instructional HTML comments.
-
-The completed demo script should guide a concise, repeatable engineering
-demonstration of what the release actually does and what evidence supports it.
--->
+Related Evidence:
+- docs/release/known-limitations.md
+- docs/requirements/requirements.md
+- docs/requirements/acceptance-criteria.md
+- docs/architecture/api-contracts.md
+- docs/architecture/architecture.md
+- docs/architecture/component-responsibilities.md
+- docs/planning/scope.md
+- src/main/java/edu/luc/comp330/campusconnect
+- src/test/java/edu/luc/comp330/campusconnect
