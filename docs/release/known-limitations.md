@@ -4,7 +4,7 @@
 **Gate:** A6 — Final Cycle 2 Release · **Last updated:** 2026-11-24 · **Tracking issues:** #114 (A6), #86 (A5), #54 (A4)
 **Status:** Proposed — pending review by the backup owner
 
-**Review basis.** Checked against `main` at `1bb17f4` on 2026-11-24 (CI run #43 passed, 36 tests). The application code has not changed since `e9f93e6` (the RF-06 fix, A5); everything merged after that is documentation. No Cycle 2 code change has reached `main`, so every limitation below is still present in the final release. Cycle 2 targets and their outcome are in [`cycle2-maturity-summary.md`](cycle2-maturity-summary.md). Open PRs that would change a limitation are named but not counted as done: #95 (Data Layer fixes and end-to-end acceptance test). Re-check this file on the final commit before the `a6-final-release` tag.
+**Review basis.** Checked against `main` at `1bb17f4` on 2026-11-24 (CI run #43 passed, 36 tests). The application code has not changed since `e9f93e6` (the RF-06 fix, A5); everything merged after that is documentation. No Cycle 2 code change has reached `main` yet, so every limitation below is still present on `main`. Cycle 2 targets and their outcome are in [`cycle2-maturity-summary.md`](cycle2-maturity-summary.md). Open PRs that would change a limitation are named but not counted as done: #95 (Data Layer fixes and end-to-end acceptance test). Re-check this file on the final commit before the `a6-final-release` tag.
 
 **Severity** is the effect on a user or demo of the final release: **High** blocks a required workflow, **Medium** limits or confuses a workflow, **Low** is cosmetic or only matters beyond this course.
 
@@ -23,11 +23,11 @@
 | LIM-009 | Category is free text; any non-blank value is accepted. | Categories can be inconsistent. | Low | Staff read the category as entered. | Deferred | Hamza Bashar | Agree a fixed category list (C-Q1) and validate it. | C-Q1 in `api-contracts.md` |
 | LIM-010 | A resolved request cannot be reopened, and a status cannot move backwards (Open → In Progress → Resolved only). | A request resolved by mistake has to be submitted again. | Low | Submit a new request. | Accepted (Cycle 1, by design) | Joanelis Rivera Matos | Revisit Q-002 if staff need to reopen requests. | Q-002, REQ-003, `RequestStatusTest` |
 
-## Cycle 2 Outcome
+## Cycle 2 Status (2026-11-24)
 
-The "Cycle 2 Action" column above was the plan. This is what happened by the final release.
+The "Cycle 2 Action" column above was the plan. This is the status on 2026-11-24; it will be updated before the tag.
 
-| ID | Cycle 2 Target | What Happened | Final Disposition |
+| ID | Cycle 2 Target | Status | Disposition for the Release if Unchanged |
 |---|---|---|---|
 | LIM-001 | MT-07 durable storage | Not started | Accepted for the final release; still the first item of future work |
 | LIM-002 | MT-08 real authentication | Not started | Accepted for the final release: synthetic data and localhost only (LIM-003) |
@@ -92,4 +92,4 @@ Runtime findings (RF) come from local builds and HTTP checks in A4 (`test-eviden
 | 2026-11-09 / A5 | All | Added severity, owner and Cycle 2 action to every limitation | A5 release requirements | Issue #86 |
 | 2026-11-09 / A5 | RF-02, RF-06, LIM-004, LIM-007, LIM-010 | RF-02 → Resolved; LIM-004 and LIM-007 → Deferred to Cycle 2 (not in the release); LIM-010 added (forward-only status rule) | TASK-104 merged (#76); Cycle 1 release scope fixed | PR #76, Q-002 |
 | 2026-11-10 / A5 | RF-06 | → Resolved | Fix reviewed and merged | Issue #96, PR #97 |
-| 2026-11-24 / A6 | All | Added the Cycle 2 outcome for every limitation; no limitation was resolved in Cycle 2 | No Cycle 2 code change reached `main` | Issue #114; `cycle2-maturity-summary.md` |
+| 2026-11-24 / A6 | All | Added the Cycle 2 status for every limitation; none resolved yet in Cycle 2 | No Cycle 2 code change on `main` yet | Issue #114; `cycle2-maturity-summary.md` |
