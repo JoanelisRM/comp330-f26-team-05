@@ -33,7 +33,7 @@ Every deliverable has a GitHub Issue; the issue and its merged, reviewed PR are 
 
 ### Part 2 — Cycle 2 maturity targets
 
-Chosen from Cycle 1 evidence; the reason, expected proof and outcome of each are in `docs/release/cycle2-maturity-summary.md` (PR #125). None had its own issue or estimate, which is why most were not started (R-024).
+Chosen from Cycle 1 evidence; the reason, expected proof and outcome of each are in `docs/release/cycle2-maturity-summary.md` (PR #125). None has its own issue or estimate yet (R-024).
 
 | ID | Target | Owner | Status (2026-11-24) |
 |---|---|---|---|
@@ -43,10 +43,10 @@ Chosen from Cycle 1 evidence; the reason, expected proof and outcome of each are
 | MT-04 | Branch protection: approval and passing CI before merge | Joanelis Rivera Matos | Not done |
 | MT-05 | `a6-final-release` on the final commit | Joanelis Rivera Matos | After the last merge (#107) |
 | MT-06 | Runbook | Sydel Ugwu | Not done (#116) |
-| MT-07 | Durable storage (SQLite) | Sydel Ugwu / Hamza Bashar | Deferred, not started |
-| MT-08 | Real authentication | Sydel Ugwu / Nova Kurul | Deferred, not started |
-| MT-09 | Controlled reopening with an audit comment | Hamza Bashar / Khaja Shabbir Ahmed | Deferred, not started |
-| MT-10 | Browser page | Not assigned | Deferred, not started |
+| MT-07 | Durable storage (SQLite) | Sydel Ugwu / Hamza Bashar | Not started |
+| MT-08 | Real authentication | Sydel Ugwu / Nova Kurul | Not started |
+| MT-09 | Controlled reopening with an audit comment | Hamza Bashar / Khaja Shabbir Ahmed | Not started |
+| MT-10 | Browser page | Not assigned | Not started |
 
 ### Part 3 — Cycle 1 build tasks (A4, issues #29–#39)
 

@@ -12,7 +12,7 @@ This file records how the plan changed because of evidence, and why. The newest 
 | Re-estimation date | 2026-11-24 |
 | Compared against | A5 release (`main` `1bb17f4`) and the A3 entry below |
 | Evidence reviewed | `known-limitations.md` (LIM-001..LIM-010), `defect-review.md` (QA-001..QA-006), `risk-register.md`, A4 instructor assessment, A5 presentation (slide 6), `cycle2-handoff.md` |
-| Owner confirmation | **Not done.** The Cycle 2 estimates below were prepared by the planning lead on the last day of the cycle; no owner confirmed them |
+| Owner confirmation | **Not yet.** The Cycle 2 estimates below were prepared by the planning lead on 2026-11-24; owners have not confirmed them |
 
 ### How Cycle 1 compared with its estimate
 
@@ -34,20 +34,20 @@ Targets come from Cycle 1 evidence; reasons and outcomes are in `cycle2-maturity
 | MT-04 Branch protection on `main` | 0.25 / 0.5 / 1 | Joanelis Rivera Matos | Not done |
 | MT-05 Final tag and GitHub Release | 0.25 / 0.5 / 1 | Joanelis Rivera Matos | After the last merge |
 | MT-06 Runbook | 2 / 3 / 5 | Sydel Ugwu | Not done |
-| MT-07 Durable storage (SQLite), with ADR and restart test | 6 / 10 / 16 | Sydel Ugwu | Deferred |
-| MT-08 Real authentication (hashed passwords, sessions), with ADR and tests | 10 / 16 / 24 | Sydel Ugwu | Deferred |
-| MT-09 Controlled reopening with an audit comment | 3 / 5 / 8 | Hamza Bashar | Deferred |
-| MT-10 Browser page (plain HTML/JS) | 8 / 12 / 20 | Not assigned | Deferred |
+| MT-07 Durable storage (SQLite), with ADR and restart test | 6 / 10 / 16 | Sydel Ugwu | Not started |
+| MT-08 Real authentication (hashed passwords, sessions), with ADR and tests | 10 / 16 / 24 | Sydel Ugwu | Not started |
+| MT-09 Controlled reopening with an audit comment | 3 / 5 / 8 | Hamza Bashar | Not started |
+| MT-10 Browser page (plain HTML/JS) | 8 / 12 / 20 | Not assigned | Not started |
 | **Code targets MT-07..MT-10** | **27 / 43 / 68** | | |
 
-The four code targets together are about the size of the whole Cycle 1 build (26 / 44 / 76 hours), but they were never turned into issues with owners and estimates at the start of Cycle 2. That is the main reason none of them was started (R-024).
+The four code targets together are about the size of the whole Cycle 1 build (26 / 44 / 76 hours), and none of them has an issue, owner or agreed estimate yet (R-024). With the time left before the A6 deadline, the realistic order is MT-03, MT-04 and MT-06 first; MT-07..MT-10 only if an owner commits to one now.
 
 ### Scope decisions
 
 | Decision | Reason | Impact | Evidence |
 |---|---|---|---|
-| MT-07..MT-10 deferred beyond the course | Not planned as issues; their combined size equals the Cycle 1 build | LIM-001, LIM-002, LIM-004, LIM-010 stay open in the final release | `known-limitations.md`, `cycle2-maturity-summary.md` |
-| Cycle 2 limited to evidence and controls | The A6 issues (#105–#123) cover evidence documents | The release is better described, not better behaved | Issues #105–#123 |
+| **Proposed:** MT-07..MT-10 deferred unless an owner commits to one this week | No issues yet; their combined size equals the Cycle 1 build | LIM-001, LIM-002, LIM-004, LIM-010 would stay open in the final release | `known-limitations.md`, `cycle2-maturity-summary.md`; to be confirmed by the team |
+| **Proposed:** finish the small targets first (MT-03, MT-04, MT-06) | Highest value for the least effort | Real risk reduction before the tag | `cycle2-maturity-summary.md` |
 
 ### What happened to the A3 next actions
 
@@ -62,7 +62,7 @@ The four code targets together are about the size of the whole Cycle 1 build (26
 
 ### Lesson
 
-Re-estimate at the **start** of a cycle, with an issue, owner and estimate for each target, and record actual hours when an issue closes. In Cycle 2 the re-estimation happened on the last day, when it could only explain what was not done.
+Re-estimate at the **start** of a cycle, with an issue, owner and estimate for each target, and record actual hours when an issue closes. In Cycle 2 this entry was written on 2026-11-24, eleven days after the A6 issues were created and before any code target had started.
 
 ---
 
