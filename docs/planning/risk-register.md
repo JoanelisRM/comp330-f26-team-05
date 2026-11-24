@@ -1,7 +1,7 @@
 # Risk Register
 
 **Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Nova Kurul
-**Gate:** A5 — Cycle 1 Release · **Last updated:** 2026-11-10 · **Tracking issues:** #17 (A3), #54 (A4), #86 (A5)
+**Gate:** A6 — Final Cycle 2 Release · **Last updated:** 2026-11-24 · **Tracking issues:** #17 (A3), #54 (A4), #86 (A5), #114 (A6)
 
 ## Risk Register
 
@@ -27,9 +27,10 @@
 | R-018 | If ADR-001 and ADR-002 remain "Proposed", then there is no accepted architecture baseline to build against, and later changes cannot be traced to a decision. | Medium | Medium | Team records acceptance (date and reviewers) on both ADRs before construction starts | Treat the A3 tag as the provisional baseline and record differences | Sydel Ugwu | Materialized | ADR-001, ADR-002 status lines (both still "Proposed" on 2026-11-09); flagged in the A4 instructor assessment |
 | R-019 | If there is no working CI workflow, then broken or untested code can be merged, and A4 cannot show CI results on a pull request. | High | High | Replace the starter `ci.yml` with a workflow that runs `mvn -B test` on every pull request and on pushes to `main` (#47); merge only when the check passes | Until CI works, the reviewer runs `mvn test` locally and pastes the result into the PR | Nova Kurul | Mitigated | CI added in PR #72 (2026-10-29); runs on every PR and push to `main`, all passing (run #18 on `706f9bf`: 31/31); merges are still not blocked by it (R-021) |
 | R-020 | If one PR also contains another PR's commits, then merging it merges code that was never reviewed on its own, and reviewers cannot tell what each PR changed. | High | Medium | One task per PR, branched from `main`; merge stacked PRs in chain order (#57 → #58 → #61 → #62 → #60) and re-check each diff after the previous merge | If merged out of order, re-review the combined diff before tagging | Sydel Ugwu | Materialized | PRs #58, #61, #62 and #60 each contain all commits of the PR before them in the chain; #61 merged on 2026-10-29 before #57 and #58 were approved; #58 findings CRF-006, CRF-007 and CRF-010 fixed in PR #95 (open) |
-| R-021 | If many PRs must be reviewed, fixed and merged just before a gate, then reviews will be rushed and PRs will merge before an approval and a passing check. | High | High | Agree a merge order; each assigned reviewer reviews within 24 hours; merge only after an approval and a passing CI check; tag only after the last merge (R-006 check) | List anything not merged in `known-limitations.md` rather than merge it unreviewed | Joanelis Rivera Matos | Materialized | A4: #57 and #67 merged without review, #75 merged with changes requested; A5: #99 merged without a review (2026-11-10); A4 instructor assessment condition 4; no branch protection |
+| R-021 | If many PRs must be reviewed, fixed and merged just before a gate, then reviews will be rushed and PRs will merge before an approval and a passing check. | High | High | Agree a merge order; each assigned reviewer reviews within 24 hours; merge only after an approval and a passing CI check; tag only after the last merge (R-006 check) | List anything not merged in `known-limitations.md` rather than merge it unreviewed | Joanelis Rivera Matos | Materialized | A4: #57 and #67 merged without review, #75 merged with changes requested; A5: #99 merged without a review (2026-11-10); A6: first A6 PR opened 2026-11-23, ten days after the A6 issues were created; A4 instructor assessment condition 4; no branch protection |
 | R-022 | If the HTTP layer keeps hand-written JSON parsing and output, then ordinary input (quotes, extra query parameters) will keep breaking requests and responses. | Medium | Medium | HTTP-level tests for each API-001..003 case; or adopt a JSON library after a dependency review (ADR) | Limit the demo to plain-text values and document it | Sydel Ugwu | Open | RF-02..RF-06 in `known-limitations.md`; 8 HTTP tests (`CampusConnectAppSubmitTest`) cover quotes, backslashes and malformed bodies; 5 more in PR #97 |
 | R-023 | If release documents describe fixes that are not on `main`, then the release evidence cannot be trusted and the presented release will not match the tagged code. | Medium | High | Before the tag, check every "fixed" or "reconciled" claim in the release documents against `main` and its tests | Correct the claim, or finish the fix in a reviewed PR before the tag | Khaja Shabbir Ahmed | Materialized | A5 release README (PR #93) and `cycle2-handoff.md` said role transport and `PATCH`-only were reconciled while `main` still accepted `?role=` and `POST` (fixed in PR #97, merged 2026-11-10) |
+| R-024 | If Cycle 2 maturity targets are not turned into issues with owners and started early, then the final release will describe risks instead of reducing them. | High | High | Create an issue, owner and estimate for each target at the start of Cycle 2; start with the smallest high-value targets | Record each target's outcome honestly in `cycle2-maturity-summary.md` | Khaja Shabbir Ahmed | Open | `cycle2-maturity-summary.md`: on 2026-11-24, 0 of 10 targets done on `main` and the code targets had no issues; A6 issues #105–#123 cover evidence documents only |
 
 ## Risk Evaluation
 
@@ -64,6 +65,7 @@
 | R-021 | A PR waits more than 24 hours for review, or PRs are still open two days before the target date | PR list |
 | R-022 | A request containing quotes or extra query parameters gives a wrong value or invalid JSON | HTTP tests, PR review |
 | R-023 | A release document says "fixed" or "reconciled" without naming the PR and test that prove it on `main` | Release package, release notes, handoff |
+| R-024 | A week into the cycle, a target has no issue, owner or pull request | Issues list, `cycle2-maturity-summary.md` |
 
 ## Materialized Risks
 
@@ -87,6 +89,7 @@
 | R-021 | 2026-10-30 | PR #75 merged while a review still requested changes; #57 and #67 had merged in A4 without a review | A5 rule: merge only after an approval and a passing CI check (A4 instructor condition 4) | Review evidence weakened; cited in the A4 assessment |
 | R-023 | 2026-11-09 | The A5 release README (PR #93) and `cycle2-handoff.md` said role transport and `PATCH`-only were reconciled while `main` still accepted `?role=` and `POST` | Code fixed in PR #97 (issue #96, merged 2026-11-10); release documents to be re-checked against `main` before the tag | The presented release would not have matched the tagged code |
 | R-006 | 2026-11-10 | `a5-cycle1-release` was created on `b3613ae` (the #99 merge, 2026-11-09 23:26) before PR #97 merged and while #92, #95, #98 and #88 were still open | Recreate the tag on the final `main` commit after the last A5 merge and before the deadline; check with `git ls-remote --tags origin` (#81) | Without the fix, the graded release would miss the RF-06 fix and the final release documents |
+| R-006 | 2026-11-10 | The A5 tag `a5-cycle1-release` stayed on `b3613ae`; a second tag, `a5-cycle1-release_`, was created on the final A5 commit `1bb17f4` instead of moving the first | Preserve the submitted tags; for A6, create `a6-final-release` once, after the last merge, and check it with `git ls-remote --tags origin` (MT-05) | The graded A5 tag did not include the RF-06 fix or the final A5 documents |
 
 ## Closed or Accepted Risks
 
@@ -98,6 +101,20 @@
 | R-019 | Mitigated | CI runs the build and tests on every PR and push to `main` | PR #72; `docs/testing/ci-evidence.md` |
 | R-016 | Mitigated | Role decisions are in one place in the Logic Layer | TC-010; `RoleCheckServiceTest` (PR #71) |
 | R-009, R-011, R-012 | Closed | The A2/A3 situations they describe are past; the A3 tag incident is recorded under Materialized Risks | `task-plan.md`, `re-estimation.md` |
+
+## Final Residual Risks (A6)
+
+The risks that remain in the final release, by category, with the person who owns each one after the course.
+
+| Category | Residual Risk | Related | Owner | Mitigation in the Final Release | Next Action |
+|---|---|---|---|---|---|
+| Security | Anyone can act as staff, because the role is a simulated header | LIM-002, R-016 | Sydel Ugwu | Synthetic data only; server listens on localhost only; one central role check (`RoleCheckService`) | Real authentication (MT-08) |
+| Governance | A pull request can merge without an approval or a passing CI check | R-020, R-021, QA-002 | Joanelis Rivera Matos | Team practice; exceptions are recorded in the release workflow evidence | Branch protection on `main` (MT-04) |
+| Governance | The release tag points to the wrong commit | R-006 | Joanelis Rivera Matos | Check `git ls-remote --tags origin` before submitting | Tag once, after the last merge (MT-05) |
+| Operational | All requests are lost when the application stops; start and recovery are manual; there is no health check | LIM-001, R-013 | Sydel Ugwu, Nova Kurul | Do not restart during a demo; console audit log shows every action | Durable storage (MT-07); runbook (MT-06); health endpoint |
+| AI | AI-drafted code or documents contain a mistake that nobody catches | R-004, R-023 | Nova Kurul | Every AI use is logged with its human check; reviewers run the tests themselves; overclaims found in A5 were corrected | Keep the review-and-verify step for every AI-assisted change |
+| Technical | Two High data-layer findings (silent overwrite, `clear()` on the interface) are still on `main`; JSON is built and parsed by hand | CRF-006, CRF-007, R-022 | Sydel Ugwu | IDs come only from `nextRequestId()`, so no caller triggers CRF-006 today; HTTP tests cover quotes and malformed input | Merge PR #95 (MT-03); a JSON library |
+| User-facing | No web page; students cannot see, edit or cancel their own requests | LIM-004, LIM-006, LIM-007 | Joanelis Rivera Matos, Hamza Bashar | The demo uses the console runner and HTTP requests | Browser page (MT-10); answer Q-005 and Q-006 |
 
 ## Risk Review
 
@@ -116,3 +133,4 @@
 | 2026-10-29 | After PR #61 merged: R-020 merge recorded as materialized; R-004, R-014, R-017 evidence brought up to date with `main` | PR #66 review (CRF-019) | Khaja Shabbir Ahmed |
 | 2026-11-09 | A5 update: R-019 and R-016 → Mitigated; R-009, R-011, R-012 → Closed (A2/A3 past); R-021 → Materialized (merges before approval); added R-023 (release claims not on `main`); R-006 covers the A5 tag; R-003, R-014, R-018, R-020, R-022 evidence brought up to date | Issue #86 | Khaja Shabbir Ahmed |
 | 2026-11-10 | After PR #97 merged: R-014 and R-023 updated; R-006 recorded again (A5 tag created before the last merges); #99 added to R-021 | Issue #86 | Khaja Shabbir Ahmed |
+| 2026-11-24 | A6 update: added R-024 (Cycle 2 targets not started) and the final residual risks by category; R-006 (A5 tag outcome) and R-021 (A6 timing) updated | Issue #114 | Khaja Shabbir Ahmed |

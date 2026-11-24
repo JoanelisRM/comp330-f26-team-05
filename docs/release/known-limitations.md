@@ -1,12 +1,12 @@
 # Known Limitations
 
 **Owner:** Khaja Shabbir Ahmed (Planning & Process Lead) · **Backup:** Hamza Bashar
-**Gate:** A5 — Cycle 1 Release · **Last updated:** 2026-11-10 · **Tracking issues:** #86 (A5), #54 (A4)
+**Gate:** A6 — Final Cycle 2 Release · **Last updated:** 2026-11-24 · **Tracking issues:** #114 (A6), #86 (A5), #54 (A4)
 **Status:** Proposed — pending review by the backup owner
 
-**Review basis.** Checked against `main` at `e9f93e6` on 2026-11-10 (CI run #23 passed, 36 tests), `scope.md`, ADR-001, ADR-002, `assumptions-open-questions.md`, the API contracts and the risk register. Open PRs that change a limitation are named but not counted as done: #95 (Data Layer fixes and end-to-end acceptance test). Re-check this file on the release commit before the `a5-cycle1-release` tag.
+**Review basis.** Checked against `main` at `1bb17f4` on 2026-11-24 (CI run #43 passed, 36 tests). The application code has not changed since `e9f93e6` (the RF-06 fix, A5); everything merged after that is documentation. No Cycle 2 code change has reached `main` yet, so every limitation below is still present on `main`. Cycle 2 targets and their outcome are in [`cycle2-maturity-summary.md`](cycle2-maturity-summary.md). Open PRs that would change a limitation are named but not counted as done: #95 (Data Layer fixes and end-to-end acceptance test). Re-check this file on the final commit before the `a6-final-release` tag.
 
-**Severity** is the effect on a Cycle 1 user or demo: **High** blocks a required workflow, **Medium** limits or confuses a workflow, **Low** is cosmetic or only matters beyond Cycle 1.
+**Severity** is the effect on a user or demo of the final release: **High** blocks a required workflow, **Medium** limits or confuses a workflow, **Low** is cosmetic or only matters beyond this course.
 
 ## Current Limitations
 
@@ -22,6 +22,23 @@
 | LIM-008 | Only the current status and the time of the last change are kept. Who changed a status is not recorded, and there is no status history. | A status change cannot be traced to a person afterwards. | Low | The console log shows the simulated role and time of each change. | Accepted (Cycle 1) | Hamza Bashar | Record the user once real authentication exists (LIM-002); add status history if needed. | Q-007 (PR #70), `AuditLogger` |
 | LIM-009 | Category is free text; any non-blank value is accepted. | Categories can be inconsistent. | Low | Staff read the category as entered. | Deferred | Hamza Bashar | Agree a fixed category list (C-Q1) and validate it. | C-Q1 in `api-contracts.md` |
 | LIM-010 | A resolved request cannot be reopened, and a status cannot move backwards (Open → In Progress → Resolved only). | A request resolved by mistake has to be submitted again. | Low | Submit a new request. | Accepted (Cycle 1, by design) | Joanelis Rivera Matos | Revisit Q-002 if staff need to reopen requests. | Q-002, REQ-003, `RequestStatusTest` |
+
+## Cycle 2 Status (2026-11-24)
+
+The "Cycle 2 Action" column above was the plan. This is the status on 2026-11-24; it will be updated before the tag.
+
+| ID | Cycle 2 Target | Status | Disposition for the Release if Unchanged |
+|---|---|---|---|
+| LIM-001 | MT-07 durable storage | Not started | Accepted for the final release; still the first item of future work |
+| LIM-002 | MT-08 real authentication | Not started | Accepted for the final release: synthetic data and localhost only (LIM-003) |
+| LIM-003 | — | No change | Accepted |
+| LIM-004 | MT-10 browser page | Not started; no owner was assigned | Deferred (future work) |
+| LIM-005 | — | Q-004 still open | Deferred |
+| LIM-006 | — | Q-005 still open | Deferred |
+| LIM-007 | — | No requirement or estimate was created | Deferred |
+| LIM-008 | — | No change | Accepted |
+| LIM-009 | — | No change | Deferred |
+| LIM-010 | MT-09 controlled reopening | Not started | Accepted (by design) |
 
 ## Deferred Capabilities
 
@@ -60,8 +77,8 @@ Runtime findings (RF) come from local builds and HTTP checks in A4 (`test-eviden
 
 | Area | What Has Been Verified | What Has Not Been Verified | Related Evidence |
 |---|---|---|---|
-| Automated tests | `main` `e9f93e6`: 36/36 in CI (run #23). With open PR #95 merged locally: 41/41. | Tests in #95 are not on `main` until it merges. | `docs/testing/ci-evidence.md` |
-| End-to-end flow | `Cycle1AcceptanceTest` (PR #95) runs submit → list → update → list again through the Logic Layer. | The same flow over HTTP on the release commit (TC-013, #39) before the tag. | PR #95, #39 |
+| Automated tests | `main` `1bb17f4`: 36/36 in CI (run #43). With open PR #95 merged locally: 41/41. | Tests in #95 are not on `main` until it merges. | `docs/testing/ci-evidence.md` |
+| End-to-end flow | HTTP run FT-002 on `321aef6` (same code as `1bb17f4`): 12 of 12 steps, no restart (`final-test-evidence.md`). | No automated end-to-end test over HTTP; `Cycle1AcceptanceTest` (PR #95, not merged) runs through the Logic Layer only. | `final-test-evidence.md`, PR #95 |
 | Staff list over HTTP | Reviewer HTTP check on PR #76 (2026-10-30): fields, empty list, new requests, status changes, student denied. An HTTP test on `main` checks that a listed request appears (PR #97). | No HTTP test of each field in the list yet. | PR #76 review, PR #97 |
 | Failure paths | Storage failure returns `500` (test `storageFailureReturns500AndNeverSuccess`). | Simultaneous requests, very large inputs. | API-001, REQ-005 |
 
@@ -75,3 +92,4 @@ Runtime findings (RF) come from local builds and HTTP checks in A4 (`test-eviden
 | 2026-11-09 / A5 | All | Added severity, owner and Cycle 2 action to every limitation | A5 release requirements | Issue #86 |
 | 2026-11-09 / A5 | RF-02, RF-06, LIM-004, LIM-007, LIM-010 | RF-02 → Resolved; LIM-004 and LIM-007 → Deferred to Cycle 2 (not in the release); LIM-010 added (forward-only status rule) | TASK-104 merged (#76); Cycle 1 release scope fixed | PR #76, Q-002 |
 | 2026-11-10 / A5 | RF-06 | → Resolved | Fix reviewed and merged | Issue #96, PR #97 |
+| 2026-11-24 / A6 | All | Added the Cycle 2 status for every limitation; none resolved yet in Cycle 2 | No Cycle 2 code change on `main` yet | Issue #114; `cycle2-maturity-summary.md` |
