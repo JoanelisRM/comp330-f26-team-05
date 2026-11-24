@@ -6,24 +6,9 @@ Students often need assistance with a variety of things, from asking about club 
 
 ## Project Status
 
-**Current Phase Gate:** A5 — Verification and Release  
+**Current Phase Gate:** A6 — Operational Maturity  
 **Release Cycle:** Cycle 1  
 **Status:** Active Development
-
-<!--
-TEAM GUIDANCE — DELETE WHEN NO LONGER NEEDED
-
-Keep this section current throughout the semester.
-
-Use the current course phase-gate terminology:
-
-- A6 — Operational Maturity
-
-Update Release Cycle and Status as the project progresses.
-
-Do not leave the repository permanently showing A1 after the project has moved
-to a later gate.
--->
 
 ## Team
 
