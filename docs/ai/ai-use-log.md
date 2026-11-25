@@ -1,8 +1,8 @@
 # AI Use Log
 
-**Owner:** Nova (AI/Governance Lead) | **Backup:** Hamza
-**Status:** Final - Cycle 1 Release
-**Target Baseline Commit:** a5-cycle1-release
+**Owner:** Nova Kurul (AI/Governance Lead) | **Backup / Reviewer:** Joanelis Rivera Matos
+**Status:** Final - Cycle 2 Release (Assignment 6)
+**Target Baseline Commit:** `a6-final-release`
 
 ## Cycle 1 Final AI Verification (Addressing A4 Remediation)
 *To strengthen verification traceability and directly address A4 Professional Gate conditions, all AI-use records are now tied to a single final release commit. Below is the explicit record of how human verification challenged an important failure path before our final merge:*
@@ -54,6 +54,7 @@
 | 2026-11-10 | Claude | Hamza recorded the final Cycle 1 test evidence (issue #83), using Claude to prepare the 12 `curl` steps for the end-to-end run and to draft the file from his terminal output and the Actions tab | `docs/testing/final-test-evidence.md` | Hamza ran `mvn test` (36 run, 0 failures) and the 12-step HTTP run himself on `main` at `321aef6`; results are copied from his terminal. CI run numbers were read from the Actions tab. Tests in unmerged PR #95 are not counted. Pending: review by Khaja (backup). | Draft — under review. |
 | 2026-11-10 | Claude | Khaja updated `traceability.md` for the A5 release (issue #88) and ran the repository inspection TC-011, using Claude to collect issue, PR, commit and CI links, map each requirement to its demo step and release-note entry, and run the `git grep` checks | `docs/planning/traceability.md`, `test-evidence/2026-10-29-local-test-runs.md` (RUN-010) | Every status was checked against `main` `e9f93e6` and CI run #23; work in open PRs (#92, #95, #98) is named but not counted as done. Khaja read the file, then asked for a second check of every commit, PR, issue and quoted demo-step and release-note entry against GitHub and PR #92; no corrections were needed. Pending: review by Hamza (backup). | Draft — under review. |
 | 2026-11-10 | Claude | Hamza recorded the A5 release workflow evidence (issue #89), using Claude to collect merges, branches, commits and tags from the repository and to draft the file from his screenshots of the Pull requests, Issues, Actions and Tags pages | `docs/release/release-workflow-evidence.md` | Merge commits and tags were read from `git log` and `git tag` on `main` at `aaf77c8`; review decisions and issue states were read from GitHub by Hamza on 2026-11-10. Deviations (PR #99 unreviewed, tag on `b3613ae`) are stated, not hidden. Pending: review by Khaja (backup). | Draft — under review. |
+| 2026-11-23 | Claude | Drafted Assignment 6 final updates for CI/CD evidence (`ci-evidence.md`), observability plan (`observability-plan.md`), security governance checklist (`security-governance-checklist.md`), and final AI-use log entry to address A5 feedback and remove Starter Kit comments | `docs/testing/ci-evidence.md`, `docs/observability/observability-plan.md`, `docs/security/security-governance-checklist.md`, `docs/ai/ai-use-log.md` | Nova verified every claim against `main` (36 passing tests, 12-step HTTP run, PR #97 role transport fix), confirmed unmerged A4/A5 PRs are not counted as shipped, removed all Starter Kit HTML comments, and submitted PR for formal peer review by Joanelis before merge. | Accepted after human verification; submitted for A6 peer review. |
 
 ## What Should Be Logged?
 
